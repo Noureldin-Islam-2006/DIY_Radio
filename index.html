@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>هنا القاهرة — Team 14's AM Radio Build</title>
+  <meta name="description" content="Three students, one AM radio. Follow Team 14's tuner and detector build, experiments, fixes, and measurements for ELEG103 at SBME, Fall 2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="هنا القاهرة — An AM radio, one milestone at a time">
+  <meta property="og:description" content="Team 14's field notes: copper wire, a tuning capacitor, an ESP32 detour, and the journey toward sound.">
+  <meta property="og:image" content="assets/m1/setup.jpg">
+  <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    try {
+      const saved = localStorage.getItem('radio-theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+    } catch (_) { /* System preference still works when storage is unavailable. */ }
+  </script>
+  <script src="js/content.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#milestones">Skip to the build log</a>
+  <div id="site"></div>
+  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js.</p></main></noscript>
+  <dialog id="lightbox" aria-labelledby="lightbox-caption">
+    <div class="lightbox-tools">
+      <button type="button" id="lightbox-prev" aria-label="Previous image">←</button>
+      <span id="lightbox-count" aria-live="polite"></span>
+      <button type="button" id="lightbox-next" aria-label="Next image">→</button>
+      <button type="button" id="lightbox-close" aria-label="Close image">Close ×</button>
+    </div>
+    <img id="lightbox-image" alt="">
+    <p id="lightbox-caption" aria-live="polite"></p>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+  <title id="title">M1 — the tuner and detector</title>
+  <desc id="desc">A signal generator drives a five-turn test loop. This couples magnetically to a parallel 75-turn coil and 20 to 280 picofarad capacitor. TP1 connects through a 1N60P diode, cathode toward TP3. A 15 kilohm resistor and 3.3 nanofarad capacitor connect in parallel from TP3 to ground.</desc>
+  <rect width="1000" height="580" fill="#faf8f2"/>
+  <g font-family="Arial, sans-serif" fill="#292d26">
+    <text x="50" y="55" font-size="15" letter-spacing="3" fill="#a4472c">TEAM 14 / M1 CIRCUIT NOTES</text>
+    <text x="50" y="96" font-size="28">Select a frequency. Follow its envelope.</text>
+    <text x="80" y="390" font-size="17">Signal source</text>
+    <text x="207" y="225" font-size="16">5 turns</text>
+    <text x="348" y="225" font-size="16">75 turns</text>
+    <text x="435" y="335" font-size="16">20–280 pF</text>
+    <text x="596" y="175" font-size="18" fill="#a4472c">1N60P</text>
+    <text x="710" y="300" font-size="16">15 kΩ</text>
+    <text x="865" y="300" font-size="16">3.3 nF</text>
+    <text x="529" y="175" font-size="18" fill="#a4472c">TP1</text>
+    <text x="899" y="190" font-size="18" fill="#a4472c">TP3</text>
+    <text x="270" y="355" font-size="13" text-anchor="middle">a few cm</text>
+    <text x="270" y="375" font-size="13" text-anchor="middle">same axis</text>
+    <text x="560" y="458" font-size="15">The diode band (cathode) faces TP3 →</text>
+    <text x="50" y="530" font-size="14" fill="#62665c">Redrawn from LAB2, Figure 3 · Diagram is a wiring guide, not a measured result.</text>
+  </g>
+  <g fill="none" stroke="#292d26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M130 260V200H220V242m0 80v78h-90v-90"/><circle cx="130" cy="285" r="25"/>
+    <path d="M113 285q8-18 17 0t17 0M220 242c25 0 25 20 0 20c25 0 25 20 0 20c25 0 25 20 0 20c25 0 25 20 0 20"/>
+    <path d="M345 242c-25 0-25 20 0 20c-25 0-25 20 0 20c-25 0-25 20 0 20c-25 0-25 20 0 20M345 242V200H603M345 322V400H900M490 200v70m-22 0h44m-44 13h44m-22 0v117M464 306l51-63m-12 3 12-3-2 12"/>
+    <path d="M603 184v32l28-16zM635 182v36M635 200H920M710 200v48l-9 9 18 14-18 14 18 14-18 14 9 9v78M835 200v70m-23 0h46m-46 13h46m-23 0v117M710 400v23m-17 0h34m-28 7h22m-16 7h10"/>
+  </g>
+  <g fill="#a4472c"><circle cx="550" cy="200" r="5"/><circle cx="920" cy="200" r="5"/><circle cx="490" cy="200" r="4"/><circle cx="710" cy="200" r="4"/><circle cx="835" cy="200" r="4"/><circle cx="490" cy="400" r="4"/><circle cx="710" cy="400" r="4"/><circle cx="835" cy="400" r="4"/></g>
+  <path d="M250 285h60m-53-5-7 5 7 5m46-10 7 5-7 5" fill="none" stroke="#a4472c" stroke-width="1.5"/>
+</svg>
