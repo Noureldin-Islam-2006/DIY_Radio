@@ -5,7 +5,9 @@ window.RADIO_CONTENT = {
   // Identity, dates, repository, and the opening story. Replace repo with your HTTPS URL.
   project: {
     name: 'هنا القاهرة', transliteration: 'HUNA AL-QAHIRA', team: '14',
-    tagline: 'An AM radio, one milestone at a time.',
+    tagline: 'Making the invisible audible.',
+    // Opening exhibit: short editorial lines and an interactive illustrated coil.
+    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', title: 'It starts with a coil.', detail: '75 turns. One frequency at a time.', label: 'Illustrated coil · explore the actual build below', dial: 'Move the dial. Find your frequency.', action: 'Enter the workbench', lines: ['AIRWAVES', 'BECOME', 'A STORY.'] },
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',

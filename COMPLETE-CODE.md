@@ -2,6 +2,114 @@
 
 Every authored source file is included below in its own labelled code block. Copy each block to the named relative path. The accompanying ZIP includes the existing photographs, videos, and LAB2.pdf; binary files cannot be pasted as source code.
 
+## css/experience.css
+
+````css
+/* Editorial exhibit layer. Accent colour remains controlled by style.css variables. */
+body { padding-left: 0; }
+.wrap { max-width: 1440px; }
+.site-header { min-height: 88px; border-bottom: 1px solid var(--line); }
+.hero { position: relative; gap: 4vw; padding: 32px 0 48px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.hero-copy > .eyebrow { order: -2; margin-bottom: 28px; }
+.hero h1 { font-size: clamp(40px,4.2vw,64px); line-height: 1.3; margin: 12px 0 4px; }
+.editorial-title { font: 500 clamp(52px,6vw,92px)/.91 Arial,sans-serif; letter-spacing: -.075em; margin: 0; }
+.editorial-title span { display: block; }
+.editorial-title span:last-child { color: var(--accent-ink); font-family: Georgia,serif; font-style: italic; letter-spacing: -.06em; }
+.hero .tagline { font-size: clamp(18px,1.7vw,26px); margin: 8px 0; }
+.hero-intro { max-width: 53ch; font-size: .82rem; line-height: 1.7; margin: 10px 0 14px; }
+.primary-link { font-size: .8rem; margin: 0; }
+.workbench-jump { background: var(--ink); color: var(--paper); padding: 15px 22px; border: 0; margin: 16px 0 0; border-radius: 100px; transition: transform .2s; }
+.workbench-jump:hover { transform: translateY(-3px); }
+.team-line { margin-top: 28px; padding-top: 16px; width: 100%; }
+.opening-exhibit { --dial-angle: 0deg; background: var(--soft); border-radius: 260px 260px 8px 8px; padding: 36px 32px 24px; min-width: 0; position: relative; }
+.exhibit-top { display: flex; justify-content: space-between; font: 9px monospace; letter-spacing: .13em; padding-top: 32px; }
+.exhibit-art { position: relative; aspect-ratio: 1.15; display: grid; place-items: center; }
+.exhibit-art img { position: relative; width: 83%; height: 100%; object-fit: contain; transform: rotate(calc(-10deg + var(--dial-angle)*.15)); transition: transform .35s ease-out; filter: drop-shadow(0 20px 18px #0002); }
+.orbit { position: absolute; width: 88%; aspect-ratio: 1; border: 1px solid var(--line); border-radius: 50%; }
+.orbit-two { width: 72%; border-style: dashed; transform: rotate(var(--dial-angle)); transition: transform .3s; }
+.orbit-one::after { content: ''; position: absolute; top: 12%; left: 14%; width: 9px; height: 9px; border-radius: 50%; background: var(--accent-ink); }
+.orbit-label { position: absolute; bottom: 0; font: 10px monospace; letter-spacing: .04em; }
+.exhibit-bottom { text-align: center; padding-top: 20px; }
+.exhibit-bottom h2 { font: italic 28px Georgia,serif; margin: 0; }
+.exhibit-bottom p { font-size: 10px; color: var(--muted); margin: 7px 0 25px; }
+.opening-dial { display: flex; justify-content: space-between; gap: 10px; font-size: 10px; }
+.opening-dial output { color: var(--accent-ink); font-family: monospace; white-space: nowrap; }
+#opening-frequency { width: 100%; accent-color: var(--accent-ink); margin: 14px 0 8px; cursor: ew-resize; }
+.frequency-ruler { display: flex; justify-content: space-between; padding-top: 18px; background: repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 10px) top/100% 10px no-repeat; font: 9px monospace; color: var(--muted); }
+.overview { padding: 50px 0; }
+.overview-head h2 { font-size: clamp(30px,4vw,56px); letter-spacing: -.045em; }
+.signal-chain li { background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding-inline: 0; }
+.chapter-heading h2 { font-size: clamp(36px,5vw,70px); letter-spacing: -.05em; }
+.chapter-section { padding-block: 60px; }
+.section-label h3 { letter-spacing: -.03em; }
+.problem-card,.theory-grid > div { background: transparent; border-width: 1px 0 0; border-radius: 0; padding-inline: 0; }
+.problem-grid,.theory-grid { gap: 32px; }
+.bench-layout { border-radius: 10px; overflow: hidden; }
+.bench-stage { background: #191d1c; }
+.part-inspector { background: var(--soft); }
+.part-portrait { height: 150px; }
+.part-portrait img { max-height: 140px; }
+.focus-option { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-top: 20px; }
+.focus-option input { accent-color: var(--accent-ink); }
+.parts-tray button { border-radius: 0; border-width: 0 0 1px; background: transparent; }
+.parts-tray button[aria-pressed="true"] { background: var(--soft); border-color: var(--accent-ink); }
+.bench-toolbar button { border-radius: 100px; }
+@media(min-width:960px){.hero { grid-template-columns: 1.05fr 1fr; }.opening-exhibit { max-width: 550px; width:100%; justify-self: end; }.bench-layout { grid-template-columns: minmax(0,1fr) 250px; }}
+@media(min-width:1200px){
+  .section-sidebar { width: 166px; padding: 110px 8px 25px; transform: translateX(-100%); transition: transform .3s; background: var(--paper); }
+  .reading-build .section-sidebar { transform: translateX(0); }
+  .milestones { margin-left: 155px; }
+  .section-sidebar a { font-size: .67rem; }
+}
+@media(max-width:959px){.hero { gap: 40px; }.editorial-title { font-size: clamp(56px,10vw,90px); }.opening-exhibit { max-width: 520px; width:100%; justify-self:center; }}
+@media(max-width:619px){.hero { padding-top:30px; }.hero-copy>.eyebrow{margin-bottom:20px}.hero h1{font-size:48px}.opening-exhibit{padding:25px 20px 20px}.exhibit-top{padding-top:20px}.editorial-title{font-size:clamp(54px,16vw,90px)}.team-line ul{flex-wrap:wrap}.chapter-section{padding-block:40px}.bench-toolbar{gap:4px}.bench-toolbar button{padding:8px;font-size:10px}.exhibit-bottom h2{font-size:25px}}
+@media print{.opening-exhibit,.editorial-title,.focus-option{display:none}.milestones{margin-left:0}.hero{display:block}.section-sidebar{display:none!important}}
+````
+
+## js/experience.js
+
+````javascript
+/* A small opening exhibit, progressively enhanced with a keyboard-friendly dial. */
+(() => {
+  const c=window.RADIO_CONTENT.project.exhibit;
+  if(!c)return;
+  const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const hero=document.querySelector('.hero');
+  hero.querySelector('.hero-photo').remove();
+  const exhibit=document.createElement('div');exhibit.className='opening-exhibit';
+  exhibit.innerHTML=`<div class="exhibit-top"><span>${esc(c.kicker)}</span><span>01 / 03</span></div><div class="exhibit-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><img src="assets/components/coil.png" alt="Illustrated copper coil on a PVC former; an approximate reconstruction" width="512" height="512" fetchpriority="high"><span class="orbit-label">${esc(c.detail)}</span></div><div class="exhibit-bottom"><h2>${esc(c.title)}</h2><p>${esc(c.label)}</p></div><label class="opening-dial" for="opening-frequency"><span>${esc(c.dial)}</span><output id="opening-readout">819 kHz</output></label><input id="opening-frequency" type="range" min="530" max="1600" value="819" step="1" aria-label="Decorative radio dial frequency"><div class="frequency-ruler" aria-hidden="true"><span>530</span><span>800</span><span>1100</span><span>1600 kHz</span></div>`;
+  hero.append(exhibit);
+  const title=document.createElement('p');title.className='editorial-title';title.setAttribute('aria-hidden','true');title.innerHTML=c.lines.map(x=>`<span>${esc(x)}</span>`).join('');hero.querySelector('.hero-copy').prepend(title);
+  const jump=document.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
+  const dial=exhibit.querySelector('input');dial.addEventListener('input',()=>{exhibit.querySelector('output').textContent=dial.value+' kHz';exhibit.style.setProperty('--dial-angle',`${(dial.value-819)/12}deg`);});
+  const update=()=>document.body.classList.toggle('reading-build',document.querySelector('#milestones').getBoundingClientRect().top<140);
+  document.addEventListener('scroll',update,{passive:true});update();
+})();
+````
+
+## MODEL-CAPTURE-GUIDE.md
+
+````markdown
+# Help us make the model match your circuit
+
+The current model is a nominal, procedural reconstruction. Generated component illustrations cannot establish unseen geometry or exact breadboard connections.
+
+## Best first upload
+
+1. A sharp overhead photo of the whole circuit with a ruler beside it.
+2. Front, back, left, right and top photos of the coil and tuning capacitor. Include the underside if accessible without damaging the build.
+3. Close-ups of the detector and ESP32, with printed markings and breadboard row numbers readable.
+4. Dimensions in millimetres: pipe outside diameter and height, winding width and position, board length/width, capacitor body and shaft, and distances between parts.
+5. An annotated overhead photo identifying TP1, TP3, ground, component terminals and where each jumper goes. Hidden wires need a written connection list.
+
+Use diffuse light, a plain background, no portrait blur, and original-resolution files. Keep the circuit unchanged between views. Take overlapping views around each object at several heights; include detail shots of small parts. A slow video helps us understand placement, but sharp stills are more useful for dimensions and markings. Do not dismantle a working circuit just to capture a hidden surface.
+
+If available, include manufacturer part numbers/datasheets, CAD files, or an exported phone scan (GLB, OBJ or STL). A scan may still need cleanup, particularly around thin wires, shiny metal and transparent plastic.
+
+Start with the coil and tuner. We can correct those first, then boards, detector parts and wiring. Label files by component and angle, for example `coil-front.jpg`, and put dimensions in `dimensions.txt`.
+````
+
 ## index.html
 
 ````html
@@ -22,6 +130,7 @@ Every authored source file is included below in its own labelled code block. Cop
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/workbench.css">
+  <link rel="stylesheet" href="css/experience.css">
   <script>
     try {
       const saved = localStorage.getItem('radio-theme');
@@ -32,6 +141,7 @@ Every authored source file is included below in its own labelled code block. Cop
   <script src="js/script.js" defer></script>
   <script src="js/circuit-model.js" defer></script>
   <script src="js/workbench.js" defer></script>
+  <script src="js/experience.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#milestones">Skip to the build log</a>
@@ -479,7 +589,9 @@ window.RADIO_CONTENT = {
   // Identity, dates, repository, and the opening story. Replace repo with your HTTPS URL.
   project: {
     name: 'هنا القاهرة', transliteration: 'HUNA AL-QAHIRA', team: '14',
-    tagline: 'An AM radio, one milestone at a time.',
+    tagline: 'Making the invisible audible.',
+    // Opening exhibit: short editorial lines and an interactive illustrated coil.
+    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', title: 'It starts with a coil.', detail: '75 turns. One frequency at a time.', label: 'Illustrated coil · explore the actual build below', dial: 'Move the dial. Find your frequency.', action: 'Enter the workbench', lines: ['AIRWAVES', 'BECOME', 'A STORY.'] },
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
@@ -1031,9 +1143,9 @@ window.RADIO_CONTENT = {
   <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY 01</span><span class="bench-live">EXPLORE IN 3D</span></div>
     <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
     <img class="bench-fallback" src="assets/m1/setup.jpg" alt="Our actual coil and breadboard circuit, shown when 3D is unavailable." hidden>
-    <p class="bench-hint">Drag to rotate · select a part below</p><div class="bench-toolbar"><button type="button" data-camera="home">Reset view</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
+    <p class="bench-hint">Drag to rotate · select a part below</p><div class="bench-toolbar"><button type="button" data-camera="home">Whole circuit</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
   </div><aside class="part-inspector" aria-live="polite" aria-atomic="true"><div class="part-portrait"><img id="part-image" alt="" loading="lazy"></div><div class="part-copy"><p class="eyebrow" id="part-value"></p><h4 id="part-name"></h4><p id="part-role"></p><p class="part-connection" id="part-connection"></p><details><summary>About this reconstruction</summary><p id="part-detail"></p><p class="fine-print">${esc(c.imageNote)}</p></details></div></aside></div>
-  <div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
+  <label class="focus-option"><input type="checkbox" id="focus-selection" checked> Zoom into selected component</label><div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
   <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/m1/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
   <div class="tuning-lab"><div class="tuning-story"><p class="eyebrow">A LITTLE BENCH EXPERIMENT</p><h4>${esc(c.tuningTitle)}</h4><p>${esc(c.tuningIntro)}</p><p class="tuning-challenge">${esc(c.challenge)}</p><label class="probe-switch"><input id="probe-load" type="checkbox"> Add 100 pF probe capacitance</label><button type="button" class="text-button" id="listen-tuning" aria-pressed="false">Listen to alignment ♪</button><p class="fine-print">Optional synthesized tone, not received radio audio.</p></div>
   <div class="tuning-console"><div class="console-readout"><div><span>TANK RESONANCE</span><output id="tuned-frequency">—</output></div><div><span>TARGET</span><strong>${c.targetKhz}<small> kHz</small></strong></div></div>
@@ -1048,14 +1160,14 @@ window.RADIO_CONTENT = {
   const jump=document.createElement('button');jump.className='workbench-jump';jump.type='button';jump.textContent='Explore the circuit in 3D ↗';
   document.querySelector('.primary-link').after(jump);
   jump.addEventListener('click',()=>{document.querySelector('#tab-m1').click();$('#m1-workbench').tabIndex=-1;$('#m1-workbench').focus({preventScroll:true});section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
-  const canvas=$('#radio-model');let selected='coil',render=()=>{},modelReady=false;
-  function select(id) {
+  const canvas=$('#radio-model');let selected='coil',render=()=>{},focusPart=()=>{},modelReady=false;
+  function select(id,zoom=true) {
     selected=id;const p=c.parts.find(p=>p.id===id);
     $('#part-image').src=p.image;$('#part-image').alt=`Illustrated reconstruction of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
-    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));render();
+    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom&&$('#focus-selection').checked){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
-  $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil');
+  $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
 
   function initModel() {
@@ -1064,14 +1176,19 @@ window.RADIO_CONTENT = {
     if(!gl){canvas.hidden=true;$('.bench-fallback').hidden=false;$('.bench-hint').textContent='3D is unavailable here. Explore the component cards or download the model.';$$('[data-camera],#bench-explode').forEach(b=>b.disabled=true);return;}
     const shader=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
     const program=gl.createProgram();
-    gl.attachShader(program,shader(gl.VERTEX_SHADER,`attribute vec3 pos;attribute vec3 normal;attribute vec3 colour;uniform vec3 offset;uniform vec2 angle;uniform float distance;uniform float aspect;uniform float emphasis;varying vec3 tint;
-      void main(){vec3 p=pos+offset-vec3(-5.,18.,0.);float a=angle.x,b=angle.y;vec3 q=vec3(p.x*cos(a)+p.z*sin(a),p.y,-p.x*sin(a)+p.z*cos(a));vec3 v=vec3(q.x,q.y*cos(b)-q.z*sin(b),q.y*sin(b)+q.z*cos(b));float depth=distance-v.z;gl_Position=vec4(v.x*2.45/aspect,v.y*2.45,1.002*depth-2.002,depth);float light=.48+.52*abs(dot(normalize(normal),normalize(vec3(-.35,.8,.5))));tint=colour*light*emphasis;}`));
+    gl.attachShader(program,shader(gl.VERTEX_SHADER,`attribute vec3 pos;attribute vec3 normal;attribute vec3 colour;uniform vec3 offset;uniform vec3 center;uniform vec2 angle;uniform float distance;uniform float aspect;uniform float emphasis;varying vec3 tint;
+      void main(){vec3 p=pos+offset-center;float a=angle.x,b=angle.y;vec3 q=vec3(p.x*cos(a)+p.z*sin(a),p.y,-p.x*sin(a)+p.z*cos(a));vec3 v=vec3(q.x,q.y*cos(b)-q.z*sin(b),q.y*sin(b)+q.z*cos(b));float depth=distance-v.z;gl_Position=vec4(v.x*2.45/aspect,v.y*2.45,1.002*depth-2.002,depth);float light=.48+.52*abs(dot(normalize(normal),normalize(vec3(-.35,.8,.5))));tint=colour*light*emphasis;}`));
     gl.attachShader(program,shader(gl.FRAGMENT_SHADER,'precision mediump float;varying vec3 tint;void main(){gl_FragColor=vec4(tint,1.);}'));gl.linkProgram(program);
     if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);gl.enable(gl.DEPTH_TEST);
     const attrs=['pos','normal','colour'].map(n=>gl.getAttribLocation(program,n));attrs.forEach(a=>gl.enableVertexAttribArray(a));
-    const u=Object.fromEntries(['offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
+    const u=Object.fromEntries(['center','offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
     const models=G.build().map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
-    let yaw=-.3,pitch=.6,distance=370,explode=0,target=0,frame=0,last=0,visible=true;
+    let yaw=-.3,pitch=.6,distance=370,desiredDistance=370,center=[-5,18,0],desiredCenter=[-5,18,0],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
+    focusPart=id=>{const part=models.find(p=>p.id===id);if(!part)return;focused=id;
+      const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
+      for(let j=0;j<part.vertices.length;j+=9)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],part.vertices[j+k]);hi[k]=Math.max(hi[k],part.vertices[j+k]);}
+      desiredCenter=lo.map((v,k)=>(v+hi[k])/2+part.position[k]);desiredDistance=Math.max(25,Math.hypot(...lo.map((v,k)=>(hi[k]-v)/2))*3.1);
+      target=0;$('#bench-explode').setAttribute('aria-pressed','false');$('#bench-explode').textContent='Separate parts ↗';canvas.dataset.view=id;$('.bench-hint').textContent='Component close-up · drag to rotate · Whole circuit to return';render();};
     function draw(now=0) {
       frame=0;if(!visible||document.hidden||document.querySelector('#panel-m1').hidden)return;
       const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
@@ -1079,19 +1196,23 @@ window.RADIO_CONTENT = {
       if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
       if(matchMedia('(prefers-reduced-motion: reduce)').matches)explode=target;
       else {const dt=Math.min(60,now-last||16);explode+=(target-explode)*(1-Math.exp(-dt/100));if(Math.abs(target-explode)<.002)explode=target;}
-      last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
-      for(const p of models){if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
-      if(explode!==target)frame=requestAnimationFrame(draw);
+      const ease=matchMedia('(prefers-reduced-motion: reduce)').matches?1:.16;
+      center=center.map((v,i)=>Math.abs(v-desiredCenter[i])<.02?desiredCenter[i]:v+(desiredCenter[i]-v)*ease);
+      distance=Math.abs(distance-desiredDistance)<.02?desiredDistance:distance+(desiredDistance-distance)*ease;
+      gl.uniform3fv(u.center,center);last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
+      for(const p of models){if(focused&&p.id!==focused)continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
+      if(explode!==target||distance!==desiredDistance||center.some((v,i)=>v!==desiredCenter[i]))frame=requestAnimationFrame(draw);
     }
     render=()=>{if(!frame)frame=requestAnimationFrame(draw);};
-    const reset=()=>{yaw=-.3;pitch=.6;distance=370;render();};
-    $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{distance=Math.max(230,Math.min(650,distance+(b.dataset.camera==='in'?-30:30)));render();}}));
-    $('#bench-explode').addEventListener('click',()=>{target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
+    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=370;desiredCenter=[-5,18,0];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · select a part below";render();};
+    $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{desiredDistance=Math.max(15,Math.min(650,desiredDistance+(b.dataset.camera==='in'?-30:30)));render();}}));
+    $('#focus-selection').addEventListener('change',()=>{if($('#focus-selection').checked)focusPart(selected);else reset();});
+    $('#bench-explode').addEventListener('click',()=>{if(focused)reset();target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
     let pointer=null;
     canvas.addEventListener('pointerdown',e=>{if(e.button!==0||pointer)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
     canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;yaw+=(e.clientX-pointer.x)*.008;pitch=Math.max(-.2,Math.min(1.55,pitch+(e.clientY-pointer.y)*.008));pointer.x=e.clientX;pointer.y=e.clientY;render();});
     const release=e=>{if(pointer?.id===e.pointerId)pointer=null;};canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
-    canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')reset();else if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.55,pitch+.1);else if(e.key==='ArrowDown')pitch=Math.max(-.2,pitch-.1);else distance=Math.max(230,Math.min(650,distance+(e.key==='-'?25:-25)));render();});
+    canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')reset();else if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.55,pitch+.1);else if(e.key==='ArrowDown')pitch=Math.max(-.2,pitch-.1);else desiredDistance=Math.max(15,Math.min(650,desiredDistance+(e.key==='-'?25:-25)));render();});
     new ResizeObserver(render).observe(canvas);
     if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)render();else if(frame){cancelAnimationFrame(frame);frame=0;}}).observe(canvas);
     document.addEventListener('visibilitychange',render);document.addEventListener('radio:tab',render);
@@ -1201,6 +1322,13 @@ The component PNGs were generated using the built-in Image Generation tool with 
 The 3D assembly is original procedural geometry informed by those visual references and nominal LAB2 dimensions. It is **not** photogrammetry, an automatic image-to-mesh conversion, a precision scan, or a pin-accurate breadboard reconstruction. The source loop is placed above the upright main coil on the same axis. Its source wiring and the circuit's jumpers are illustrative. The schematic remains the electrical reference.
 
 The viewer renders actual three-dimensional triangle meshes with depth testing, perspective, and lighting; it is not a flat image that rotates. The standalone GLB contains the same assembled geometry, vertex colours, separate named meshes, and metre units. It can be imported into a 3D editor. No captured images of the reference website are distributed.
+# November 5 refinement
+
+Reviewed the visual hierarchy of [Money in Check](https://moneyincheck.org/) and the published experiences at [Lusion](https://lusion.co/), [Linear](https://linear.app/) and [Bruno Simon](https://bruno-simon.com/). These are selected benchmarks, not a verified popularity ranking. Money in Check's dominant object and restrained palette are effective; its elaborate spectacle is more than this guide needs. Lusion foregrounds visual storytelling, Linear provides a useful benchmark for clear information hierarchy, and Bruno Simon demonstrates exploratory 3D interaction, with a larger interaction/learning burden than a short lab guide needs.
+
+Our interpretation: a copper-coil opening exhibit, large editorial typography, a visitor-operated radio dial, and component close-ups that explain the build. No copied layouts, assets or implementation. The left chapter index appears while reading the build, leaving the opening uncluttered. Technical content and real photos remain in the story.
+
+Review passes: (1) desktop composition, then tightened opening typography; (2) close-up camera, then added automatic viewer positioning and ensured lazy initialization before focus; (3) all eight selections, return-to-assembly option, keyboard dial and tabs, both themes, and 320/390 px widths. No horizontal page overflow or browser JavaScript errors observed. Existing content/calculation checks pass. Visual taste remains subjective; hardware fidelity still requires the additional captures described in MODEL-CAPTURE-GUIDE.md.
 ````
 
 ## assets/components/GENERATION.md
@@ -1495,6 +1623,13 @@ The tuning experiment calculates resonance from nominal coil dimensions. Its opt
 The PNGs were produced with the built-in image generator from the team's own photos. The 3D model was authored from the visual references and nominal specifications; it is not an automatic photo-to-mesh conversion or precision scan. It shows illustrative placement, not exact breadboard connections. Follow the circuit schematic for wiring.
 
 The website still runs by opening `index.html`: no npm, React, CDN, or build step. Only if you edit geometry and want to regenerate the downloadable GLB, the optional authoring command is `node tools/export-model.cjs`. The viewer uses the geometry source directly, so editing it does not require an export to preview changes.
+# Latest design revision
+
+The opening exhibit uses `project.exhibit` in `js/content.js`. Its dial is decorative; the workbench tuning experiment is the calculated demonstration. `css/experience.css` controls the editorial composition and `js/experience.js` adds the opening interaction.
+
+Select any component to move the camera into an isolated close-up and read its role and connections. Uncheck **Zoom into selected component** to keep the assembled view while reading descriptions. **Whole circuit** returns to the assembly. Motion respects reduced-motion preferences.
+
+For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTURE-GUIDE.md). Current geometry and generated illustrations remain approximate.
 ````
 
 ## Replace these placeholders first

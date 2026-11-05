@@ -180,3 +180,11 @@ The tuning experiment calculates resonance from nominal coil dimensions. Its opt
 The PNGs were produced with the built-in image generator from the team's own photos. The 3D model was authored from the visual references and nominal specifications; it is not an automatic photo-to-mesh conversion or precision scan. It shows illustrative placement, not exact breadboard connections. Follow the circuit schematic for wiring.
 
 The website still runs by opening `index.html`: no npm, React, CDN, or build step. Only if you edit geometry and want to regenerate the downloadable GLB, the optional authoring command is `node tools/export-model.cjs`. The viewer uses the geometry source directly, so editing it does not require an export to preview changes.
+# Latest design revision
+
+The opening exhibit uses `project.exhibit` in `js/content.js`. Its dial is decorative; the workbench tuning experiment is the calculated demonstration. `css/experience.css` controls the editorial composition and `js/experience.js` adds the opening interaction.
+
+Select any component to move the camera into an isolated close-up and read its role and connections. Uncheck **Zoom into selected component** to keep the assembled view while reading descriptions. **Whole circuit** returns to the assembly. Motion respects reduced-motion preferences.
+
+For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTURE-GUIDE.md). Current geometry and generated illustrations remain approximate.
+
