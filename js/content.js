@@ -40,6 +40,30 @@ window.RADIO_CONTENT = {
     theme: 'Change colour theme', themes: ['System', 'Light', 'Dark'],
     print: 'Print this milestone', plannedNote: 'The next chapter is still on the drawing board.'
   },
+  // Workbench copy and part catalogue. Illustrations are AI reconstructions, not bench evidence.
+  workbench: {
+    title: 'Take the radio apart.', eyebrow: 'THE INTERACTIVE WORKBENCH',
+    intro: 'Meet the pieces before following the build. Turn the assembly, lift its components apart, and discover how a small change in capacitance changes the frequency we hear.',
+    modelNote: 'Photo-informed 3D reconstruction · nominal dimensions · illustrative placement. Use the schematic for electrical connections, not the model’s breadboard holes.',
+    imageNote: 'AI component illustration based on our photos; obscured details are representative. Original bench photos remain in the journey below.',
+    parts: [
+      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 50 mm',image:'assets/components/coil.png',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses 75 turns over a nominal 25 mm winding length.',connection:'Across TP1 and ground.'},
+      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
+      {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'The small package is partially hidden in the photos. Its illustrated housing is representative; the cathode band is the important orientation cue.',connection:'Anode at TP1; banded cathode toward TP3.'},
+      {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
+      {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'A representative yellow dipped capacitor based on the visible package. Its capacitance is the specified nominal value.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
+      {id:'breadboard',name:'Our temporary workbench',short:'Boards',value:'Two solderless boards',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The two-board arrangement follows our overhead photo. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
+      {id:'esp32',name:'The detour that taught us something',short:'ESP32',value:'Temporary signal source',image:'assets/components/esp32.png',role:'Our early workaround when the first function generator could not reach the frequency range we needed.',detail:'Team 20 helped with the sampled-sine sketch. That sketch is about 1 kHz before overhead and does not generate an AM carrier. We later switched generators.',connection:'A historical experiment, not a required receiver component.'},
+      {id:'test-loop',name:'A station, a few centimetres away',short:'Test loop',value:'5 turns · magnetic coupling',image:'assets/components/test-loop.png',role:'Transfers the test source’s magnetic field into the main coil without a direct electrical connection.',detail:'The exact loop shape is not clear in the photos, so this part is a representative five-turn reconstruction. Keep it on the same axis as the main coil.',connection:'Driven by the external signal source; isolated from the tank.'}
+    ],
+    tuningTitle: 'Find the signal.',
+    tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
+    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 30 is assumed. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
+    targetKhz:819, assumedQ:30,
+    challenge:'Can you bring the resonance within 5 kHz of the target?',
+    matched:'On target. Now add the probe and try again.',
+    unmatched:'Keep tuning: more capacitance lowers the resonant frequency.'
+  },
   // The radio's signal flow, in order. M1 appears twice because it includes both halves.
   chain: [
     { title: 'Airwaves', detail: 'The starting point' },

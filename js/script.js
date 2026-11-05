@@ -134,6 +134,7 @@
       $$('video').forEach(video => video.pause());
       $$('.embed-slot iframe').forEach(frame => { const slot = frame.parentElement; frame.remove(); slot.querySelector('button').hidden = false; });
     }
+    document.dispatchEvent(new Event('radio:tab'));
     activeId = id;
     updateSidebar(id);
     $$('[data-tab]').forEach(tab => { const selected = tab.dataset.tab === id; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; });
@@ -160,6 +161,7 @@
       if (target !== undefined) { event.preventDefault(); navigate(tabs[target].dataset.tab, true); }
     });
   });
+  document.addEventListener('radio:content', () => updateSidebar(activeId));
   window.addEventListener('hashchange', readHash);
   readHash();
   $$('[data-milestone], [data-jump]').forEach(link => link.addEventListener('click', event => {
@@ -181,6 +183,7 @@
       });
     }, { rootMargin: '-10% 0px -55% 0px', threshold: 0 });
     $$('.chapter-section').forEach(section => sectionObserver.observe(section));
+    document.addEventListener('radio:content', () => $$('.chapter-section').forEach(section => sectionObserver.observe(section))); 
   }
 
   // Missing assets fall back cleanly, including a missing real photo after deployment.

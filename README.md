@@ -161,3 +161,22 @@ Relative paths support `https://<user>.github.io/<repo>/`; no rewriting, build a
 ## Section navigation and motion
 
 A fixed left sidebar at desktop widths follows the active milestone. On smaller screens it becomes a horizontal section menu. Links scroll to headings without replacing the milestone hash. Section highlighting follows scrolling. Subtle entrance and card-hover animations respect prefers-reduced-motion.
+
+
+## Interactive 3D workbench
+
+M1 now includes a dependency-free WebGL assembly with orbit/zoom controls, animated component separation, and eight selectable component illustrations. Use the hero's **Explore the circuit in 3D** button or the section sidebar. Mouse/touch dragging rotates the model; keyboard arrows rotate, +/- zoom, and Home resets the camera. Native WebGL must be enabled for the 3D view; an actual bench photo is the fallback. The descriptions and tuning experiment remain ordinary accessible HTML.
+
+The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. No real measurements were added.
+
+- `js/content.js`: workbench descriptions and component catalogue.
+- `js/circuit-model.js`: original mesh geometry and resonance functions.
+- `js/workbench.js`: native WebGL renderer, controls, and tuning experiment.
+- `css/workbench.css`: responsive workbench styles.
+- `assets/components/`: eight transparent PNG illustrations and the complete generation prompts.
+- `assets/m1/radio-assembly.glb`: downloadable 3D assembly with named meshes, vertex colours, and metre units.
+- `DESIGN-NOTES.md`: reference review, research links, implementation choices, and future ideas.
+
+The PNGs were produced with the built-in image generator from the team's own photos. The 3D model was authored from the visual references and nominal specifications; it is not an automatic photo-to-mesh conversion or precision scan. It shows illustrative placement, not exact breadboard connections. Follow the circuit schematic for wiring.
+
+The website still runs by opening `index.html`: no npm, React, CDN, or build step. Only if you edit geometry and want to regenerate the downloadable GLB, the optional authoring command is `node tools/export-model.cjs`. The viewer uses the geometry source directly, so editing it does not require an export to preview changes.

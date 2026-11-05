@@ -1,0 +1,101 @@
+.workbench-jump { display: inline-block; background: none; border: none; border-bottom: 1px solid var(--line); margin: 16px 0 0 16px; padding: 9px 0; font-size: .78rem; color: var(--accent-ink); }
+.workbench .section-intro { max-width: 750px; }
+.bench-layout { display: grid; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.bench-layout > * { min-width: 0; }
+.bench-stage { position: relative; background: radial-gradient(ellipse at 45% 45%, #34483a, #18251e 75%); color: #f1f0e4; min-height: 440px; display: flex; flex-direction: column; }
+.bench-stage::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#ced6ba07 1px,transparent 1px),linear-gradient(90deg,#ced6ba07 1px,transparent 1px); background-size: 38px 38px; pointer-events: none; }
+.bench-stage-top { position: absolute; top: 22px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 15px; pointer-events: none; font: .6rem Consolas, monospace; letter-spacing: .12em; color: #c9d1c4; z-index: 1; }
+.bench-live { color: #ebba8f; }
+#radio-model { width: 100%; height: 400px; display: block; touch-action: none; cursor: grab; outline-offset: -5px; }
+#radio-model:active { cursor: grabbing; }
+.bench-fallback { width: 100%; height: 400px; object-fit: contain; }
+.bench-hint { text-align: center; margin: -10px 15px 16px; color: #bbc8bb; font-size: .7rem; pointer-events: none; }
+.bench-toolbar { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 12px 18px; margin-top: auto; }
+.bench-toolbar button { background: #ffffff08; border: 1px solid #b8c6b340; border-radius: 3px; min-height: 40px; padding: 7px 12px; color: #efefe3; font-size: .68rem; }
+.bench-toolbar button:hover, .bench-toolbar button[aria-pressed="true"] { background: #d9a778; color: #16231c; border-color: #d9a778; }
+.part-inspector { background: var(--surface); display: grid; grid-template-columns: 120px 1fr; align-items: start; padding: 22px; gap: 20px; }
+.part-portrait { background: var(--soft); border-radius: 4px; padding: 12px; }
+.part-portrait img { width: 100%; aspect-ratio: 1.1; object-fit: contain; }
+.part-copy .eyebrow { color: var(--accent-ink); margin-bottom: 10px; }
+.part-copy h4 { font: 400 1.55rem/1.15 var(--serif); margin-bottom: 17px; }
+.part-copy > p:not(.eyebrow) { font-size: .8rem; color: var(--muted); }
+.part-copy .part-connection { border-top: 1px solid var(--line); padding-top: 15px; color: var(--ink) !important; }
+.part-copy details { border-top: 1px solid var(--line); }
+.part-copy summary { font-size: .68rem; padding: 13px 0; }
+.part-copy details p { font-size: .72rem; color: var(--muted); }
+.parts-tray { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; padding-block: 14px; }
+.parts-tray button { border: 1px solid var(--line); background: var(--surface); padding: 13px 10px; border-radius: 4px; text-align: left; font-size: .74rem; display: flex; align-items: baseline; gap: 9px; min-height: 48px; }
+.parts-tray button:hover, .parts-tray button[aria-pressed="true"] { border-color: var(--accent-ink); color: var(--accent-ink); background: var(--soft); }
+.part-index { font: .6rem Consolas,monospace; color: var(--muted); }
+.bench-footnote { display: flex; flex-direction: column; gap: 8px; color: var(--muted); font-size: .68rem; }
+.bench-footnote p { max-width: 700px; }
+.bench-footnote a { white-space: nowrap; }
+.tuning-lab { margin-top: 55px; display: grid; gap: 30px; }
+.tuning-story h4 { font: 400 2.6rem/1.2 var(--serif); letter-spacing: -.05em; margin-bottom: 18px; }
+.tuning-story > p:not(.eyebrow) { font-size: .85rem; color: var(--muted); }
+.tuning-challenge { border-left: 2px solid var(--accent-ink); padding-left: 15px; margin-block: 24px; }
+.probe-switch { display: flex; align-items: center; gap: 10px; font-size: .8rem; cursor: pointer; margin-bottom: 20px; }
+.probe-switch input { accent-color: var(--accent-ink); width: 18px; height: 18px; }
+.tuning-story .text-button { font-size: .78rem; border-radius: 3px; }
+.tuning-story .text-button[aria-pressed="true"] { background: var(--accent); color: white; }
+.tuning-story .fine-print { margin-top: 10px; font-size: .65rem !important; }
+.tuning-console { border: 1px solid var(--line); padding: 25px; border-radius: 5px; background: var(--surface); transition: border-color .2s; }
+.tuning-console.is-tuned { border-color: var(--accent-ink); }
+.console-readout { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.console-readout span { display: block; font-size: .58rem; letter-spacing: .12em; color: var(--muted); margin-bottom: 5px; }
+.console-readout output { font: 400 clamp(1.5rem,3vw,2.2rem) Consolas,monospace; font-variant-numeric: tabular-nums; }
+.console-readout strong { font: 400 1.2rem Consolas,monospace; }
+.console-readout small { font: .7rem var(--sans); }
+.tuning-dial { width: 100%; color: var(--muted); margin-top: 20px; display: block; }
+.tuning-dial text { fill: currentColor; font: 12px Consolas,monospace; }
+#tuning-needle { stroke: var(--accent-ink); stroke-width: 3; }
+#target-needle { stroke: var(--muted); stroke-width: 2; }
+#tuning-dot { fill: var(--accent-ink); }
+.tune-label, .alignment-row { display: flex; justify-content: space-between; gap: 12px; font-size: .75rem; margin-block: 20px 8px; }
+.tune-label output { white-space: nowrap; font-family: Consolas,monospace; color: var(--accent-ink); }
+#tune-capacitance { width: 100%; margin: 0; height: 32px; cursor: pointer; accent-color: var(--accent-ink); }
+#signal-meter { display: block; width: 100%; height: 9px; }
+#signal-meter::-webkit-meter-bar { border: none; background: var(--soft); }
+#signal-meter::-webkit-meter-optimum-value { background: var(--accent-ink); }
+#signal-meter::-moz-meter-bar { background: var(--accent-ink); }
+.scope-mini { width: 100%; display: block; margin-block: 20px 8px; }
+.scope-axis { stroke: var(--line); stroke-dasharray: 3 5; }
+#scope-wave { stroke: var(--accent-ink); stroke-width: 1.5; fill: none; }
+.tune-feedback { min-height: 3em; font-size: .72rem; color: var(--muted); margin: 0; }
+.is-tuned .tune-feedback { color: var(--accent-ink); }
+.bench-assumptions { margin-top: 20px; border-top: 1px solid var(--line); }
+.bench-assumptions summary { padding-inline: 0; }
+.bench-assumptions p { font-size: .75rem; color: var(--muted); max-width: 800px; }
+@media (min-width: 900px) {
+  .bench-layout { grid-template-columns: minmax(0,1fr) 270px; }
+  .part-inspector { display: block; border-left: 1px solid var(--line); }
+  .part-portrait { margin-bottom: 22px; }
+  .part-portrait img { height: 160px; }
+  #radio-model { height: 480px; }
+  .parts-tray { grid-template-columns: repeat(8,minmax(0,1fr)); }
+  .parts-tray button { flex-direction: column; gap: 8px; }
+  .bench-footnote { flex-direction: row; justify-content: space-between; gap: 30px; }
+  .tuning-lab { grid-template-columns: .8fr 1.2fr; gap: 45px; }
+}
+@media (max-width: 480px) {
+  .workbench-jump { margin-left: 0; display: block; }
+  .bench-stage-top { left: 15px; right: 15px; font-size: .5rem; }
+  #radio-model { height: 340px; }
+  .bench-stage { min-height: 390px; }
+  .bench-toolbar button { padding: 7px 8px; }
+  .part-inspector { grid-template-columns: 85px 1fr; padding: 16px; gap: 16px; }
+  .part-copy h4 { font-size: 1.25rem; }
+  .parts-tray { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .parts-tray button { padding: 10px 6px; flex-direction: column; gap: 5px; font-size: .66rem; }
+  .tuning-console { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .tuning-console { transition: none; } }
+@media print {
+  .bench-stage { display: none; }
+  .bench-layout { display: block; }
+  .part-inspector { display: block; }
+  .part-portrait { float: left; width: 120px; margin-right: 20px; }
+  .bench-toolbar, .parts-tray, .workbench-jump, #listen-tuning { display: none; }
+  .tuning-lab { display: block; }
+  .tuning-console { break-inside: avoid; }
+}

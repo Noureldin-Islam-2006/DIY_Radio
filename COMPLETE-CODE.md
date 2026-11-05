@@ -21,6 +21,7 @@ Every authored source file is included below in its own labelled code block. Cop
   <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/workbench.css">
   <script>
     try {
       const saved = localStorage.getItem('radio-theme');
@@ -29,6 +30,8 @@ Every authored source file is included below in its own labelled code block. Cop
   </script>
   <script src="js/content.js" defer></script>
   <script src="js/script.js" defer></script>
+  <script src="js/circuit-model.js" defer></script>
+  <script src="js/workbench.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#milestones">Skip to the build log</a>
@@ -360,6 +363,112 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
 }
 ````
 
+## css/workbench.css
+
+````css
+.workbench-jump { display: inline-block; background: none; border: none; border-bottom: 1px solid var(--line); margin: 16px 0 0 16px; padding: 9px 0; font-size: .78rem; color: var(--accent-ink); }
+.workbench .section-intro { max-width: 750px; }
+.bench-layout { display: grid; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.bench-layout > * { min-width: 0; }
+.bench-stage { position: relative; background: radial-gradient(ellipse at 45% 45%, #34483a, #18251e 75%); color: #f1f0e4; min-height: 440px; display: flex; flex-direction: column; }
+.bench-stage::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#ced6ba07 1px,transparent 1px),linear-gradient(90deg,#ced6ba07 1px,transparent 1px); background-size: 38px 38px; pointer-events: none; }
+.bench-stage-top { position: absolute; top: 22px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 15px; pointer-events: none; font: .6rem Consolas, monospace; letter-spacing: .12em; color: #c9d1c4; z-index: 1; }
+.bench-live { color: #ebba8f; }
+#radio-model { width: 100%; height: 400px; display: block; touch-action: none; cursor: grab; outline-offset: -5px; }
+#radio-model:active { cursor: grabbing; }
+.bench-fallback { width: 100%; height: 400px; object-fit: contain; }
+.bench-hint { text-align: center; margin: -10px 15px 16px; color: #bbc8bb; font-size: .7rem; pointer-events: none; }
+.bench-toolbar { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 12px 18px; margin-top: auto; }
+.bench-toolbar button { background: #ffffff08; border: 1px solid #b8c6b340; border-radius: 3px; min-height: 40px; padding: 7px 12px; color: #efefe3; font-size: .68rem; }
+.bench-toolbar button:hover, .bench-toolbar button[aria-pressed="true"] { background: #d9a778; color: #16231c; border-color: #d9a778; }
+.part-inspector { background: var(--surface); display: grid; grid-template-columns: 120px 1fr; align-items: start; padding: 22px; gap: 20px; }
+.part-portrait { background: var(--soft); border-radius: 4px; padding: 12px; }
+.part-portrait img { width: 100%; aspect-ratio: 1.1; object-fit: contain; }
+.part-copy .eyebrow { color: var(--accent-ink); margin-bottom: 10px; }
+.part-copy h4 { font: 400 1.55rem/1.15 var(--serif); margin-bottom: 17px; }
+.part-copy > p:not(.eyebrow) { font-size: .8rem; color: var(--muted); }
+.part-copy .part-connection { border-top: 1px solid var(--line); padding-top: 15px; color: var(--ink) !important; }
+.part-copy details { border-top: 1px solid var(--line); }
+.part-copy summary { font-size: .68rem; padding: 13px 0; }
+.part-copy details p { font-size: .72rem; color: var(--muted); }
+.parts-tray { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; padding-block: 14px; }
+.parts-tray button { border: 1px solid var(--line); background: var(--surface); padding: 13px 10px; border-radius: 4px; text-align: left; font-size: .74rem; display: flex; align-items: baseline; gap: 9px; min-height: 48px; }
+.parts-tray button:hover, .parts-tray button[aria-pressed="true"] { border-color: var(--accent-ink); color: var(--accent-ink); background: var(--soft); }
+.part-index { font: .6rem Consolas,monospace; color: var(--muted); }
+.bench-footnote { display: flex; flex-direction: column; gap: 8px; color: var(--muted); font-size: .68rem; }
+.bench-footnote p { max-width: 700px; }
+.bench-footnote a { white-space: nowrap; }
+.tuning-lab { margin-top: 55px; display: grid; gap: 30px; }
+.tuning-story h4 { font: 400 2.6rem/1.2 var(--serif); letter-spacing: -.05em; margin-bottom: 18px; }
+.tuning-story > p:not(.eyebrow) { font-size: .85rem; color: var(--muted); }
+.tuning-challenge { border-left: 2px solid var(--accent-ink); padding-left: 15px; margin-block: 24px; }
+.probe-switch { display: flex; align-items: center; gap: 10px; font-size: .8rem; cursor: pointer; margin-bottom: 20px; }
+.probe-switch input { accent-color: var(--accent-ink); width: 18px; height: 18px; }
+.tuning-story .text-button { font-size: .78rem; border-radius: 3px; }
+.tuning-story .text-button[aria-pressed="true"] { background: var(--accent); color: white; }
+.tuning-story .fine-print { margin-top: 10px; font-size: .65rem !important; }
+.tuning-console { border: 1px solid var(--line); padding: 25px; border-radius: 5px; background: var(--surface); transition: border-color .2s; }
+.tuning-console.is-tuned { border-color: var(--accent-ink); }
+.console-readout { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.console-readout span { display: block; font-size: .58rem; letter-spacing: .12em; color: var(--muted); margin-bottom: 5px; }
+.console-readout output { font: 400 clamp(1.5rem,3vw,2.2rem) Consolas,monospace; font-variant-numeric: tabular-nums; }
+.console-readout strong { font: 400 1.2rem Consolas,monospace; }
+.console-readout small { font: .7rem var(--sans); }
+.tuning-dial { width: 100%; color: var(--muted); margin-top: 20px; display: block; }
+.tuning-dial text { fill: currentColor; font: 12px Consolas,monospace; }
+#tuning-needle { stroke: var(--accent-ink); stroke-width: 3; }
+#target-needle { stroke: var(--muted); stroke-width: 2; }
+#tuning-dot { fill: var(--accent-ink); }
+.tune-label, .alignment-row { display: flex; justify-content: space-between; gap: 12px; font-size: .75rem; margin-block: 20px 8px; }
+.tune-label output { white-space: nowrap; font-family: Consolas,monospace; color: var(--accent-ink); }
+#tune-capacitance { width: 100%; margin: 0; height: 32px; cursor: pointer; accent-color: var(--accent-ink); }
+#signal-meter { display: block; width: 100%; height: 9px; }
+#signal-meter::-webkit-meter-bar { border: none; background: var(--soft); }
+#signal-meter::-webkit-meter-optimum-value { background: var(--accent-ink); }
+#signal-meter::-moz-meter-bar { background: var(--accent-ink); }
+.scope-mini { width: 100%; display: block; margin-block: 20px 8px; }
+.scope-axis { stroke: var(--line); stroke-dasharray: 3 5; }
+#scope-wave { stroke: var(--accent-ink); stroke-width: 1.5; fill: none; }
+.tune-feedback { min-height: 3em; font-size: .72rem; color: var(--muted); margin: 0; }
+.is-tuned .tune-feedback { color: var(--accent-ink); }
+.bench-assumptions { margin-top: 20px; border-top: 1px solid var(--line); }
+.bench-assumptions summary { padding-inline: 0; }
+.bench-assumptions p { font-size: .75rem; color: var(--muted); max-width: 800px; }
+@media (min-width: 900px) {
+  .bench-layout { grid-template-columns: minmax(0,1fr) 270px; }
+  .part-inspector { display: block; border-left: 1px solid var(--line); }
+  .part-portrait { margin-bottom: 22px; }
+  .part-portrait img { height: 160px; }
+  #radio-model { height: 480px; }
+  .parts-tray { grid-template-columns: repeat(8,minmax(0,1fr)); }
+  .parts-tray button { flex-direction: column; gap: 8px; }
+  .bench-footnote { flex-direction: row; justify-content: space-between; gap: 30px; }
+  .tuning-lab { grid-template-columns: .8fr 1.2fr; gap: 45px; }
+}
+@media (max-width: 480px) {
+  .workbench-jump { margin-left: 0; display: block; }
+  .bench-stage-top { left: 15px; right: 15px; font-size: .5rem; }
+  #radio-model { height: 340px; }
+  .bench-stage { min-height: 390px; }
+  .bench-toolbar button { padding: 7px 8px; }
+  .part-inspector { grid-template-columns: 85px 1fr; padding: 16px; gap: 16px; }
+  .part-copy h4 { font-size: 1.25rem; }
+  .parts-tray { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .parts-tray button { padding: 10px 6px; flex-direction: column; gap: 5px; font-size: .66rem; }
+  .tuning-console { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .tuning-console { transition: none; } }
+@media print {
+  .bench-stage { display: none; }
+  .bench-layout { display: block; }
+  .part-inspector { display: block; }
+  .part-portrait { float: left; width: 120px; margin-right: 20px; }
+  .bench-toolbar, .parts-tray, .workbench-jump, #listen-tuning { display: none; }
+  .tuning-lab { display: block; }
+  .tuning-console { break-inside: avoid; }
+}
+````
+
 ## js/content.js
 
 ````javascript
@@ -404,6 +513,30 @@ window.RADIO_CONTENT = {
     footer: 'Made by hand. Documented as we go.', repository: 'GitHub repository ↗',
     theme: 'Change colour theme', themes: ['System', 'Light', 'Dark'],
     print: 'Print this milestone', plannedNote: 'The next chapter is still on the drawing board.'
+  },
+  // Workbench copy and part catalogue. Illustrations are AI reconstructions, not bench evidence.
+  workbench: {
+    title: 'Take the radio apart.', eyebrow: 'THE INTERACTIVE WORKBENCH',
+    intro: 'Meet the pieces before following the build. Turn the assembly, lift its components apart, and discover how a small change in capacitance changes the frequency we hear.',
+    modelNote: 'Photo-informed 3D reconstruction · nominal dimensions · illustrative placement. Use the schematic for electrical connections, not the model’s breadboard holes.',
+    imageNote: 'AI component illustration based on our photos; obscured details are representative. Original bench photos remain in the journey below.',
+    parts: [
+      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 50 mm',image:'assets/components/coil.png',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses 75 turns over a nominal 25 mm winding length.',connection:'Across TP1 and ground.'},
+      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
+      {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'The small package is partially hidden in the photos. Its illustrated housing is representative; the cathode band is the important orientation cue.',connection:'Anode at TP1; banded cathode toward TP3.'},
+      {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
+      {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'A representative yellow dipped capacitor based on the visible package. Its capacitance is the specified nominal value.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
+      {id:'breadboard',name:'Our temporary workbench',short:'Boards',value:'Two solderless boards',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The two-board arrangement follows our overhead photo. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
+      {id:'esp32',name:'The detour that taught us something',short:'ESP32',value:'Temporary signal source',image:'assets/components/esp32.png',role:'Our early workaround when the first function generator could not reach the frequency range we needed.',detail:'Team 20 helped with the sampled-sine sketch. That sketch is about 1 kHz before overhead and does not generate an AM carrier. We later switched generators.',connection:'A historical experiment, not a required receiver component.'},
+      {id:'test-loop',name:'A station, a few centimetres away',short:'Test loop',value:'5 turns · magnetic coupling',image:'assets/components/test-loop.png',role:'Transfers the test source’s magnetic field into the main coil without a direct electrical connection.',detail:'The exact loop shape is not clear in the photos, so this part is a representative five-turn reconstruction. Keep it on the same axis as the main coil.',connection:'Driven by the external signal source; isolated from the tank.'}
+    ],
+    tuningTitle: 'Find the signal.',
+    tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
+    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 30 is assumed. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
+    targetKhz:819, assumedQ:30,
+    challenge:'Can you bring the resonance within 5 kHz of the target?',
+    matched:'On target. Now add the probe and try again.',
+    unmatched:'Keep tuning: more capacitance lowers the resonant frequency.'
   },
   // The radio's signal flow, in order. M1 appears twice because it includes both halves.
   chain: [
@@ -684,6 +817,7 @@ window.RADIO_CONTENT = {
       $$('video').forEach(video => video.pause());
       $$('.embed-slot iframe').forEach(frame => { const slot = frame.parentElement; frame.remove(); slot.querySelector('button').hidden = false; });
     }
+    document.dispatchEvent(new Event('radio:tab'));
     activeId = id;
     updateSidebar(id);
     $$('[data-tab]').forEach(tab => { const selected = tab.dataset.tab === id; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; });
@@ -710,6 +844,7 @@ window.RADIO_CONTENT = {
       if (target !== undefined) { event.preventDefault(); navigate(tabs[target].dataset.tab, true); }
     });
   });
+  document.addEventListener('radio:content', () => updateSidebar(activeId));
   window.addEventListener('hashchange', readHash);
   readHash();
   $$('[data-milestone], [data-jump]').forEach(link => link.addEventListener('click', event => {
@@ -731,6 +866,7 @@ window.RADIO_CONTENT = {
       });
     }, { rootMargin: '-10% 0px -55% 0px', threshold: 0 });
     $$('.chapter-section').forEach(section => sectionObserver.observe(section));
+    document.addEventListener('radio:content', () => $$('.chapter-section').forEach(section => sectionObserver.observe(section))); 
   }
 
   // Missing assets fall back cleanly, including a missing real photo after deployment.
@@ -787,6 +923,324 @@ window.RADIO_CONTENT = {
   dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
   dialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); if (opener?.isConnected) opener.focus(); });
 })();
+````
+
+## js/circuit-model.js
+
+````javascript
+/* Original, photo-informed 3D geometry. Dimensions are nominal; housing details are illustrative.
+   Each vertex contains position, normal, and colour. No external renderer or model loader. */
+(() => {
+  const TAU = Math.PI * 2;
+  const add = (a,b) => a.map((v,i)=>v+b[i]);
+  const sub = (a,b) => a.map((v,i)=>v-b[i]);
+  const scale = (a,s) => a.map(v=>v*s);
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const norm = a => scale(a,1/(Math.hypot(...a)||1));
+  const rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
+  function build() {
+    const parts = [];
+    let part;
+    function group(id,position,explode) { part={id,position,explode,vertices:[]}; parts.push(part); }
+    function tri(a,b,c,colour) { const n=norm(cross(sub(b,a),sub(c,a))); for(const p of [a,b,c]) part.vertices.push(...p,...n,...rgb(colour)); }
+    function quad(a,b,c,d,colour) { tri(a,b,c,colour);tri(a,c,d,colour); }
+    function box(center,size,colour) {
+      const v=Array.from({length:8},(_,i)=>center.map((x,j)=>x+size[j]*((i>>j&1)? .5:-.5)));
+      for(const f of [[0,4,6,2],[1,3,7,5],[0,1,5,4],[2,6,7,3],[0,2,3,1],[4,5,7,6]])quad(...f.map(i=>v[i]),colour);
+    }
+    function tube(a,b,r,colour,sides=10) {
+      const axis=norm(sub(b,a)), u=norm(cross(axis,Math.abs(axis[1])<.9?[0,1,0]:[1,0,0])),v=cross(axis,u);
+      const ring=(p,t)=>add(p,add(scale(u,Math.cos(t)*r),scale(v,Math.sin(t)*r)));
+      for(let i=0;i<sides;i++) {const t=i*TAU/sides,q=(i+1)*TAU/sides;quad(ring(a,t),ring(a,q),ring(b,q),ring(b,t),colour);tri(a,ring(a,q),ring(a,t),colour);tri(b,ring(b,t),ring(b,q),colour);}
+    }
+    function path(points,r,colour,sides=6) {for(let i=1;i<points.length;i++)tube(points[i-1],points[i],r,colour,sides);}
+    function ring(radius,y,width,height,colour) {
+      for(let i=0;i<72;i++) {const a=i*TAU/72,b=(i+1)*TAU/72;
+        const p=(r,h,t)=>[r*Math.cos(t),h,r*Math.sin(t)];
+        quad(p(radius,y,a),p(radius,y,b),p(radius,y+height,b),p(radius,y+height,a),colour);
+        quad(p(radius-width,y,b),p(radius-width,y,a),p(radius-width,y+height,a),p(radius-width,y+height,b),'#b6c7c4');
+        quad(p(radius,y+height,a),p(radius,y+height,b),p(radius-width,y+height,b),p(radius-width,y+height,a),'#e4e9df');
+      }
+    }
+    group('breadboard',[35,0,0],[0,-24,0]);
+    for(const z of [-47,47]) {
+      box([0,2,z],[160,4,56],'#e5e8df');box([0,4.05,z],[151,.2,3],'#9ca8a3');
+      for(const dz of [-23,23])box([0,4.2,z+dz],[150,.15,.45],dz<0?'#a55845':'#588d92');
+      for(let x=-72;x<=72;x+=4)for(let row=-5;row<=5;row++)if(row)box([x,4.2,z+row*3.5],[1.3,.25,1.3],'#59665e');
+    }
+    group('coil',[-63,29,0],[-22,25,0]);
+    ring(25,-25,2,50,'#d4e0d9');
+    for(const z of [-1,1])box([0,z*22,25],[8,5,1],'#242b28');
+    const start=part.vertices.length/9;
+    for(let i=0;i<75*32;i++){
+      const p=t=>[25.4*Math.cos(t*TAU/32),-12.5+25*t/(75*32),25.4*Math.sin(t*TAU/32)];
+      tube(p(i),p(i+1),.21,i%3===0?'#db9c56':'#b97332',5);
+    }
+    part.winding={start,count:part.vertices.length/9-start};
+    path([[25,-12,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
+    path([[25,12,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
+    group('tuning-capacitor',[-5,11,-47],[-8,34,-30]);
+    box([0,0,0],[21,12,20],'#232a27');box([0,6.5,0],[22,1,21],'#b9c0b8');
+    tube([0,7,0],[0,16,0],2.4,'#a9b1a9',20);
+    for(const x of [-8,8])for(const z of [-7,7])tube([x,7,z],[x,7.6,z],1.4,'#626a61');
+    for(const x of [-8,0,8])path([[x,-2,10],[x,-6,14],[x,-7,14]],.5,'#b1b4a6');
+    group('diode',[34,11,-47],[0,51,-10]);
+    tube([-5,0,0],[5,0,0],1.6,'#31312c',16);tube([3.5,0,0],[4.4,0,0],1.68,'#c9cfc3',16);
+    path([[-14,-6,0],[-14,0,0],[-5,0,0]],.35,'#aab2a9');path([[5,0,0],[14,0,0],[14,-6,0]],.35,'#aab2a9');
+    group('resistor',[66,11,-40],[20,32,-15]);
+    tube([0,0,-5],[0,0,5],2,'#cabb91',16);
+    ['#744b2c','#37604b','#c26c2f','#b8984a'].forEach((c,i)=>tube([0,0,-3+i*2],[0,0,-2.3+i*2],2.04,c,16));
+    path([[0,-6,-13],[0,0,-13],[0,0,-5]],.35,'#aab2a9');path([[0,0,5],[0,0,13],[0,-6,13]],.35,'#aab2a9');
+    group('detector-capacitor',[89,11,-40],[40,41,-12]);
+    tube([0,0,-1.4],[0,0,1.4],4.5,'#c49d37',24);
+    for(const x of [-2,2])path([[x,0,0],[x,-3,0],[x,-7,0]],.35,'#adb4a9');
+    group('esp32',[36,9,47],[20,28,36]);
+    box([0,0,0],[50,2,27],'#22362e');box([-8,3,0],[23,4,19],'#aeb9ae');box([22,3,0],[8,5,9],'#aab0a7');
+    box([9,2,0],[8,2,8],'#252b27');
+    for(let x=-22;x<=22;x+=3)for(const z of [-12,12]){box([x,0,z],[1.2,6,1.2],'#bca36e');box([x,2,z],[2,2,2],'#29312b');}
+    for(let x=-22;x<-14;x+=2)box([x,1.2,0],[.5,.3,16],'#c5af6c');
+    group('test-loop',[-63,88,0],[-35,20,0]);
+    for(let k=0;k<5;k++){const pts=Array.from({length:49},(_,i)=>[20*Math.cos(i*TAU/48),k*.6,20*Math.sin(i*TAU/48)]);path(pts,.3,'#b88646');}
+    path([[20,0,0],[30,-4,0],[35,-12,10]],.5,'#436f77');
+    group('connections',[0,0,0],[0,0,0]);
+    path([[-20,6,-20],[-14,25,-22],[-5,6,-37]],.65,'#587a6c');
+    path([[9,6,-47],[13,15,-47],[20,6,-47]],.6,'#9b6546');
+    path([[48,6,-47],[55,13,-47],[66,6,-53]],.6,'#9b6546');
+    path([[66,6,-53],[78,9,-53],[87,6,-40]],.6,'#9b6546');
+    path([[66,6,-27],[77,10,-24],[91,6,-40]],.6,'#444f48');
+    return parts;
+  }
+  const inductance = (turns=75) => 50**2*turns**2/(457*50+1016*25);
+  const resonance = (capPf,turns=75,probePf=0) => 1/(2*Math.PI*Math.sqrt(inductance(turns)*1e-6*(capPf+probePf)*1e-12));
+  globalThis.RadioGeometry={build,inductance,resonance};
+})();
+````
+
+## js/workbench.js
+
+````javascript
+/* Native WebGL, pointer controls, and a small teaching model. No framework or dependencies. */
+(() => {
+  'use strict';
+  const c=window.RADIO_CONTENT.workbench, G=window.RadioGeometry;
+  if(!c||!G||!document.querySelector('#panel-m1'))return;
+  const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const section=document.createElement('section');section.className='chapter-section workbench';section.setAttribute('aria-labelledby','m1-workbench');
+  section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="m1-workbench">${esc(c.title)}</h3></div>
+  <p class="eyebrow">${esc(c.eyebrow)}</p><p class="section-intro">${esc(c.intro)}</p>
+  <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY 01</span><span class="bench-live">EXPLORE IN 3D</span></div>
+    <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
+    <img class="bench-fallback" src="assets/m1/setup.jpg" alt="Our actual coil and breadboard circuit, shown when 3D is unavailable." hidden>
+    <p class="bench-hint">Drag to rotate · select a part below</p><div class="bench-toolbar"><button type="button" data-camera="home">Reset view</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
+  </div><aside class="part-inspector" aria-live="polite" aria-atomic="true"><div class="part-portrait"><img id="part-image" alt="" loading="lazy"></div><div class="part-copy"><p class="eyebrow" id="part-value"></p><h4 id="part-name"></h4><p id="part-role"></p><p class="part-connection" id="part-connection"></p><details><summary>About this reconstruction</summary><p id="part-detail"></p><p class="fine-print">${esc(c.imageNote)}</p></details></div></aside></div>
+  <div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
+  <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/m1/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
+  <div class="tuning-lab"><div class="tuning-story"><p class="eyebrow">A LITTLE BENCH EXPERIMENT</p><h4>${esc(c.tuningTitle)}</h4><p>${esc(c.tuningIntro)}</p><p class="tuning-challenge">${esc(c.challenge)}</p><label class="probe-switch"><input id="probe-load" type="checkbox"> Add 100 pF probe capacitance</label><button type="button" class="text-button" id="listen-tuning" aria-pressed="false">Listen to alignment ♪</button><p class="fine-print">Optional synthesized tone, not received radio audio.</p></div>
+  <div class="tuning-console"><div class="console-readout"><div><span>TANK RESONANCE</span><output id="tuned-frequency">—</output></div><div><span>TARGET</span><strong>${c.targetKhz}<small> kHz</small></strong></div></div>
+  <svg class="tuning-dial" viewBox="0 0 600 110" role="img" aria-label="Frequency scale with target and tank resonance"><defs><pattern id="dial-ticks" width="15" height="55" patternUnits="userSpaceOnUse"><path d="M0 0V18" stroke="currentColor" stroke-width="1"/></pattern></defs><path d="M30 20H570" stroke="currentColor" opacity=".3"/><rect x="30" y="20" width="540" height="55" fill="url(#dial-ticks)" opacity=".5"/><text x="30" y="92">500 kHz</text><text x="510" y="92">2.2 MHz</text><path id="target-needle" d="M0 18V68" stroke-dasharray="3 3"/><path id="tuning-needle" d="M0 10V70"/><circle id="tuning-dot" r="4" cy="10"/></svg>
+  <label class="tune-label" for="tune-capacitance"><span>Turn the tuning capacitor</span><output id="capacitance-output">180 pF</output></label><input id="tune-capacitance" type="range" min="20" max="280" step="0.1" value="180">
+  <div class="alignment-row"><span>Signal alignment</span><output id="signal-strength"></output></div><meter id="signal-meter" min="0" max="1" value="0" aria-label="Calculated signal alignment"></meter>
+  <svg class="scope-mini" viewBox="0 0 600 100" role="img" aria-label="Illustrative amplitude-modulated waveform; its height follows the calculated tank response"><path d="M0 50H600" class="scope-axis"/><path id="scope-wave"/></svg><p class="tune-feedback" id="tune-feedback" role="status"></p></div></div>
+  <details class="bench-assumptions"><summary>What this experiment assumes</summary><p>${esc(c.tuningNote)}</p></details>`;
+  document.querySelector('#panel-m1 .chapter-heading').after(section);
+  document.dispatchEvent(new Event('radio:content'));
+  const $=s=>section.querySelector(s), $$=s=>[...section.querySelectorAll(s)];
+  const jump=document.createElement('button');jump.className='workbench-jump';jump.type='button';jump.textContent='Explore the circuit in 3D ↗';
+  document.querySelector('.primary-link').after(jump);
+  jump.addEventListener('click',()=>{document.querySelector('#tab-m1').click();$('#m1-workbench').tabIndex=-1;$('#m1-workbench').focus({preventScroll:true});section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
+  const canvas=$('#radio-model');let selected='coil',render=()=>{},modelReady=false;
+  function select(id) {
+    selected=id;const p=c.parts.find(p=>p.id===id);
+    $('#part-image').src=p.image;$('#part-image').alt=`Illustrated reconstruction of ${p.name.toLowerCase()}`;
+    for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
+    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));render();
+  }
+  $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil');
+  $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
+
+  function initModel() {
+    if(modelReady)return;modelReady=true;
+    const gl=canvas.getContext('webgl',{antialias:true,alpha:true,preserveDrawingBuffer:false});
+    if(!gl){canvas.hidden=true;$('.bench-fallback').hidden=false;$('.bench-hint').textContent='3D is unavailable here. Explore the component cards or download the model.';$$('[data-camera],#bench-explode').forEach(b=>b.disabled=true);return;}
+    const shader=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
+    const program=gl.createProgram();
+    gl.attachShader(program,shader(gl.VERTEX_SHADER,`attribute vec3 pos;attribute vec3 normal;attribute vec3 colour;uniform vec3 offset;uniform vec2 angle;uniform float distance;uniform float aspect;uniform float emphasis;varying vec3 tint;
+      void main(){vec3 p=pos+offset-vec3(-5.,18.,0.);float a=angle.x,b=angle.y;vec3 q=vec3(p.x*cos(a)+p.z*sin(a),p.y,-p.x*sin(a)+p.z*cos(a));vec3 v=vec3(q.x,q.y*cos(b)-q.z*sin(b),q.y*sin(b)+q.z*cos(b));float depth=distance-v.z;gl_Position=vec4(v.x*2.45/aspect,v.y*2.45,1.002*depth-2.002,depth);float light=.48+.52*abs(dot(normalize(normal),normalize(vec3(-.35,.8,.5))));tint=colour*light*emphasis;}`));
+    gl.attachShader(program,shader(gl.FRAGMENT_SHADER,'precision mediump float;varying vec3 tint;void main(){gl_FragColor=vec4(tint,1.);}'));gl.linkProgram(program);
+    if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);gl.enable(gl.DEPTH_TEST);
+    const attrs=['pos','normal','colour'].map(n=>gl.getAttribLocation(program,n));attrs.forEach(a=>gl.enableVertexAttribArray(a));
+    const u=Object.fromEntries(['offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
+    const models=G.build().map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
+    let yaw=-.3,pitch=.6,distance=370,explode=0,target=0,frame=0,last=0,visible=true;
+    function draw(now=0) {
+      frame=0;if(!visible||document.hidden||document.querySelector('#panel-m1').hidden)return;
+      const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
+      const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(rect.width*dpr),h=Math.round(rect.height*dpr);
+      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches)explode=target;
+      else {const dt=Math.min(60,now-last||16);explode+=(target-explode)*(1-Math.exp(-dt/100));if(Math.abs(target-explode)<.002)explode=target;}
+      last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
+      for(const p of models){if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
+      if(explode!==target)frame=requestAnimationFrame(draw);
+    }
+    render=()=>{if(!frame)frame=requestAnimationFrame(draw);};
+    const reset=()=>{yaw=-.3;pitch=.6;distance=370;render();};
+    $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{distance=Math.max(230,Math.min(650,distance+(b.dataset.camera==='in'?-30:30)));render();}}));
+    $('#bench-explode').addEventListener('click',()=>{target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
+    let pointer=null;
+    canvas.addEventListener('pointerdown',e=>{if(e.button!==0||pointer)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
+    canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;yaw+=(e.clientX-pointer.x)*.008;pitch=Math.max(-.2,Math.min(1.55,pitch+(e.clientY-pointer.y)*.008));pointer.x=e.clientX;pointer.y=e.clientY;render();});
+    const release=e=>{if(pointer?.id===e.pointerId)pointer=null;};canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
+    canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')reset();else if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.55,pitch+.1);else if(e.key==='ArrowDown')pitch=Math.max(-.2,pitch-.1);else distance=Math.max(230,Math.min(650,distance+(e.key==='-'?25:-25)));render();});
+    new ResizeObserver(render).observe(canvas);
+    if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)render();else if(frame){cancelAnimationFrame(frame);frame=0;}}).observe(canvas);
+    document.addEventListener('visibilitychange',render);document.addEventListener('radio:tab',render);
+    canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();canvas.hidden=true;$('.bench-fallback').hidden=false;$('.bench-hint').textContent='3D context interrupted. Reload to restore; component descriptions remain available.';});render();
+  }
+  if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();initModel();}},{rootMargin:'300px'});observer.observe(section);}else initModel();
+
+  // The optional sound is a quiet 440 Hz cue, never radio audio. It stops offscreen or on tab changes.
+  let audio=null,oscillator=null,gain=null,amplitude=0,audioRequest=0,audioPending=false;
+  function stopAudio(){audioRequest++;audioPending=false;if(oscillator){oscillator.stop();oscillator.disconnect();oscillator=null;}if(gain){gain.disconnect();gain=null;}if(audio)audio.suspend();$('#listen-tuning').setAttribute('aria-pressed','false');$('#listen-tuning').textContent='Listen to alignment ♪';}
+  $('#listen-tuning').addEventListener('click',async()=>{
+    if(oscillator||audioPending){stopAudio();return;}
+    const request=++audioRequest;audioPending=true;
+    try{audio ||= new (window.AudioContext||window.webkitAudioContext)();await audio.resume();if(request!==audioRequest)return;audioPending=false;oscillator=audio.createOscillator();gain=audio.createGain();oscillator.frequency.value=440;gain.gain.value=amplitude*.035;oscillator.connect(gain);gain.connect(audio.destination);oscillator.start();$('#listen-tuning').setAttribute('aria-pressed','true');$('#listen-tuning').textContent='Stop listening ■';}
+    catch(_){audioPending=false;$('#listen-tuning').textContent='Audio unavailable in this browser';}
+  });
+  function tune(){const cap=Number($('#tune-capacitance').value),probe=$('#probe-load').checked?100:0,f0=G.resonance(cap,75,probe)/1000,target=c.targetKhz;amplitude=1/Math.sqrt(1+c.assumedQ**2*(target/f0-f0/target)**2);
+    $('#tuned-frequency').innerHTML=`${f0.toFixed(1)}<small> kHz</small>`;$('#capacitance-output').textContent=`${cap.toFixed(1)} pF`;$('#signal-strength').textContent=`${(amplitude*100).toFixed(0)}%`;$('#signal-meter').value=amplitude;
+    const px=f=>30+Math.max(0,Math.min(1,(f-500)/1700))*540;
+    $('#target-needle').setAttribute('transform',`translate(${px(target)} 0)`);$('#tuning-needle').setAttribute('transform',`translate(${px(f0)} 0)`);$('#tuning-dot').setAttribute('cx',px(f0));
+    $('#scope-wave').setAttribute('d',Array.from({length:601},(_,i)=>`${i?'L':'M'}${i},${50-Math.sin(i*.65)*(20+12*Math.sin(i*.022))*amplitude}`).join(' '));
+    const matched=Math.abs(f0-target)<5;$('#tune-feedback').textContent=matched?c.matched:c.unmatched;$('.tuning-console').classList.toggle('is-tuned',matched);if(gain)gain.gain.setTargetAtTime(amplitude*.035,audio.currentTime,.05);
+  }
+  $('#tune-capacitance').addEventListener('input',tune);$('#probe-load').addEventListener('change',tune);tune();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});document.addEventListener('radio:tab',stopAudio);
+  if('IntersectionObserver' in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stopAudio();}).observe($('.tuning-lab'));
+})();
+````
+
+## tools/export-model.cjs
+
+````javascript
+// Optional authoring utility: node tools/export-model.cjs. The website needs no build step.
+const fs=require('node:fs');
+require('../js/circuit-model.js');
+const parts=globalThis.RadioGeometry.build();
+const json={asset:{version:'2.0',generator:'Team 14 original procedural reconstruction'},scene:0,scenes:[{nodes:[]}],nodes:[],meshes:[],materials:[{name:'Vertex-coloured lab materials',doubleSided:true,pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:.15,roughnessFactor:.65}}],buffers:[{byteLength:0}],bufferViews:[],accessors:[],extras:{description:'Photo-informed educational assembly; nominal geometry, representative housings and placement. Not a scan or a breadboard wiring plan. Units: metres.'}};
+const blocks=[];let offset=0;
+for(const p of parts){
+  const a=new Float32Array(p.vertices),count=a.length/9,min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];
+  for(let i=0;i<a.length;i+=9)for(let j=0;j<3;j++){a[i+j]*=.001;min[j]=Math.min(min[j],a[i+j]);max[j]=Math.max(max[j],a[i+j]);}
+  const block=Buffer.from(a.buffer);blocks.push(block);
+  const view=json.bufferViews.length;json.bufferViews.push({buffer:0,byteOffset:offset,byteLength:block.length,byteStride:36,target:34962});offset+=block.length;
+  const index=json.accessors.length;
+  json.accessors.push({bufferView:view,byteOffset:0,componentType:5126,count,type:'VEC3',min,max},{bufferView:view,byteOffset:12,componentType:5126,count,type:'VEC3'},{bufferView:view,byteOffset:24,componentType:5126,count,type:'VEC3'});
+  json.meshes.push({name:p.id,primitives:[{attributes:{POSITION:index,NORMAL:index+1,COLOR_0:index+2},material:0,mode:4}]});
+  json.scenes[0].nodes.push(json.nodes.length);json.nodes.push({name:p.id,mesh:json.meshes.length-1,translation:p.position.map(n=>n*.001)});
+}
+json.buffers[0].byteLength=offset;
+const raw=Buffer.from(JSON.stringify(json));const j=Buffer.alloc(Math.ceil(raw.length/4)*4,32);raw.copy(j);const bin=Buffer.concat(blocks);
+const header=Buffer.alloc(12);header.writeUInt32LE(0x46546c67,0);header.writeUInt32LE(2,4);header.writeUInt32LE(12+8+j.length+8+bin.length,8);
+const chunk=(length,type)=>{const b=Buffer.alloc(8);b.writeUInt32LE(length);b.writeUInt32LE(type,4);return b;};
+fs.writeFileSync('assets/m1/radio-assembly.glb',Buffer.concat([header,chunk(j.length,0x4e4f534a),j,chunk(bin.length,0x004e4942),bin]));
+console.log(`Exported ${parts.length} meshes; ${offset.toLocaleString()} bytes of vertex data.`);
+````
+
+## DESIGN-NOTES.md
+
+````markdown
+# A livelier radio guide, without copying another team's site
+
+## Reference review
+
+Reviewed the [Electronics Lab Radio reference](https://ahmadenan.github.io/Electronics-Lab-Radio/?step=wind), including its winding, detector, and signal-model views.
+
+Strengths observed:
+
+- A rotatable assembly explains relationships that photographs alone cannot show.
+- Build steps, materials, checks, and cautions make the guide usable at the bench.
+- Keyboard camera controls provide an alternative to dragging.
+- The signal model explicitly separates calculations from recorded measurements.
+- Photographs anchor the polished diagrams in a real build.
+
+Design tradeoffs observed (design judgment, not an accessibility audit):
+
+- Milestone links, build-step navigation, visualization tabs, camera controls, and an assembly timeline create several competing navigation layers.
+- At the inspected medium viewport, the two-column layout leaves relatively narrow space for both instructions and the model; the build-step navigation needs horizontal scrolling.
+- Many useful controls are visible together. A newcomer must choose what to operate before understanding what matters.
+
+Our response: keep Team 14's narrative, original copper-and-paper design, real photographs, and ESP32 story. Add one dedicated workbench rather than reproducing the reference's eight-step interface. Inspect parts through a simple labelled tray, explore one tuning challenge, and keep measurement tables untouched. No reference source code, images, or 3D assets were copied.
+
+## Research and creative elements
+
+- **Exploded assemblies:** spatial separation makes the relationship between components easier to inspect. [Advanta's product-experience case study](https://www.advanta-group.com/work/interactive-product-experience) illustrates the general technique. Our interpretation uses a manual separation button, not scroll hijacking.
+- **Component inspection:** give each object a purpose, connection note, and visual reference. [Model-viewer's annotation examples](https://modelviewer.dev/examples/annotations/) demonstrate the broader principle of attaching readable HTML explanations to a 3D experience. Our implementation uses an accessible component tray and inspector; it does not load model-viewer.
+- **Native interaction:** [MDN Pointer Events](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Using_Pointer_Events) documents unified mouse/pen/touch handling. Pointer capture keeps our orbit drag reliable outside the canvas bounds.
+- **Motion only when needed:** [MDN's Canvas animation guide](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations) explains requestAnimationFrame. Our 3D renderer draws on interaction or during the short separation transition, not in an endless idle animation loop.
+
+Implemented: photo-informed component illustrations, rotatable and separable 3D assembly, component inspector, downloadable GLB, a resonance dial, a probe-loading challenge, response-driven waveform, optional synthesized sound, reduced-motion behavior, and offscreen audio shutdown.
+
+Useful future additions once the team supplies the relevant content:
+
+1. A measured-versus-predicted overlay once Tables 5 and 6 are filled in.
+2. A short annotated tuning video tied to the recorded source settings.
+3. A before/after comparison of the ESP32 experiment and the replacement generator, using confirmed frequencies and channel labels.
+
+Avoided: autoplay sound, scroll-jacking, a replacement cursor, random particle backgrounds, invented bench readings, and a framework migration merely to add animation.
+
+## Does this need React?
+
+No. React is a UI framework; it is not a prerequisite for animation or 3D. Native HTML controls, CSS transitions, Pointer Events, Web Audio, and WebGL support this experience. The delivered implementation has no React, npm, build step, CDN, Three.js, or other runtime dependency.
+
+## What the model represents
+
+The component PNGs were generated using the built-in Image Generation tool with the team's two bench photographs as visual references. The prompts and provenance are in `assets/components/GENERATION.md`. The small diode/capacitor packages and test loop contain representative details where the photos do not resolve the hardware. Illustrations are labelled as illustrations, not evidence.
+
+The 3D assembly is original procedural geometry informed by those visual references and nominal LAB2 dimensions. It is **not** photogrammetry, an automatic image-to-mesh conversion, a precision scan, or a pin-accurate breadboard reconstruction. The source loop is placed above the upright main coil on the same axis. Its source wiring and the circuit's jumpers are illustrative. The schematic remains the electrical reference.
+
+The viewer renders actual three-dimensional triangle meshes with depth testing, perspective, and lighting; it is not a flat image that rotates. The standalone GLB contains the same assembled geometry, vertex colours, separate named meshes, and metre units. It can be imported into a 3D editor. No captured images of the reference website are distributed.
+````
+
+## assets/components/GENERATION.md
+
+````markdown
+# Component image provenance and prompts
+
+Generated with the built-in Image Generation tool. Transparent PNGs preserved. Reference images: `assets/m1/setup.jpg` and `assets/m1/top-view.jpg`. These are photo-informed illustrations, not measurement evidence or exact cutouts of hidden components. The 3D meshes are authored separately from the visible geometry and nominal specifications; PNGs are the component inspection illustrations, not automatically converted mesh textures.
+
+## coil.png
+
+Use case: background-extraction. Create one standalone isolated component illustration for a student radio website from these reference photographs: ONLY the copper wire coil on its upright hollow pale blue-white PVC pipe, with black tape at the edges, and two fine copper lead tails. Faithfully retain the physical handmade appearance, dense copper winding and roughly 50 mm pipe diameter. Three-quarter elevated view. Entire object visible centered with generous transparent margin, no breadboard, clips, probes, desk, wires from other components, labels or text. Transparent background. This is a clean photo-informed component reconstruction, not a precision scan. Studio soft light, realistic material, crisp edges. Save the output for use as coil.png.
+
+## tuning-capacitor.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: the small square metal-topped black/plastic variable tuning capacitor with its central rotating shaft, as seen on the upper breadboard in the overhead reference. Isolate just the component and its short terminal lugs. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: tuning-capacitor.
+
+## diode.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one small axial 1N60P detector diode with its thin metal leads, a compact dark cylindrical body and one clearly visible pale cathode band at the RIGHT end. The tiny component is partly obscured in the photos, so render a representative package rather than inventing markings. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: diode.
+
+## resistor.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one beige axial 15 kilohm resistor, with brown-green-orange-gold bands and two bent tinned metal leads. The resistor is small in the reference; render a representative package and accurate band order. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: resistor.
+
+## detector-capacitor.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one small mustard-yellow dipped radial ceramic capacitor with two separated metal legs, representing the 3.3 nF capacitor visible near the front of the reference. No invented readable markings. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: detector-capacitor.
+
+## breadboard.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one white solderless breadboard from the reference, empty with no components, two long banks of small holes, central channel, subtle red and blue power-rail markings. Three-quarter elevated view. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: breadboard.
+
+## esp32.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one ESP32 development board like the one visible in the overhead photograph: black PCB, silver shielded module, two rows of header pins, USB connector at one short end. No breadboard or wires. Do not invent readable chip legends. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: esp32.
+
+## test-loop.png
+
+Use case: product-mockup / photo-informed educational reconstruction. Create ONE isolated component asset: one five-turn loop of thin enamelled copper wire standing upright, with two short bare copper lead ends. This represents the lab's coupling loop, whose exact geometry is not clearly visible in the reference. Make a simple representative circular winding, no invented hardware. Match the materials and practical handmade student lab aesthetic of the reference. Realistic soft studio lighting. Whole object visible centered, three-quarter elevated view, generous truly transparent background. No text labels, backdrop, desk, other components or hands. This is an illustration, not measurement evidence. Asset ID: test-loop.
 ````
 
 ## assets/favicon.svg
@@ -1022,6 +1476,25 @@ Relative paths support `https://<user>.github.io/<repo>/`; no rewriting, build a
 ## Section navigation and motion
 
 A fixed left sidebar at desktop widths follows the active milestone. On smaller screens it becomes a horizontal section menu. Links scroll to headings without replacing the milestone hash. Section highlighting follows scrolling. Subtle entrance and card-hover animations respect prefers-reduced-motion.
+
+
+## Interactive 3D workbench
+
+M1 now includes a dependency-free WebGL assembly with orbit/zoom controls, animated component separation, and eight selectable component illustrations. Use the hero's **Explore the circuit in 3D** button or the section sidebar. Mouse/touch dragging rotates the model; keyboard arrows rotate, +/- zoom, and Home resets the camera. Native WebGL must be enabled for the 3D view; an actual bench photo is the fallback. The descriptions and tuning experiment remain ordinary accessible HTML.
+
+The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. No real measurements were added.
+
+- `js/content.js`: workbench descriptions and component catalogue.
+- `js/circuit-model.js`: original mesh geometry and resonance functions.
+- `js/workbench.js`: native WebGL renderer, controls, and tuning experiment.
+- `css/workbench.css`: responsive workbench styles.
+- `assets/components/`: eight transparent PNG illustrations and the complete generation prompts.
+- `assets/m1/radio-assembly.glb`: downloadable 3D assembly with named meshes, vertex colours, and metre units.
+- `DESIGN-NOTES.md`: reference review, research links, implementation choices, and future ideas.
+
+The PNGs were produced with the built-in image generator from the team's own photos. The 3D model was authored from the visual references and nominal specifications; it is not an automatic photo-to-mesh conversion or precision scan. It shows illustrative placement, not exact breadboard connections. Follow the circuit schematic for wiring.
+
+The website still runs by opening `index.html`: no npm, React, CDN, or build step. Only if you edit geometry and want to regenerate the downloadable GLB, the optional authoring command is `node tools/export-model.cjs`. The viewer uses the geometry source directly, so editing it does not require an export to preview changes.
 ````
 
 ## Replace these placeholders first
