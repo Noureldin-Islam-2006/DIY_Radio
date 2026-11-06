@@ -6,14 +6,28 @@ window.RADIO_CONTENT = {
   project: {
     name: 'هنا القاهرة', transliteration: 'HUNA AL-QAHIRA', team: '14',
     tagline: 'Making the invisible audible.',
-    // Opening exhibit: short editorial lines and an interactive illustrated coil.
-    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', title: 'It starts with a coil.', detail: '75 turns. One frequency at a time.', label: 'Illustrated coil · explore the actual build below', dial: 'Move the dial. Find your frequency.', action: 'Enter the workbench', lines: ['AIRWAVES', 'BECOME', 'A STORY.'] },
+    // Opening exhibit: the real bench photo, a short headline and two routes into the build.
+    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', headline: 'A small circuit. An invisible world.', detail: '75 turns / 3 students / 1 radio', action: 'Explore the circuit', signalLink: 'Follow the signal' },
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-05', dateLabel: '05 November 2026',
+    term: 'Fall 2026', date: '2026-11-06', dateLabel: '06 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf',
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
+  },
+  // Interactive signal story: illustrative shapes, not oscilloscope readings. Add stages here.
+  signalStory: {
+    eyebrow: 'AN INVISIBLE JOURNEY', title: 'From the air. To your ears.',
+    intro: 'Select a stage and see what changes. Two pieces belong to M1; the rest show where our radio is heading.',
+    controls: 'Explore the radio signal path', screenLabel: 'SIGNAL STUDY / NOT TO SCALE',
+    note: 'Illustrative waveforms · not measured data', next: 'Next stage',
+    stages: [
+      {name:'Airwaves',status:'The starting point',wave:'air',title:'Many signals. One piece of wire.',text:'Different radio signals reach the receiver together. Our first task is to pick out a narrow band around the station we want.',waveAlt:'Illustration of several oscillations added together.'},
+      {name:'Tune',status:'M1 · tank circuit',wave:'tuned',title:'Choose a frequency.',text:'The coil and capacitor exchange energy. Near resonance, the tank responds strongly; turning the capacitor changes the frequency it selects.',waveAlt:'Illustrative carrier oscillations inside a slowly changing amplitude envelope.'},
+      {name:'RF gain',status:'Later stage',wave:'gain',title:'Give the carrier a little help.',text:'A later amplifier will increase the selected radio-frequency signal before detection. This is a planned stage, not a measured result from our build.',waveAlt:'The illustrative amplitude-modulated carrier with increased amplitude.'},
+      {name:'Detect',status:'M1 · diode + RC',wave:'detected',title:'Keep the shape. Lose the carrier.',text:'The diode charges the capacitor near the peaks. The resistor lets it discharge between them, following the envelope that carries the audio.',waveAlt:'A slowly varying positive envelope without the fast carrier oscillations.'},
+      {name:'Audio + sound',status:'Later stages',wave:'audio',title:'Make the message audible.',text:'Later audio stages will amplify the recovered signal and drive an output transducer. This simplified view shows the audio variation around its average level.',waveAlt:'An illustrative low-frequency audio waveform centred around zero.'}
+    ]
   },
   // Interface labels can also be edited here without changing rendering logic.
   ui: {

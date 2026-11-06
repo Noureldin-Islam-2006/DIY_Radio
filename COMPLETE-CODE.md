@@ -2,6 +2,69 @@
 
 Every authored source file is included below in its own labelled code block. Copy each block to the named relative path. The accompanying ZIP includes the existing photographs, videos, and LAB2.pdf; binary files cannot be pasted as source code.
 
+## skills/atmospheric-vanilla-web/SKILL.md
+
+````markdown
+---
+name: atmospheric-vanilla-web
+description: Design original atmospheric editorial websites with plain HTML, CSS and JavaScript, bold typography, real project imagery and purposeful interaction. Use for Noureldin's radio site or requests for this saved visual direction.
+---
+
+# Atmospheric vanilla web
+
+Create a distinctive experience whose interaction explains its subject. Read [reference observations](references/direction.md). These are design principles, not a template to reproduce.
+
+## Composition
+
+- Begin with one project-specific visual: actual photography, an artifact, or an original diagram. Give it space to establish identity before detailed content.
+- Pair an expressive headline with small technical labels and generous spacing. Preserve Arabic shaping and reading direction. Avoid equally prominent competing headlines.
+- Use one accent against restrained neutrals. A cinematic opening can lead into a quieter reading area; preserve light/dark preferences. Text over imagery needs a contrast layer.
+- Alternate immersive moments with calm explanation. Avoid placing every paragraph in a rounded card or adding decorative filler.
+- Let the subject suggest the motif: copper, dial marks and signal flow for the radio. Never import another brand's symbols, assets, copy or distinctive composition.
+
+## Interaction
+
+Choose one primary interaction per section. For the radio: selecting a signal stage changes an explanatory waveform; selecting a component focuses its model and explains its role. Distinguish illustrative signals and nominal geometry from measured evidence.
+
+Use native buttons, ranges and details with touch and keyboard equivalents. Prefer brief transitions, modest pointer depth and scroll entry cues. Avoid scroll hijacking, mandatory preloaders, cursor replacement, autoplay audio, endless particle loops and effects that obscure content. Reduced motion must retain all information with instant state changes.
+
+Preserve the no-framework, no-build-step constraint unless the user changes it. Keep copy in the established content file. Pause ongoing animation offscreen and when hidden. Do not add libraries for decoration.
+
+## Review
+
+Inspect desktop and narrow-screen renders. Check first-screen identity and action, long-copy readability, crops, focus visibility, touch sizing and overflow. Exercise interactions and return paths; inspect browser errors. Fix observed problems and recheck affected areas. Never claim perfection or award-level quality based on code alone.
+
+Keep measurements, credits, future milestones and navigation intact. Redesign authorization does not authorize unrelated services or publication destinations. Follow the current task's publication instructions.
+````
+
+## skills/atmospheric-vanilla-web/references/direction.md
+
+````markdown
+# Reference observations
+
+Reviewed November 5–6, 2026. External designs may change.
+
+## Vevilos — https://v4vevilos.gr/
+
+Visually observed: photographic backdrop, dark contrast layers, large artist lettering, concentrated warm accent, small identity labels and pronounced hierarchy. The page also contains a timeline, visual log and optional lyric interaction. Transfer the connection between subject, atmosphere and interaction—not its red neon styling or composition.
+
+## Awwwards vanilla JavaScript collection
+
+https://www.awwwards.com/websites/vanilla-js/
+
+Inspected listing entries including Vevilos, Soo, Hozon, DOT Audio Recorder and Money in Check. Listing is a discovery signal, not evidence every entry won an award or uses dependency-free JavaScript. The radio's stricter no-library constraint remains.
+
+## DOT Audio Recorder listing
+
+https://www.awwwards.com/sites/dot-audio-recorder
+
+Inspected the Awwwards description and highlight labels: product-video hero, short explanatory blocks and waveform leading to a closing action. Its live destination was not inspected: browser approval failed on a usage limit. Do not report unseen animation, performance or accessibility as verified.
+
+## Team 14 interpretation
+
+Actual bench photography as atmosphere; Arabic project title as dominant identity; copper signal lines; an interactive route from airwaves to sound; focused component inspection; calm lab notes. Generated geometry remains approximate. This is an educational guide, not a concert page or a game.
+````
+
 ## css/experience.css
 
 ````css
@@ -65,26 +128,99 @@ body { padding-left: 0; }
 @media(max-width:959px){.hero { gap: 40px; }.editorial-title { font-size: clamp(56px,10vw,90px); }.opening-exhibit { max-width: 520px; width:100%; justify-self:center; }}
 @media(max-width:619px){.hero { padding-top:30px; }.hero-copy>.eyebrow{margin-bottom:20px}.hero h1{font-size:48px}.opening-exhibit{padding:25px 20px 20px}.exhibit-top{padding-top:20px}.editorial-title{font-size:clamp(54px,16vw,90px)}.team-line ul{flex-wrap:wrap}.chapter-section{padding-block:40px}.bench-toolbar{gap:4px}.bench-toolbar button{padding:8px;font-size:10px}.exhibit-bottom h2{font-size:25px}}
 @media print{.opening-exhibit,.editorial-title,.focus-option{display:none}.milestones{margin-left:0}.hero{display:block}.section-sidebar{display:none!important}}
+
+/* Atmospheric radio direction: real photography and a quiet interactive signal study. */
+.broadcast-hero { isolation:isolate; display:block; min-height:660px; margin:24px 0 0; padding:64px 48px 94px; background:#111714; color:#fff7eb; overflow:hidden; border-radius:3px; }
+.broadcast-photo { position:absolute; inset:0; z-index:-2; }
+.broadcast-photo img { width:100%; height:100%; object-fit:cover; object-position:72% 50%; opacity:.65; transform:scale(1.04) translate(var(--photo-x,0px),var(--photo-y,0px)); transition:transform .6s ease-out; }
+.broadcast-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#0c120ff5 0%,#0c120fd9 35%,#0c120f25 100%),linear-gradient(0deg,#0c120f 0%,transparent 50%); }
+.broadcast-photo figcaption { position:absolute; right:24px; bottom:80px; font:10px monospace; color:#e1d5c9; max-width:28ch; text-align:right; }
+.broadcast-hero .hero-copy { position:relative; z-index:1; max-width:660px; }
+.broadcast-hero .eyebrow { color:#dcc7b5; margin-bottom:18px; }
+.broadcast-hero h1 { font:700 clamp(62px,8.2vw,118px)/1.5 'Segoe UI',Arial,sans-serif; margin:0; letter-spacing:-.04em; text-shadow:0 5px 40px #0006; }
+.broadcast-hero .tagline { font:italic clamp(24px,3vw,42px)/1.22 Georgia,serif; max-width:20ch; margin:0 0 20px; }
+.broadcast-hero .hero-intro { color:#d9ded6; max-width:46ch; font-size:14px; line-height:1.8; }
+.hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:20px; margin-top:16px; }
+.broadcast-hero .workbench-jump { background:#f1e9da; color:#18201b; margin:0; padding:15px 22px; min-height:48px; }
+.broadcast-hero .primary-link { background:transparent; border-bottom:1px solid #9caa9f; color:#f1e9da; padding:12px 0; }
+.broadcast-hero .team-line { color:#e0e4da; border-color:#ffffff30; margin-top:30px; font-size:11px; }
+.broadcast-hero .team-label { color:#d7b39a; }
+.broadcast-band { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:22px 28px; border-top:1px solid #ffffff20; font:10px monospace; letter-spacing:.08em; background:#0b110fc9; z-index:2; }
+.broadcast-band a { color:#efc3a6; text-decoration:none; padding:5px; }
+.hero-wave { position:absolute; right:-8%; bottom:90px; width:60%; height:160px; z-index:-1; opacity:.45; pointer-events:none; }
+.hero-wave path { fill:none; stroke:color-mix(in srgb,var(--accent),white 45%); stroke-width:1.4; }
+.signal-story { padding:100px 0 70px; scroll-margin-top:30px; }
+.signal-story-head { display:grid; grid-template-columns:1.2fr 1fr; gap:15px 80px; align-items:end; margin-bottom:35px; }
+.signal-story-head .eyebrow { grid-column:1/-1; margin:0; }
+.signal-story-head h2 { font-size:clamp(36px,4.5vw,66px); max-width:12ch; }
+.signal-story-head>p:last-child { max-width:45ch; color:var(--muted); font-size:14px; margin:0; }
+.signal-explorer { display:grid; grid-template-columns:235px 1fr; border-block:1px solid var(--line); }
+.signal-stages { display:flex; flex-direction:column; border-right:1px solid var(--line); padding:18px 20px 18px 0; }
+.signal-stages button { position:relative; display:grid; grid-template-columns:26px 1fr; gap:1px 10px; text-align:left; padding:14px; border:0; background:transparent; min-height:70px; }
+.signal-stages button>span { grid-row:span 2; font:10px monospace; color:var(--muted); padding-top:6px; }
+.signal-stages small { font-size:10px; }
+.signal-stages button[aria-pressed=true] { background:var(--soft); color:var(--accent-ink); }
+.signal-stages button[aria-pressed=true]::after { content:'↗'; position:absolute; right:12px; top:16px; }
+.signal-screen { padding:25px 32px; min-width:0; background:radial-gradient(ellipse at 80% 10%,var(--soft),transparent 70%); }
+.signal-screen-label { display:flex; justify-content:space-between; font:10px monospace; color:var(--muted); letter-spacing:.08em; }
+.signal-screen svg { width:100%; height:180px; margin:10px 0; }
+.signal-baseline { stroke:var(--line); fill:none; }
+#signal-path { stroke:var(--accent-ink); stroke-width:2; fill:none; }
+.signal-description h3 { font:400 28px/1.2 Georgia,serif; margin-bottom:12px; }
+.signal-description p { font-size:14px; color:var(--muted); max-width:65ch; min-height:4.9em; }
+.signal-screen-footer { display:flex; gap:16px; align-items:center; justify-content:space-between; border-top:1px solid var(--line); padding-top:14px; }
+.signal-screen-footer>span { font-size:10px; color:var(--muted); }
+.signal-screen-footer button { border:0; background:transparent; color:var(--accent-ink); font-size:12px; padding:12px 0 12px 12px; min-height:44px; white-space:nowrap; }
+@media(max-width:959px){.broadcast-hero{padding:40px 30px 110px;min-height:640px}.broadcast-hero h1{font-size:82px}.signal-story-head{gap:20px 40px}.signal-explorer{grid-template-columns:190px 1fr}.signal-screen{padding:25px}.signal-description p{min-height:6.5em}}
+@media(max-width:619px){.broadcast-hero{padding:30px 22px 120px;min-height:690px}.broadcast-hero h1{font-size:clamp(48px,13.6vw,78px)}.broadcast-hero .hero-intro{font-size:12px}.broadcast-hero .tagline{font-size:28px}.broadcast-photo img{object-position:60% center;opacity:.4}.broadcast-photo::after{background:linear-gradient(90deg,#0c120fee,#0c120f70)}.broadcast-photo figcaption{display:none}.broadcast-hero .team-line{margin-top:25px}.broadcast-band{padding:18px;font-size:9px}.broadcast-band>span:nth-child(2){display:none}.hero-actions{gap:12px}.hero-wave{width:100%;bottom:70px}.signal-story{padding:60px 0 35px}.signal-story-head{display:block}.signal-story-head h2{margin:15px 0 20px;max-width:15ch}.signal-explorer{display:block}.signal-stages{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 0;gap:5px}.signal-stages button{flex:0 0 145px;font-size:13px;min-height:75px}.signal-screen{padding:22px 10px}.signal-screen svg{height:130px}.signal-description h3{font-size:25px}.signal-description p{min-height:8em}.signal-screen-label{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.broadcast-photo img{transform:none!important}}
+@media print{.broadcast-hero{min-height:0;padding:20px;color:#111;background:white}.broadcast-photo,.hero-wave,.broadcast-band,.hero-actions{display:none}.broadcast-hero .hero-intro,.broadcast-hero .eyebrow,.broadcast-hero .team-line{color:#333}.signal-story{padding:20px 0}.signal-stages{display:none}.signal-explorer{display:block}.signal-screen-footer button{display:none}}
 ````
 
 ## js/experience.js
 
 ````javascript
-/* A small opening exhibit, progressively enhanced with a keyboard-friendly dial. */
+/* Original radio exhibit; all copy and signal-stage definitions live in content.js. */
 (() => {
-  const c=window.RADIO_CONTENT.project.exhibit;
-  if(!c)return;
-  const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
-  const hero=document.querySelector('.hero');
-  hero.querySelector('.hero-photo').remove();
-  const exhibit=document.createElement('div');exhibit.className='opening-exhibit';
-  exhibit.innerHTML=`<div class="exhibit-top"><span>${esc(c.kicker)}</span><span>01 / 03</span></div><div class="exhibit-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><img src="assets/components/coil.png" alt="Illustrated copper coil on a PVC former; an approximate reconstruction" width="512" height="512" fetchpriority="high"><span class="orbit-label">${esc(c.detail)}</span></div><div class="exhibit-bottom"><h2>${esc(c.title)}</h2><p>${esc(c.label)}</p></div><label class="opening-dial" for="opening-frequency"><span>${esc(c.dial)}</span><output id="opening-readout">819 kHz</output></label><input id="opening-frequency" type="range" min="530" max="1600" value="819" step="1" aria-label="Decorative radio dial frequency"><div class="frequency-ruler" aria-hidden="true"><span>530</span><span>800</span><span>1100</span><span>1600 kHz</span></div>`;
-  hero.append(exhibit);
-  const title=document.createElement('p');title.className='editorial-title';title.setAttribute('aria-hidden','true');title.innerHTML=c.lines.map(x=>`<span>${esc(x)}</span>`).join('');hero.querySelector('.hero-copy').prepend(title);
-  const jump=document.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
-  const dial=exhibit.querySelector('input');dial.addEventListener('input',()=>{exhibit.querySelector('output').textContent=dial.value+' kHz';exhibit.style.setProperty('--dial-angle',`${(dial.value-819)/12}deg`);});
-  const update=()=>document.body.classList.toggle('reading-build',document.querySelector('#milestones').getBoundingClientRect().top<140);
-  document.addEventListener('scroll',update,{passive:true});update();
+  const p=window.RADIO_CONTENT.project,c=p.exhibit,s=window.RADIO_CONTENT.signalStory;
+  if(!c||!s)return;
+  const esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const hero=document.querySelector('.hero');hero.classList.add('broadcast-hero');
+  const photo=hero.querySelector('.hero-photo');photo.className='broadcast-photo';photo.querySelector('.photo-label')?.remove();
+  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').textContent=c.headline;
+  const actions=document.createElement('div');actions.className='hero-actions';
+  const follow=copy.querySelector('.primary-link'),jump=copy.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
+  actions.append(jump,follow);copy.querySelector('.team-line').before(actions);
+  const band=document.createElement('div');band.className='broadcast-band';
+  band.innerHTML=`<span>${esc(c.kicker)}</span><span>${esc(c.detail)}</span><a href="#signal-story">${esc(c.signalLink)} ↓</a>`;hero.append(band);
+  const wave=document.createElementNS('http://www.w3.org/2000/svg','svg');wave.classList.add('hero-wave');wave.setAttribute('viewBox','0 0 1200 160');wave.setAttribute('aria-hidden','true');
+  const line=document.createElementNS(wave.namespaceURI,'path');
+  line.setAttribute('d',Array.from({length:601},(_,i)=>`${i?'L':'M'}${i*2},${80+Math.sin(i*.23)*(12+50*Math.exp(-Math.pow((i-400)/110,2)))}`).join(' '));wave.append(line);hero.append(wave);
+  const story=document.createElement('section');story.id='signal-story';story.className='signal-story';story.setAttribute('aria-labelledby','signal-story-title');
+  story.innerHTML=`<div class="signal-story-head"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="signal-story-title">${esc(s.title)}</h2><p>${esc(s.intro)}</p></div><div class="signal-explorer"><div class="signal-stages" role="group" aria-label="${esc(s.controls)}">${s.stages.map((v,i)=>`<button type="button" data-signal="${i}" aria-pressed="${i===0}"><span>0${i+1}</span>${esc(v.name)}<small>${esc(v.status)}</small></button>`).join('')}</div><div class="signal-screen"><div class="signal-screen-label"><span>${esc(s.screenLabel)}</span><span id="signal-stage-number"></span></div><svg viewBox="0 0 800 180" role="img" aria-labelledby="signal-svg-title"><title id="signal-svg-title"></title><path class="signal-baseline" d="M0 90H800"/><path id="signal-path"/></svg><div class="signal-description" aria-live="polite" aria-atomic="true"><h3 id="signal-name"></h3><p id="signal-copy"></p></div><div class="signal-screen-footer"><span>${esc(s.note)}</span><button type="button" id="signal-next">${esc(s.next)} →</button></div></div></div>`;
+  document.querySelector('.overview').before(story);
+  let stage=0;
+  function show(i){stage=i;const item=s.stages[i];story.querySelectorAll('[data-signal]').forEach((b,n)=>b.setAttribute('aria-pressed',String(n===i)));
+    document.querySelector('#signal-name').textContent=item.title;document.querySelector('#signal-copy').textContent=item.text;
+    document.querySelector('#signal-svg-title').textContent=item.waveAlt;document.querySelector('#signal-stage-number').textContent=`0${i+1} / ${s.stages.length}`;
+    const path=Array.from({length:801},(_,x)=>{const envelope=24+15*Math.sin(x*.018);let y;
+      if(item.wave==='air')y=16*Math.sin(x*.21)+15*Math.sin(x*.37)+13*Math.sin(x*.09);
+      else if(item.wave==='tuned')y=envelope*Math.sin(x*.24);
+      else if(item.wave==='gain')y=envelope*1.6*Math.sin(x*.24);
+      else if(item.wave==='detected')y=envelope;
+      else y=48*Math.sin(x*.018);
+      return `${x?'L':'M'}${x},${90-y}`;}).join(' ');
+    document.querySelector('#signal-path').setAttribute('d',path);
+    if(!reduced.matches&&story.animate)story.querySelector('.signal-description').animate([{opacity:.3,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:220});
+  }
+  story.querySelectorAll('[data-signal]').forEach((b,i)=>b.addEventListener('click',()=>show(i)));
+  document.querySelector('#signal-next').addEventListener('click',()=>show((stage+1)%s.stages.length));show(0);
+  let scheduled=false;
+  const update=()=>{scheduled=false;document.body.classList.toggle('reading-build',document.querySelector('#milestones').getBoundingClientRect().top<140);};
+  document.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update);}},{passive:true});update();
+  hero.addEventListener('pointermove',e=>{if(reduced.matches||e.pointerType!=='mouse')return;const r=hero.getBoundingClientRect();hero.style.setProperty('--photo-x',`${(e.clientX-r.left-r.width/2)*.012}px`);hero.style.setProperty('--photo-y',`${(e.clientY-r.top-r.height/2)*.012}px`);});
+  hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--photo-x','0px');hero.style.setProperty('--photo-y','0px');});
 })();
 ````
 
@@ -590,14 +726,28 @@ window.RADIO_CONTENT = {
   project: {
     name: 'هنا القاهرة', transliteration: 'HUNA AL-QAHIRA', team: '14',
     tagline: 'Making the invisible audible.',
-    // Opening exhibit: short editorial lines and an interactive illustrated coil.
-    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', title: 'It starts with a coil.', detail: '75 turns. One frequency at a time.', label: 'Illustrated coil · explore the actual build below', dial: 'Move the dial. Find your frequency.', action: 'Enter the workbench', lines: ['AIRWAVES', 'BECOME', 'A STORY.'] },
+    // Opening exhibit: the real bench photo, a short headline and two routes into the build.
+    exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', headline: 'A small circuit. An invisible world.', detail: '75 turns / 3 students / 1 radio', action: 'Explore the circuit', signalLink: 'Follow the signal' },
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-05', dateLabel: '05 November 2026',
+    term: 'Fall 2026', date: '2026-11-06', dateLabel: '06 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf',
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
+  },
+  // Interactive signal story: illustrative shapes, not oscilloscope readings. Add stages here.
+  signalStory: {
+    eyebrow: 'AN INVISIBLE JOURNEY', title: 'From the air. To your ears.',
+    intro: 'Select a stage and see what changes. Two pieces belong to M1; the rest show where our radio is heading.',
+    controls: 'Explore the radio signal path', screenLabel: 'SIGNAL STUDY / NOT TO SCALE',
+    note: 'Illustrative waveforms · not measured data', next: 'Next stage',
+    stages: [
+      {name:'Airwaves',status:'The starting point',wave:'air',title:'Many signals. One piece of wire.',text:'Different radio signals reach the receiver together. Our first task is to pick out a narrow band around the station we want.',waveAlt:'Illustration of several oscillations added together.'},
+      {name:'Tune',status:'M1 · tank circuit',wave:'tuned',title:'Choose a frequency.',text:'The coil and capacitor exchange energy. Near resonance, the tank responds strongly; turning the capacitor changes the frequency it selects.',waveAlt:'Illustrative carrier oscillations inside a slowly changing amplitude envelope.'},
+      {name:'RF gain',status:'Later stage',wave:'gain',title:'Give the carrier a little help.',text:'A later amplifier will increase the selected radio-frequency signal before detection. This is a planned stage, not a measured result from our build.',waveAlt:'The illustrative amplitude-modulated carrier with increased amplitude.'},
+      {name:'Detect',status:'M1 · diode + RC',wave:'detected',title:'Keep the shape. Lose the carrier.',text:'The diode charges the capacitor near the peaks. The resistor lets it discharge between them, following the envelope that carries the audio.',waveAlt:'A slowly varying positive envelope without the fast carrier oscillations.'},
+      {name:'Audio + sound',status:'Later stages',wave:'audio',title:'Make the message audible.',text:'Later audio stages will amplify the recovered signal and drive an output transducer. This simplified view shows the audio variation around its average level.',waveAlt:'An illustrative low-frequency audio waveform centred around zero.'}
+    ]
   },
   // Interface labels can also be edited here without changing rendering logic.
   ui: {
@@ -1329,6 +1479,14 @@ Reviewed the visual hierarchy of [Money in Check](https://moneyincheck.org/) and
 Our interpretation: a copper-coil opening exhibit, large editorial typography, a visitor-operated radio dial, and component close-ups that explain the build. No copied layouts, assets or implementation. The left chapter index appears while reading the build, leaving the opening uncluttered. Technical content and real photos remain in the story.
 
 Review passes: (1) desktop composition, then tightened opening typography; (2) close-up camera, then added automatic viewer positioning and ensured lazy initialization before focus; (3) all eight selections, return-to-assembly option, keyboard dial and tabs, both themes, and 320/390 px widths. No horizontal page overflow or browser JavaScript errors observed. Existing content/calculation checks pass. Visual taste remains subjective; hardware fidelity still requires the additional captures described in MODEL-CAPTURE-GUIDE.md.
+
+# November 6: atmospheric vanilla direction
+
+Created and installed `atmospheric-vanilla-web`, based on the visually inspected Vevilos homepage, the Awwwards vanilla-JS collection, and the DOT Audio Recorder listing. Exact sources and the limit of the research are recorded in `skills/atmospheric-vanilla-web/references/direction.md`. Opening the live DOT destination was blocked by automatic approval review because of a usage limit; no unseen behavior is claimed.
+
+Applied the skill through actual bench photography, a dominant Arabic title, a restrained copper waveform, modest pointer depth, and a selectable five-stage signal story. Kept the existing 3D focus interaction, tab navigation, left section index, theme controls and measurement placeholders. No frameworks or extra dependencies.
+
+Verification: syntax and existing content/calculation checks passed; skill validation passed. Desktop light/dark and 320/390 px layouts were inspected, with no page overflow. All five stages respond to Enter, Next cycles to stage one, and the diode close-up updates its description and view. No browser JavaScript errors observed during the checks.
 ````
 
 ## assets/components/GENERATION.md
@@ -1625,7 +1783,9 @@ The PNGs were produced with the built-in image generator from the team's own pho
 The website still runs by opening `index.html`: no npm, React, CDN, or build step. Only if you edit geometry and want to regenerate the downloadable GLB, the optional authoring command is `node tools/export-model.cjs`. The viewer uses the geometry source directly, so editing it does not require an export to preview changes.
 # Latest design revision
 
-The opening exhibit uses `project.exhibit` in `js/content.js`. Its dial is decorative; the workbench tuning experiment is the calculated demonstration. `css/experience.css` controls the editorial composition and `js/experience.js` adds the opening interaction.
+The photographic opening uses `project.hero` and `project.exhibit` in `js/content.js`. The five-stage signal explorer uses `signalStory`; its waveforms are illustrations, not measured data. The workbench tuning experiment is a separate calculated demonstration. `css/experience.css` controls the editorial composition and `js/experience.js` adds the opening and signal interactions.
+
+The reusable design skill is included at `skills/atmospheric-vanilla-web/SKILL.md`, with reference observations alongside it. The personal installed copy can be invoked as `$atmospheric-vanilla-web`. No external reference assets or source code are bundled.
 
 Select any component to move the camera into an isolated close-up and read its role and connections. Uncheck **Zoom into selected component** to keep the assembled view while reading descriptions. **Whole circuit** returns to the assembly. Motion respects reduced-motion preferences.
 

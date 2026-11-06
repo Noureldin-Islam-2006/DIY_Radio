@@ -56,3 +56,11 @@ Our interpretation: a copper-coil opening exhibit, large editorial typography, a
 
 Review passes: (1) desktop composition, then tightened opening typography; (2) close-up camera, then added automatic viewer positioning and ensured lazy initialization before focus; (3) all eight selections, return-to-assembly option, keyboard dial and tabs, both themes, and 320/390 px widths. No horizontal page overflow or browser JavaScript errors observed. Existing content/calculation checks pass. Visual taste remains subjective; hardware fidelity still requires the additional captures described in MODEL-CAPTURE-GUIDE.md.
 
+# November 6: atmospheric vanilla direction
+
+Created and installed `atmospheric-vanilla-web`, based on the visually inspected Vevilos homepage, the Awwwards vanilla-JS collection, and the DOT Audio Recorder listing. Exact sources and the limit of the research are recorded in `skills/atmospheric-vanilla-web/references/direction.md`. Opening the live DOT destination was blocked by automatic approval review because of a usage limit; no unseen behavior is claimed.
+
+Applied the skill through actual bench photography, a dominant Arabic title, a restrained copper waveform, modest pointer depth, and a selectable five-stage signal story. Kept the existing 3D focus interaction, tab navigation, left section index, theme controls and measurement placeholders. No frameworks or extra dependencies.
+
+Verification: syntax and existing content/calculation checks passed; skill validation passed. Desktop light/dark and 320/390 px layouts were inspected, with no page overflow. All five stages respond to Enter, Next cycles to stage one, and the diode close-up updates its description and view. No browser JavaScript errors observed during the checks.
+

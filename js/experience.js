@@ -1,16 +1,42 @@
-/* A small opening exhibit, progressively enhanced with a keyboard-friendly dial. */
+/* Original radio exhibit; all copy and signal-stage definitions live in content.js. */
 (() => {
-  const c=window.RADIO_CONTENT.project.exhibit;
-  if(!c)return;
-  const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
-  const hero=document.querySelector('.hero');
-  hero.querySelector('.hero-photo').remove();
-  const exhibit=document.createElement('div');exhibit.className='opening-exhibit';
-  exhibit.innerHTML=`<div class="exhibit-top"><span>${esc(c.kicker)}</span><span>01 / 03</span></div><div class="exhibit-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><img src="assets/components/coil.png" alt="Illustrated copper coil on a PVC former; an approximate reconstruction" width="512" height="512" fetchpriority="high"><span class="orbit-label">${esc(c.detail)}</span></div><div class="exhibit-bottom"><h2>${esc(c.title)}</h2><p>${esc(c.label)}</p></div><label class="opening-dial" for="opening-frequency"><span>${esc(c.dial)}</span><output id="opening-readout">819 kHz</output></label><input id="opening-frequency" type="range" min="530" max="1600" value="819" step="1" aria-label="Decorative radio dial frequency"><div class="frequency-ruler" aria-hidden="true"><span>530</span><span>800</span><span>1100</span><span>1600 kHz</span></div>`;
-  hero.append(exhibit);
-  const title=document.createElement('p');title.className='editorial-title';title.setAttribute('aria-hidden','true');title.innerHTML=c.lines.map(x=>`<span>${esc(x)}</span>`).join('');hero.querySelector('.hero-copy').prepend(title);
-  const jump=document.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
-  const dial=exhibit.querySelector('input');dial.addEventListener('input',()=>{exhibit.querySelector('output').textContent=dial.value+' kHz';exhibit.style.setProperty('--dial-angle',`${(dial.value-819)/12}deg`);});
-  const update=()=>document.body.classList.toggle('reading-build',document.querySelector('#milestones').getBoundingClientRect().top<140);
-  document.addEventListener('scroll',update,{passive:true});update();
+  const p=window.RADIO_CONTENT.project,c=p.exhibit,s=window.RADIO_CONTENT.signalStory;
+  if(!c||!s)return;
+  const esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const hero=document.querySelector('.hero');hero.classList.add('broadcast-hero');
+  const photo=hero.querySelector('.hero-photo');photo.className='broadcast-photo';photo.querySelector('.photo-label')?.remove();
+  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').textContent=c.headline;
+  const actions=document.createElement('div');actions.className='hero-actions';
+  const follow=copy.querySelector('.primary-link'),jump=copy.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
+  actions.append(jump,follow);copy.querySelector('.team-line').before(actions);
+  const band=document.createElement('div');band.className='broadcast-band';
+  band.innerHTML=`<span>${esc(c.kicker)}</span><span>${esc(c.detail)}</span><a href="#signal-story">${esc(c.signalLink)} ↓</a>`;hero.append(band);
+  const wave=document.createElementNS('http://www.w3.org/2000/svg','svg');wave.classList.add('hero-wave');wave.setAttribute('viewBox','0 0 1200 160');wave.setAttribute('aria-hidden','true');
+  const line=document.createElementNS(wave.namespaceURI,'path');
+  line.setAttribute('d',Array.from({length:601},(_,i)=>`${i?'L':'M'}${i*2},${80+Math.sin(i*.23)*(12+50*Math.exp(-Math.pow((i-400)/110,2)))}`).join(' '));wave.append(line);hero.append(wave);
+  const story=document.createElement('section');story.id='signal-story';story.className='signal-story';story.setAttribute('aria-labelledby','signal-story-title');
+  story.innerHTML=`<div class="signal-story-head"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="signal-story-title">${esc(s.title)}</h2><p>${esc(s.intro)}</p></div><div class="signal-explorer"><div class="signal-stages" role="group" aria-label="${esc(s.controls)}">${s.stages.map((v,i)=>`<button type="button" data-signal="${i}" aria-pressed="${i===0}"><span>0${i+1}</span>${esc(v.name)}<small>${esc(v.status)}</small></button>`).join('')}</div><div class="signal-screen"><div class="signal-screen-label"><span>${esc(s.screenLabel)}</span><span id="signal-stage-number"></span></div><svg viewBox="0 0 800 180" role="img" aria-labelledby="signal-svg-title"><title id="signal-svg-title"></title><path class="signal-baseline" d="M0 90H800"/><path id="signal-path"/></svg><div class="signal-description" aria-live="polite" aria-atomic="true"><h3 id="signal-name"></h3><p id="signal-copy"></p></div><div class="signal-screen-footer"><span>${esc(s.note)}</span><button type="button" id="signal-next">${esc(s.next)} →</button></div></div></div>`;
+  document.querySelector('.overview').before(story);
+  let stage=0;
+  function show(i){stage=i;const item=s.stages[i];story.querySelectorAll('[data-signal]').forEach((b,n)=>b.setAttribute('aria-pressed',String(n===i)));
+    document.querySelector('#signal-name').textContent=item.title;document.querySelector('#signal-copy').textContent=item.text;
+    document.querySelector('#signal-svg-title').textContent=item.waveAlt;document.querySelector('#signal-stage-number').textContent=`0${i+1} / ${s.stages.length}`;
+    const path=Array.from({length:801},(_,x)=>{const envelope=24+15*Math.sin(x*.018);let y;
+      if(item.wave==='air')y=16*Math.sin(x*.21)+15*Math.sin(x*.37)+13*Math.sin(x*.09);
+      else if(item.wave==='tuned')y=envelope*Math.sin(x*.24);
+      else if(item.wave==='gain')y=envelope*1.6*Math.sin(x*.24);
+      else if(item.wave==='detected')y=envelope;
+      else y=48*Math.sin(x*.018);
+      return `${x?'L':'M'}${x},${90-y}`;}).join(' ');
+    document.querySelector('#signal-path').setAttribute('d',path);
+    if(!reduced.matches&&story.animate)story.querySelector('.signal-description').animate([{opacity:.3,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:220});
+  }
+  story.querySelectorAll('[data-signal]').forEach((b,i)=>b.addEventListener('click',()=>show(i)));
+  document.querySelector('#signal-next').addEventListener('click',()=>show((stage+1)%s.stages.length));show(0);
+  let scheduled=false;
+  const update=()=>{scheduled=false;document.body.classList.toggle('reading-build',document.querySelector('#milestones').getBoundingClientRect().top<140);};
+  document.addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update);}},{passive:true});update();
+  hero.addEventListener('pointermove',e=>{if(reduced.matches||e.pointerType!=='mouse')return;const r=hero.getBoundingClientRect();hero.style.setProperty('--photo-x',`${(e.clientX-r.left-r.width/2)*.012}px`);hero.style.setProperty('--photo-y',`${(e.clientY-r.top-r.height/2)*.012}px`);});
+  hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--photo-x','0px');hero.style.setProperty('--photo-y','0px');});
 })();
