@@ -47,7 +47,7 @@ README.md
 
 Open `js/content.js`. Its commented sections contain the identity, team, story, theory descriptions, measurements, media, and interface labels. Text is escaped before rendering. Use plain text, not HTML. A token such as `[[TBD: measured f0]]` is automatically highlighted.
 
-M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. Turn counts and winding length remain pending clarification, so submitted predictions are preserved with a conditional recalculation note. M2 and M3 remain **Soon**.
+M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. The receiver has 75 turns and the generator test loop has 5 turns. Only the axial winding length remains pending clarification, so submitted predictions are preserved with a conditional recalculation note. M2 and M3 remain **Soon**.
 
 Keep `project.date` in `YYYY-MM-DD` format and update `dateLabel` alongside it. Replace `project.repo` with your actual HTTPS GitHub repository URL to activate the footer link.
 
@@ -152,7 +152,7 @@ Relative paths support `https://<user>.github.io/<repo>/`; no rewriting, build a
 
 ## Fill the remaining gaps, in order
 
-1. **Confirm the prediction inputs:** the submitted 249.43 µH needs reconciliation with the confirmed 60 mm diameter and the actual winding length/turn counts. Tables 4–6 and all six detector points have been entered; confirm the measurement setup; grader sign-off has been confirmed.
+1. **Confirm the prediction inputs:** the submitted 249.43 µH needs reconciliation with the confirmed 60 mm diameter and the actual axial winding length. Tables 4–6 and all six detector points have been entered; confirm the measurement setup; grader sign-off has been confirmed.
 2. **Evidence:** generator models/ranges, probe settings, scope channel mapping, actual fixes, and M1 sign-off/status.
 3. **Media:** coil and detector close-ups, a verified resonance screenshot, the tuning video, and meaningful descriptions/captions for the existing videos.
 4. **Publishing:** GitHub repository URL and the last-updated date. Update social metadata if you rename the project.
