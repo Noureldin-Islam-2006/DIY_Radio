@@ -781,16 +781,18 @@ window.RADIO_CONTENT = {
     title: 'Take the radio apart.', eyebrow: 'THE INTERACTIVE WORKBENCH',
     intro: 'Meet the pieces before following the build. Turn the assembly, lift its components apart, and discover how a small change in capacitance changes the frequency we hear.',
     modelNote: 'Photo-informed 3D reconstruction · nominal dimensions · illustrative placement. Use the schematic for electrical connections, not the model’s breadboard holes.',
-    imageNote: 'AI component illustration based on our photos; obscured details are representative. Original bench photos remain in the journey below.',
+    imageNote: 'Reference photographs and original instrument diagrams. The 3D reconstruction follows visible shapes; unmeasured dimensions and wire routing remain approximate.',
     parts: [
-      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 60 mm',image:'assets/components/coil.png',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses the team-confirmed 60 mm diameter, the confirmed 75 main-coil turns, and the team-confirmed 29 mm axial winding length. Other obscured dimensions remain illustrative.',connection:'Across TP1 and ground.'},
-      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
-      {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'The small package is partially hidden in the photos. Its illustrated housing is representative; the cathode band is the important orientation cue.',connection:'Anode at TP1; banded cathode toward TP3.'},
-      {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
-      {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'A representative yellow dipped capacitor based on the visible package. Its capacitance is the specified nominal value.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
+      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 60 mm',image:'assets/m1/setup.jpg',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses the team-confirmed 60 mm diameter, the confirmed 75 main-coil turns, and the team-confirmed 29 mm axial winding length. Both windings share this PVC former: the 75-turn band is 29 mm wide, and the five-turn band is below it. The axial gap is illustrated as about 24 mm; its exact value and the pipe height are not measured. Four leads connect the two electrically separate windings.',connection:'Two receiver leads go to TP1 and ground; the other two leads belong to the generator winding.'},
+      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor-reference.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
+      {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode-reference.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'Orange glass-style axial package with a dark cathode band, following the supplied 1N60P reference. The band faces TP3.',connection:'Anode at TP1; banded cathode toward TP3.'},
+      {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor-reference.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
+      {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor-reference.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'Yellow dipped radial package marked 332: 3300 pF, or 3.3 nF, following the supplied reference.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
       {id:'breadboard',name:'Our temporary workbench',short:'Boards',value:'Two solderless boards',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The two-board arrangement follows our overhead photo. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
-      {id:'esp32',name:'The detour that taught us something',short:'ESP32',value:'Temporary signal source',image:'assets/components/esp32.png',role:'Our early workaround when the first function generator could not reach the frequency range we needed.',detail:'Team 20 helped with the sampled-sine sketch. That sketch is about 1 kHz before overhead and does not generate an AM carrier. We later switched generators.',connection:'A historical experiment, not a required receiver component.'},
-      {id:'test-loop',name:'A station, a few centimetres away',short:'Test loop',value:'5 turns · magnetic coupling',image:'assets/components/test-loop.png',role:'Transfers the test source’s magnetic field into the main coil without a direct electrical connection.',detail:'The exact loop shape is not clear in the photos, so this part is a representative five-turn reconstruction. Keep it on the same axis as the main coil.',connection:'Confirmed: five-turn loop connected to the generator; magnetically coupled to the separate 75-turn receiver coil.'}
+      {id:'generator',name:'The function generator',short:'Generator',value:'GW Instek GFG-8020H',image:'assets/components/generator.svg',role:'Supplies the test signal to the five-turn winding. Magnetic coupling excites the receiver tank.',detail:'Based on the supplied GFG-8020H reference: grey case, carry handle, counter, range buttons and tuning controls. Panel geometry is approximate; the display is illustrative. Product reference: https://www.rapidonline.com/gw-instek-function-generator-gfg-8020h-85-2064',connection:'Output centre and return connect to the two leads of the five-turn winding, not directly to the 75-turn tank.'},
+      {id:'oscilloscope',name:'Watch the tank respond',short:'Scope',value:'SDS1102 reference',image:'assets/components/oscilloscope.svg',role:'Shows the waveform at TP1 while we sweep the source and find resonance.',detail:'Front-panel layout follows the supplied SDS1102 listing, with a wide screen, controls and two channel connectors. The trace is illustrative, not a recorded measurement. Reference: https://www.ebay.com/itm/365605442585',connection:'Probe tip at TP1, ground clip at circuit ground. The lab calls for a compensated ×10 probe and matching channel setting.'},
+      {id:'probe',name:'The probe is part of the circuit',short:'Probe',value:'Compensated ×10 probe',image:'assets/components/probe-reference.png',role:'Connects TP1 to the oscilloscope while reducing capacitive loading compared with ×1.',detail:'Black probe body, yellow selector and collar, metal tip, ground lead and coaxial cable follow the supplied reference. The generator instead uses its output cable and a two-lead breakout.',connection:'Oscilloscope channel → probe tip at TP1; short ground clip → circuit ground.'},
+      {id:'test-loop',name:'A station, a few centimetres away',short:'Test loop',value:'5 turns · magnetic coupling',image:'assets/m1/setup.jpg',role:'Transfers the test source’s magnetic field into the main coil without a direct electrical connection.',detail:'Five turns around the same 60 mm PVC former, separated from the 75-turn winding by a few centimetres. The exact separation remains approximate in the model.',connection:'Confirmed: five-turn loop connected to the generator; magnetically coupled to the electrically separate 75-turn winding on the same PVC pipe.'}
     ],
     tuningTitle: 'Find the signal.',
     tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
@@ -830,7 +832,7 @@ window.RADIO_CONTENT = {
         { title: 'Give it a frequency to choose.', text: 'We fixed the 20–280 pF tuning capacitor to the pipe and connected its AM section across the coil. Turning the shaft changes the capacitance, which changes the frequency the tank prefers.', note: '[[TBD: the AM terminal pair we used and how we identified it]]', media: 'top' },
         { title: 'Follow the peaks.', text: 'Next came the detector: a 1N60P diode from TP1 to TP3, with its band facing TP3. A 15 kΩ resistor and a 3.3 nF capacitor sit in parallel between TP3 and ground. Their RC is 49.5 µs, rounded to the lab’s 50 µs. The diode charges the capacitor near each peak; the resistor gives that charge a controlled way to fall.', media: 'schematic' },
         { title: 'A detour through an ESP32.', text: 'The function generator available to us initially had a limited frequency range. With help from Team 20, we tried an ESP32 circuit as a signal source for the test loop. It became our workaround while we looked for a generator that could reach the range we needed.', note: 'This exact sketch produces a sampled sine, not an AM carrier. 100 samples × 10 µs suggests about 1 kHz before sinf(), dacWrite(), and loop overhead; the actual frequency is lower. FREQ is declared but unused. This was a proof-of-concept detour, not a verified medium-wave source.', media: 'esp32', code: '#include <Arduino.h>\n#include <math.h>\n\n#define DAC_PIN 25\n#define FREQ 1000\n#define SAMPLES 100\n\nvoid setup() {\n  Serial.begin(115200);\n}\n\nvoid loop() {\n  for (int i = 0; i < SAMPLES; i++) {\n    float phase = 2.0f * PI * i / SAMPLES;\n    int value = 128 + 100 * sinf(phase);\n\n    dacWrite(DAC_PIN, value);\n\n    delayMicroseconds(10);\n  }\n}', credit: 'Sketch credit: Team 20, who helped us try this approach. Hardware note: this uses a DAC-capable ESP32 with DAC output on GPIO25; it is not portable to every ESP32 variant.' },
-        { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn loop a few centimetres from the main coil, with both coils on the same axis. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
+        { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn winding on the same PVC pipe as the 75-turn receiver winding, separated along the pipe by a few centimetres. Its two leads connect to the generator output and return; the receiver winding has its own two leads to the tank circuit. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
         { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the settings visible in our scope capture]]', media: 'wave' }
       ],
       // Formula text is rendered with native MathML; descriptions should explain the intuition.
@@ -1240,45 +1242,75 @@ window.RADIO_CONTENT = {
       for(let x=-72;x<=72;x+=4)for(let row=-5;row<=5;row++)if(row)box([x,4.2,z+row*3.5],[1.3,.25,1.3],'#59665e');
     }
     group('coil',[-63,29,0],[-22,25,0]);
-    ring(30,-25,2,50,'#d4e0d9');
-    for(const z of [-1,1])box([0,z*22,30],[8,5,1],'#242b28');
+    ring(30,-25,2,70,'#d4e0d9');
+    for(const z of [-1,1])box([0,z*32,30],[8,5,1],'#242b28');
     const start=part.vertices.length/9;
     for(let i=0;i<75*32;i++){
-      const p=t=>[30.4*Math.cos(t*TAU/32),-14.5+29*t/(75*32),30.4*Math.sin(t*TAU/32)];
+      const p=t=>[30.4*Math.cos(t*TAU/32),7+29*t/(75*32),30.4*Math.sin(t*TAU/32)];
       tube(p(i),p(i+1),.21,i%3===0?'#db9c56':'#b97332',5);
     }
     part.winding={start,count:part.vertices.length/9-start};
-    path([[30,-14.5,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
-    path([[30,14.5,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
+    path([[30,7,0],[37,10,-15],[58,-18,-47]],.35,'#b8783e');
+    path([[30,36,0],[40,30,12],[65,-23,-24]],.35,'#b8783e');
     group('tuning-capacitor',[-5,11,-47],[-8,34,-30]);
-    box([0,0,0],[21,12,20],'#232a27');box([0,6.5,0],[22,1,21],'#b9c0b8');
-    tube([0,7,0],[0,16,0],2.4,'#a9b1a9',20);
+    box([0,0,0],[21,12,20],'#c1b8a3');box([0,6.5,0],[22,1,21],'#d4b882');
+    tube([0,7,0],[0,11,0],3.2,'#98804c',20);
     for(const x of [-8,8])for(const z of [-7,7])tube([x,7,z],[x,7.6,z],1.4,'#626a61');
     for(const x of [-8,0,8])path([[x,-2,10],[x,-6,14],[x,-7,14]],.5,'#b1b4a6');
     group('diode',[34,11,-47],[0,51,-10]);
-    tube([-5,0,0],[5,0,0],1.6,'#31312c',16);tube([3.5,0,0],[4.4,0,0],1.68,'#c9cfc3',16);
+    tube([-4,0,0],[4,0,0],1.45,'#c76536',20);tube([-2,0,0],[2,0,0],1.48,'#d88b60',20);tube([2.5,0,0],[3.5,0,0],1.5,'#242321',20);
     path([[-14,-6,0],[-14,0,0],[-5,0,0]],.35,'#aab2a9');path([[5,0,0],[14,0,0],[14,-6,0]],.35,'#aab2a9');
     group('resistor',[66,11,-40],[20,32,-15]);
     tube([0,0,-5],[0,0,5],2,'#cabb91',16);
     ['#744b2c','#37604b','#c26c2f','#b8984a'].forEach((c,i)=>tube([0,0,-3+i*2],[0,0,-2.3+i*2],2.04,c,16));
     path([[0,-6,-13],[0,0,-13],[0,0,-5]],.35,'#aab2a9');path([[0,0,5],[0,0,13],[0,-6,13]],.35,'#aab2a9');
     group('detector-capacitor',[89,11,-40],[40,41,-12]);
-    tube([0,0,-1.4],[0,0,1.4],4.5,'#c49d37',24);
+    box([0,1,0],[7,7,2.8],'#e0b24e');tube([-2.2,4,0],[2.2,4,0],1.5,'#e0b24e',16);
+    // Dipped ceramic package with two radial leads; 332 = 3.3 nF.
+    for(const x of [-2,0,2])path([[x-.6,2,1.5],[x+.5,2,1.5],[x+.5,1,1.5],[x-.3,1,1.5],[x+.5,1,1.5],[x+.5,0,1.5],[x-.6,0,1.5]],.10,'#805e39');
     for(const x of [-2,2])path([[x,0,0],[x,-3,0],[x,-7,0]],.35,'#adb4a9');
-    group('esp32',[36,9,47],[20,28,36]);
-    box([0,0,0],[50,2,27],'#22362e');box([-8,3,0],[23,4,19],'#aeb9ae');box([22,3,0],[8,5,9],'#aab0a7');
-    box([9,2,0],[8,2,8],'#252b27');
-    for(let x=-22;x<=22;x+=3)for(const z of [-12,12]){box([x,0,z],[1.2,6,1.2],'#bca36e');box([x,2,z],[2,2,2],'#29312b');}
-    for(let x=-22;x<-14;x+=2)box([x,1.2,0],[.5,.3,16],'#c5af6c');
-    group('test-loop',[-63,88,0],[-35,20,0]);
-    for(let k=0;k<5;k++){const pts=Array.from({length:49},(_,i)=>[20*Math.cos(i*TAU/48),k*.6,20*Math.sin(i*TAU/48)]);path(pts,.3,'#b88646');}
-    path([[20,0,0],[30,-4,0],[35,-12,10]],.5,'#436f77');
+    // Instrument dimensions and panel details are visual approximations of the supplied references.
+    function knob(x,y,z,r=3) {tube([x,y,z],[x,y,z+4],r,'#737c79',20);tube([x,y,z+4],[x,y,z+4.6],r*.8,'#d9ddd6',20);box([x,y+r*.5,z+4.8],[.5,r*.6,.3],'#2c3534');}
+    function bnc(x,y,z){tube([x,y,z],[x,y,z+4],2.6,'#a9b4b3',16);tube([x,y,z+4],[x,y,z+4.3],1.7,'#303a38',16);}
+    group('generator',[-127,25,-110],[-40,20,-30]);
+    box([0,0,0],[100,46,65],'#bfc8c4');box([0,0,33],[98,44,2],'#e1e4d8');
+    box([-24,11,34.5],[39,13,1],'#273c39');
+    // Four red seven-segment digits on the generator counter (illustrative readout).
+    for(let i=0;i<4;i++){const x=-39+i*9;for(const y of [7,11,15])box([x,y,35.2],[5,.65,.3],'#df6654');for(const dx of [-2.5,2.5])for(const y of [9,13])box([x+dx,y,35.2],[.65,3,.3],'#df6654');}
+    knob(32,6,35,9);knob(13,-12,35,3);knob(-1,-12,35,3);bnc(33,-13,35);
+    for(let i=0;i<7;i++)box([-40+i*7,-3,35],[4,3,3],'#646f6d');
+    path([[-53,-10,15],[-57,22,15],[-57,29,-15],[57,29,-15],[57,22,15],[53,-10,15]],2.2,'#5c6965');
+    for(const x of [-39,39])box([x,-25,12],[12,5,16],'#424b47');
+    group('oscilloscope',[49,38,-132],[38,25,-35]);
+    box([0,0,0],[120,66,30],'#d7ddd8');box([0,0,16],[118,64,2],'#ecece2');
+    box([-22,2,17.5],[65,46,1],'#253d43');
+    for(let x=-51;x<10;x+=7)box([x,2,18],[.2,40,.2],'#446166');
+    for(let y=-17;y<23;y+=5)box([-22,y,18],[60,.2,.2],'#446166');
+    path(Array.from({length:100},(_,i)=>[-51+i*.6,2+10*Math.sin(i*.21),18.3]),.35,'#e8c75c');
+    for(const x of [21,36,50])for(const y of [21,7,-7])knob(x,y,18,y===7?3.3:2);
+    for(let y=-14;y<24;y+=7)box([14,y,18],[3,3,2],'#9aa6a2');
+    bnc(24,-23,18);bnc(45,-23,18);box([24,-28,18],[6,1,1],'#dfbd4a');box([45,-28,18],[6,1,1],'#6fa6ce');
+    path([[-47,34,0],[-47,42,0],[47,42,0],[47,34,0]],2,'#626f6b');
+    group('test-loop',[-63,29,0],[-22,25,0]);
+    const loopPoint=t=>[30.4*Math.cos(t*TAU/48),-20+3*t/(5*48),30.4*Math.sin(t*TAU/48)];
+    for(let i=0;i<5*48;i++)tube(loopPoint(i),loopPoint(i+1),.24,'#b77a38',6);
+    // Two generator-loop leads, electrically isolated from the main winding.
+    path([[30.4,-20,0],[39,-18,17],[10,-23,43],[-40,-23,43],[-55,-23,-10]],.4,'#bd8845');
+    path([[30.4,-17,0],[38,-12,22],[12,-22,49],[-44,-22,49],[-61,-22,-10]],.4,'#bd8845');
+    group('probe',[12,12,-20],[20,15,30]);
+    tube([0,0,0],[24,0,0],2.3,'#434e4b',16);tube([0,0,0],[5,0,0],3.2,'#e3ba43',16);tube([-10,0,0],[0,0,0],.65,'#adb5b0');
+    tube([6,0,0],[8,0,0],4.2,'#434e4b',18);box([16,2.3,0],[6,.8,1.8],'#d5b34c');
+    path([[24,0,0],[42,2,7],[81,0,18],[100,-5,0],[100,-4,-42],[61,3,-94]],1.2,'#343d39');
+    path([[7,-1,0],[10,-6,5],[0,-7,10],[-8,-6,-4]],.5,'#333c38');
     group('connections',[0,0,0],[0,0,0]);
     path([[-20,6,-20],[-14,25,-22],[-5,6,-37]],.65,'#587a6c');
     path([[9,6,-47],[13,15,-47],[20,6,-47]],.6,'#9b6546');
     path([[48,6,-47],[55,13,-47],[66,6,-53]],.6,'#9b6546');
     path([[66,6,-53],[78,9,-53],[87,6,-40]],.6,'#9b6546');
     path([[66,6,-27],[77,10,-24],[91,6,-40]],.6,'#444f48');
+    path([[-94,12,-71],[-93,6,-50],[-133,6,-22],[-118,6,-10]],1.1,'#343d39');
+    tube([-118,6,-14],[-118,6,-10],1.4,'#af4b3c');path([[-118,6,-10],[-124,7,-10]],.9,'#343d39');
+    path([[-5,5,-33],[2,6,-24],[66,5,-27]],.6,'#343d39');
     return parts;
   }
   // Use the submitted Table 4 inductance for the teaching experiment.
@@ -1301,11 +1333,11 @@ window.RADIO_CONTENT = {
   section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="m1-workbench">${esc(c.title)}</h3></div>
   <p class="eyebrow">${esc(c.eyebrow)}</p><p class="section-intro">${esc(c.intro)}</p>
   <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY 01</span><span class="bench-live">EXPLORE IN 3D</span></div>
-    <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
+    <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Scroll to zoom. Click a component to inspect. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
     <img class="bench-fallback" src="assets/m1/setup.jpg" alt="Our actual coil and breadboard circuit, shown when 3D is unavailable." hidden>
-    <p class="bench-hint">Drag to rotate · select a part below</p><div class="bench-toolbar"><button type="button" data-camera="home">Whole circuit</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
+    <p class="bench-hint">Drag to rotate · scroll to zoom · click a component</p><div class="bench-toolbar"><button type="button" data-camera="home">Whole circuit</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
   </div><aside class="part-inspector" aria-live="polite" aria-atomic="true"><div class="part-portrait"><img id="part-image" alt="" loading="lazy"></div><div class="part-copy"><p class="eyebrow" id="part-value"></p><h4 id="part-name"></h4><p id="part-role"></p><p class="part-connection" id="part-connection"></p><details><summary>About this reconstruction</summary><p id="part-detail"></p><p class="fine-print">${esc(c.imageNote)}</p></details></div></aside></div>
-  <label class="focus-option"><input type="checkbox" id="focus-selection" checked> Zoom into selected component</label><div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
+  <div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
   <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/m1/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
   <div class="tuning-lab"><div class="tuning-story"><p class="eyebrow">A LITTLE BENCH EXPERIMENT</p><h4>${esc(c.tuningTitle)}</h4><p>${esc(c.tuningIntro)}</p><p class="tuning-challenge">${esc(c.challenge)}</p><label class="probe-switch"><input id="probe-load" type="checkbox"> Add 100 pF probe capacitance</label><button type="button" class="text-button" id="listen-tuning" aria-pressed="false">Listen to alignment ♪</button><p class="fine-print">Optional synthesized tone, not received radio audio.</p></div>
   <div class="tuning-console"><div class="console-readout"><div><span>TANK RESONANCE</span><output id="tuned-frequency">—</output></div><div><span>TARGET</span><strong>${c.targetKhz}<small> kHz</small></strong></div></div>
@@ -1323,9 +1355,9 @@ window.RADIO_CONTENT = {
   const canvas=$('#radio-model');let selected='coil',render=()=>{},focusPart=()=>{},modelReady=false;
   function select(id,zoom=true) {
     selected=id;const p=c.parts.find(p=>p.id===id);
-    $('#part-image').src=p.image;$('#part-image').alt=`Illustrated reconstruction of ${p.name.toLowerCase()}`;
+    $('#part-image').src=p.image;$('#part-image').alt=`Reference view of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
-    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom&&$('#focus-selection').checked){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
+    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
   $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
@@ -1343,7 +1375,7 @@ window.RADIO_CONTENT = {
     const attrs=['pos','normal','colour'].map(n=>gl.getAttribLocation(program,n));attrs.forEach(a=>gl.enableVertexAttribArray(a));
     const u=Object.fromEntries(['center','offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
     const models=G.build().map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
-    let yaw=-.3,pitch=.6,distance=370,desiredDistance=370,center=[-5,18,0],desiredCenter=[-5,18,0],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
+    let yaw=-.3,pitch=.6,distance=570,desiredDistance=570,center=[-25,28,-48],desiredCenter=[-25,28,-48],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
     focusPart=id=>{const part=models.find(p=>p.id===id);if(!part)return;focused=id;
       const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
       for(let j=0;j<part.vertices.length;j+=9)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],part.vertices[j+k]);hi[k]=Math.max(hi[k],part.vertices[j+k]);}
@@ -1360,19 +1392,29 @@ window.RADIO_CONTENT = {
       center=center.map((v,i)=>Math.abs(v-desiredCenter[i])<.02?desiredCenter[i]:v+(desiredCenter[i]-v)*ease);
       distance=Math.abs(distance-desiredDistance)<.02?desiredDistance:distance+(desiredDistance-distance)*ease;
       gl.uniform3fv(u.center,center);last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
-      for(const p of models){if(focused&&p.id!==focused)continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
+      for(const p of models){if(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id)))continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
       if(explode!==target||distance!==desiredDistance||center.some((v,i)=>v!==desiredCenter[i]))frame=requestAnimationFrame(draw);
     }
-    render=()=>{if(!frame)frame=requestAnimationFrame(draw);};
-    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=370;desiredCenter=[-5,18,0];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · select a part below";render();};
-    $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{desiredDistance=Math.max(15,Math.min(650,desiredDistance+(b.dataset.camera==='in'?-30:30)));render();}}));
-    $('#focus-selection').addEventListener('change',()=>{if($('#focus-selection').checked)focusPart(selected);else reset();});
+    render=()=>{if(frame)cancelAnimationFrame(frame);frame=0;draw(performance.now());};
+    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=570;desiredCenter=[-25,28,-48];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · scroll to zoom · click a component";render();};
+    $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{desiredDistance=Math.max(15,Math.min(1000,desiredDistance+(b.dataset.camera==='in'?-30:30)));render();}}));
     $('#bench-explode').addEventListener('click',()=>{if(focused)reset();target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
+    canvas.addEventListener('wheel',e=>{e.preventDefault();const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?canvas.clientHeight:1);desiredDistance=Math.max(15,Math.min(1000,desiredDistance*Math.exp(Math.max(-120,Math.min(120,delta))*.002)));render();},{passive:false});
+    // Hit-test the rendered triangles so direct clicks select the visible surface, not a nearby label.
+    function pick(clientX,clientY){
+      const rect=canvas.getBoundingClientRect(),aspect=rect.width/rect.height,D=distance*Math.max(1,1.3/aspect);
+      const x=(clientX-rect.left)/rect.width*2-1,y=1-(clientY-rect.top)/rect.height*2;
+      let hit=null,best=Infinity;
+      for(const p of models){if(!c.parts.some(q=>q.id===p.id)||(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id))))continue;
+        const project=j=>{const v=[0,1,2].map(k=>p.vertices[j+k]+p.position[k]+p.explode[k]*explode-center[k]);const qx=v[0]*Math.cos(yaw)+v[2]*Math.sin(yaw),qz=-v[0]*Math.sin(yaw)+v[2]*Math.cos(yaw),vy=v[1]*Math.cos(pitch)-qz*Math.sin(pitch),z=D-v[1]*Math.sin(pitch)-qz*Math.cos(pitch);return [qx*2.45/aspect/z,vy*2.45/z,z];};
+        for(let j=0;j<p.vertices.length;j+=27){const a=project(j),b=project(j+9),c=project(j+18);if(Math.min(a[2],b[2],c[2])<=1)continue;const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(den)<1e-12)continue;const u=((b[1]-c[1])*(x-c[0])+(c[0]-b[0])*(y-c[1]))/den,v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(y-c[1]))/den;if(u<0||v<0||u+v>1)continue;const depth=1/(u/a[2]+v/b[2]+(1-u-v)/c[2]);if(depth<best){best=depth;hit=p.id;}}
+      }if(hit)select(hit);
+    }
     let pointer=null;
-    canvas.addEventListener('pointerdown',e=>{if(e.button!==0||pointer)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);});
-    canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;yaw+=(e.clientX-pointer.x)*.008;pitch=Math.max(-.2,Math.min(1.55,pitch+(e.clientY-pointer.y)*.008));pointer.x=e.clientX;pointer.y=e.clientY;render();});
-    const release=e=>{if(pointer?.id===e.pointerId)pointer=null;};canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
-    canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')reset();else if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.55,pitch+.1);else if(e.key==='ArrowDown')pitch=Math.max(-.2,pitch-.1);else desiredDistance=Math.max(15,Math.min(650,desiredDistance+(e.key==='-'?25:-25)));render();});
+    canvas.addEventListener('pointerdown',e=>{if(e.button!==0||pointer)return;pointer={id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId);});
+    canvas.addEventListener('pointermove',e=>{if(!pointer||pointer.id!==e.pointerId)return;if(Math.hypot(e.clientX-pointer.startX,e.clientY-pointer.startY)>5)pointer.moved=true;yaw+=(e.clientX-pointer.x)*.008;pitch=Math.max(-.2,Math.min(1.55,pitch+(e.clientY-pointer.y)*.008));pointer.x=e.clientX;pointer.y=e.clientY;render();});
+    const release=e=>{if(pointer?.id===e.pointerId){const clicked=e.type==='pointerup'&&!pointer.moved;pointer=null;if(clicked)pick(e.clientX,e.clientY);}};canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
+    canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')reset();else if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.55,pitch+.1);else if(e.key==='ArrowDown')pitch=Math.max(-.2,pitch-.1);else desiredDistance=Math.max(15,Math.min(1000,desiredDistance+(e.key==='-'?25:-25)));render();});
     new ResizeObserver(render).observe(canvas);
     if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)render();else if(frame){cancelAnimationFrame(frame);frame=0;}}).observe(canvas);
     document.addEventListener('visibilitychange',render);document.addEventListener('radio:tab',render);
@@ -1800,6 +1842,14 @@ The reusable design skill is included at `skills/atmospheric-vanilla-web/SKILL.m
 Select any component to move the camera into an isolated close-up and read its role and connections. Uncheck **Zoom into selected component** to keep the assembled view while reading descriptions. **Whole circuit** returns to the assembly. Motion respects reduced-motion preferences.
 
 For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTURE-GUIDE.md). Current geometry and generated illustrations remain approximate.
+
+
+
+## Updated bench assembly
+
+Click a visible 3D component or its button to focus it automatically. Drag to orbit, scroll over the canvas to zoom, and use Whole circuit to return. Keyboard arrows, +/- and Home remain available. The focus checkbox has been removed.
+
+The assembly uses a shared 60 mm PVC former with a 75-turn, 29 mm-wide receiver winding and a separate five-turn generator winding. There are four winding leads. The illustrated 24 mm gap and overall pipe height remain approximate. The generator replaces the ESP32 in the model; the ESP32 remains in the historical journey. The supplied GFG-8020H and SDS1102 links guide the instrument shapes, and supplied component photos guide their packages. This is a visual reconstruction, not a dimensionally certified CAD model or breadboard wiring plan.
 ````
 
 ## Replace these placeholders first
