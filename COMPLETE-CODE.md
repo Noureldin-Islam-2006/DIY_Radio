@@ -783,7 +783,7 @@ window.RADIO_CONTENT = {
     modelNote: 'Photo-informed 3D reconstruction · nominal dimensions · illustrative placement. Use the schematic for electrical connections, not the model’s breadboard holes.',
     imageNote: 'AI component illustration based on our photos; obscured details are representative. Original bench photos remain in the journey below.',
     parts: [
-      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 60 mm',image:'assets/components/coil.png',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses the team-confirmed 60 mm diameter, the confirmed 75 main-coil turns, and an assumed 25 mm winding length until that axial dimension is measured.',connection:'Across TP1 and ground.'},
+      {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 60 mm',image:'assets/components/coil.png',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses the team-confirmed 60 mm diameter, the confirmed 75 main-coil turns, and the team-confirmed 29 mm axial winding length. Other obscured dimensions remain illustrative.',connection:'Across TP1 and ground.'},
       {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
       {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'The small package is partially hidden in the photos. Its illustrated housing is representative; the cathode band is the important orientation cue.',connection:'Anode at TP1; banded cathode toward TP3.'},
       {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
@@ -794,7 +794,7 @@ window.RADIO_CONTENT = {
     ],
     tuningTitle: 'Find the signal.',
     tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
-    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, the confirmed 60 mm diameter and an assumed 25 mm winding length (actual length pending confirmation). Q = 4.48 uses the value reported in Table 5; L still uses the nominal geometry, not a measured inductance. The submitted Table 4 inductance is flagged for confirmation in the results. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
+    tuningNote: 'Teaching model, not a measurement or live station. L = 249.43 µH uses the submitted Table 4 value; Q = 4.48 uses Table 5. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
     targetKhz:819, assumedQ:4.48,
     challenge:'Can you bring the resonance within 5 kHz of the target?',
     matched:'On target. Now add the probe and try again.',
@@ -816,7 +816,7 @@ window.RADIO_CONTENT = {
     {
       id: 'm1', label: 'M1', title: 'Finding our frequency.', name: 'Tuner & detector',
       summary: 'From 75 turns of copper to our first experiments with a signal.',
-      status: 'Done', statusNote: 'M1 signed off · confirmed by the team. Prediction inputs still under review.',
+      status: 'Done', statusNote: 'M1 signed off · confirmed by the team.',
       objective: 'Build the front end of an AM receiver. The coil and tuning capacitor form a tank circuit that selects one station’s frequency. A peak-rectifier detector then follows the wave’s envelope: a DC level for a steady sine, or the sound carried by an AM signal.',
       // Facts here are construction specifications, not measured results.
       specs: [
@@ -826,12 +826,12 @@ window.RADIO_CONTENT = {
       ],
       // Tell the build in your own words. media refers to an ID in this milestone's media array.
       journey: [
-        { title: 'First, make the coil.', text: 'We followed the LAB2 winding method, but our coil diameter was 60 mm rather than the brief’s 50 mm. Our receiver coil has 75 turns of 0.3 mm enamelled copper wire. At a 30 mm radius, 2πr × 75 estimates about 14.14 m of wire around the pipe, excluding the connection leads. The axial winding length—the width of the copper-covered band along the pipe—still needs a ruler measurement. We scraped roughly 1 cm of enamel off each end so the connections reached bare copper.', note: '[[TBD: how we kept the turns together without gaps or crossings]]', media: 'setup' },
+        { title: 'First, make the coil.', text: 'We followed the LAB2 winding method, but our coil diameter was 60 mm rather than the brief’s 50 mm. Our receiver coil has 75 turns of 0.3 mm enamelled copper wire. At a 30 mm radius, 2πr × 75 estimates about 14.14 m of wire around the pipe, excluding the connection leads. The axial winding length—the width of the copper-covered band along the pipe—is 29 mm, confirmed by our team. We scraped roughly 1 cm of enamel off each end so the connections reached bare copper.', note: '[[TBD: how we kept the turns together without gaps or crossings]]', media: 'setup' },
         { title: 'Give it a frequency to choose.', text: 'We fixed the 20–280 pF tuning capacitor to the pipe and connected its AM section across the coil. Turning the shaft changes the capacitance, which changes the frequency the tank prefers.', note: '[[TBD: the AM terminal pair we used and how we identified it]]', media: 'top' },
         { title: 'Follow the peaks.', text: 'Next came the detector: a 1N60P diode from TP1 to TP3, with its band facing TP3. A 15 kΩ resistor and a 3.3 nF capacitor sit in parallel between TP3 and ground. Their RC is 49.5 µs, rounded to the lab’s 50 µs. The diode charges the capacitor near each peak; the resistor gives that charge a controlled way to fall.', media: 'schematic' },
         { title: 'A detour through an ESP32.', text: 'The function generator available to us initially had a limited frequency range. With help from Team 20, we tried an ESP32 circuit as a signal source for the test loop. It became our workaround while we looked for a generator that could reach the range we needed.', note: 'This exact sketch produces a sampled sine, not an AM carrier. 100 samples × 10 µs suggests about 1 kHz before sinf(), dacWrite(), and loop overhead; the actual frequency is lower. FREQ is declared but unused. This was a proof-of-concept detour, not a verified medium-wave source.', media: 'esp32', code: '#include <Arduino.h>\n#include <math.h>\n\n#define DAC_PIN 25\n#define FREQ 1000\n#define SAMPLES 100\n\nvoid setup() {\n  Serial.begin(115200);\n}\n\nvoid loop() {\n  for (int i = 0; i < SAMPLES; i++) {\n    float phase = 2.0f * PI * i / SAMPLES;\n    int value = 128 + 100 * sinf(phase);\n\n    dacWrite(DAC_PIN, value);\n\n    delayMicroseconds(10);\n  }\n}', credit: 'Sketch credit: Team 20, who helped us try this approach. Hardware note: this uses a DAC-capable ESP32 with DAC output on GPIO25; it is not portable to every ESP32 variant.' },
         { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn loop a few centimetres from the main coil, with both coils on the same axis. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
-        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the coil dimensions used for Table 4 and the settings visible in our scope capture]]', media: 'wave' }
+        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the settings visible in our scope capture]]', media: 'wave' }
       ],
       // Formula text is rendered with native MathML; descriptions should explain the intuition.
       theory: [
@@ -851,10 +851,10 @@ window.RADIO_CONTENT = {
       ],
       // Table 4 and Table 5: enter numeric values only (units are separate).
       results: {
-        note: 'Tables 4–6 are transcribed from our solved Part B sheet, pages 5–6. Predictions remain as submitted; measurements are recorded separately. The comparison errors below use those submitted predictions, pending the geometry check.',
+        note: 'Tables 4–6 are transcribed from our solved Part B sheet, pages 5–6. Predictions remain as submitted; measurements are recorded separately. The comparison errors below use those submitted predictions.',
         source: { src: 'LAB2solvedpartB.pdf', label: 'Read our solved Part B sheet ↗' },
         reviewNotes: [
-          'Calculation check: the team confirmed a 60 mm coil diameter and M1 sign-off. With the confirmed 75 main-coil turns and generator-driven five-turn test loop, assuming a 25 mm winding length gives L ≈ 383.378 µH and C at 819 kHz ≈ 98.502 pF. These are conditional recalculations, not replacements for the submitted Table 4 value of 249.43 µH. [[TBD: measure the axial width of the 75-turn winding along the pipe]]',
+          'L = 249.43 µH, as recorded in our submitted Table 4.',
           'The recorded bandwidth is 1194 − 956.3 = 237.7 kHz, giving Q = 1065 / 237.7 ≈ 4.4804, consistent with the reported 4.48. Tuning limits and the bandwidth points are different measurements: bandwidth is swept at a fixed capacitor position.',
           'The six recorded points rise from TP1 = 44.53 mV / TP3 = 11.72 mV to TP1 = 1348 mV / TP3 = 851.9 mV. They do not establish a flat dead zone or a precise diode threshold. More points below 44.53 mV at TP1 would help characterize the low-output region.'
         ],
@@ -899,7 +899,7 @@ window.RADIO_CONTENT = {
         'A steady sine gives the detector a DC level; an AM wave gives it an envelope to follow.',
         'Our recorded Q is about 4.48: the bandwidth is 237.7 kHz around a 1065 kHz resonance. The detector output rises across all six readings, but these points alone do not locate the diode’s dead zone.'
       ],
-      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. M1 is signed off. Keep the prediction-input check documented as we prepare for the next chapter.', label: 'M2 · Coming soon →' },
+      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. M1 is signed off. We are ready to prepare for the next chapter.', label: 'M2 · Coming soon →' },
       // Media types: image, video, youtube, drive. Embed src must be a provider embed/preview URL.
       // Missing images stay attractive: use missing:true until the file exists, then remove it.
       // Videos default to muted, never autoplay, and download only on playback (preload:none).
@@ -1244,12 +1244,12 @@ window.RADIO_CONTENT = {
     for(const z of [-1,1])box([0,z*22,30],[8,5,1],'#242b28');
     const start=part.vertices.length/9;
     for(let i=0;i<75*32;i++){
-      const p=t=>[30.4*Math.cos(t*TAU/32),-12.5+25*t/(75*32),30.4*Math.sin(t*TAU/32)];
+      const p=t=>[30.4*Math.cos(t*TAU/32),-14.5+29*t/(75*32),30.4*Math.sin(t*TAU/32)];
       tube(p(i),p(i+1),.21,i%3===0?'#db9c56':'#b97332',5);
     }
     part.winding={start,count:part.vertices.length/9-start};
-    path([[30,-12,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
-    path([[30,12,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
+    path([[30,-14.5,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
+    path([[30,14.5,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
     group('tuning-capacitor',[-5,11,-47],[-8,34,-30]);
     box([0,0,0],[21,12,20],'#232a27');box([0,6.5,0],[22,1,21],'#b9c0b8');
     tube([0,7,0],[0,16,0],2.4,'#a9b1a9',20);
@@ -1281,7 +1281,8 @@ window.RADIO_CONTENT = {
     path([[66,6,-27],[77,10,-24],[91,6,-40]],.6,'#444f48');
     return parts;
   }
-  const inductance = (turns=75) => 60**2*turns**2/(457*60+1016*25);
+  // Use the submitted Table 4 inductance for the teaching experiment.
+  const inductance = (turns=75) => (globalThis.window?.RADIO_CONTENT?.milestones[0].results.predictions.find(row => row.key === 'inductance')?.value ?? 249.43)*(turns/75)**2;
   const resonance = (capPf,turns=75,probePf=0) => 1/(2*Math.PI*Math.sqrt(inductance(turns)*1e-6*(capPf+probePf)*1e-12));
   globalThis.RadioGeometry={build,inductance,resonance};
 })();
@@ -1657,7 +1658,7 @@ README.md
 
 Open `js/content.js`. Its commented sections contain the identity, team, story, theory descriptions, measurements, media, and interface labels. Text is escaped before rendering. Use plain text, not HTML. A token such as `[[TBD: measured f0]]` is automatically highlighted.
 
-M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. The receiver has 75 turns and the generator test loop has 5 turns. Only the axial winding length remains pending clarification, so submitted predictions are preserved with a conditional recalculation note. M2 and M3 remain **Soon**.
+M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. The receiver has 75 turns and the generator test loop has 5 turns. The confirmed axial winding length is 29 mm. The website and tuning experiment use L = 249.43 µH from submitted Table 4. M2 and M3 remain **Soon**.
 
 Keep `project.date` in `YYYY-MM-DD` format and update `dateLabel` alongside it. Replace `project.repo` with your actual HTTPS GitHub repository URL to activate the footer link.
 
@@ -1665,7 +1666,7 @@ The HTML includes a static page title, description, and Open Graph metadata so s
 
 ## Enter results and get the chart
 
-Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, with a visible note about the coil-geometry calculation discrepancy.
+Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, including L = 249.43 µH.
 
 The Table 6 `detector` array has six rows:
 
@@ -1803,8 +1804,8 @@ For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTUR
 
 ## Replace these placeholders first
 
-1. Confirm the coil dimensions behind Table 4; Tables 4–6 are populated from the solved PDF.
-2. Actual generator/probe settings, confirmed problems and fixes, and M1 sign-off.
+1. Tables 4–6 are populated from the solved PDF; L = 249.43 µH is retained as submitted.
+2. Actual generator/probe settings, confirmed problems and fixes, (M1 sign-off is already confirmed).
 3. Missing close-ups, verified resonance capture, tuning video, and media descriptions.
-4. GitHub repository URL and last-updated date.
+4. Keep the last-updated date current; the GitHub repository URL is already configured.
 5. M2 and M3 content when their work begins; until then, keep them as Soon.

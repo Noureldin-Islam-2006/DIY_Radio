@@ -43,12 +43,12 @@
     for(const z of [-1,1])box([0,z*22,30],[8,5,1],'#242b28');
     const start=part.vertices.length/9;
     for(let i=0;i<75*32;i++){
-      const p=t=>[30.4*Math.cos(t*TAU/32),-12.5+25*t/(75*32),30.4*Math.sin(t*TAU/32)];
+      const p=t=>[30.4*Math.cos(t*TAU/32),-14.5+29*t/(75*32),30.4*Math.sin(t*TAU/32)];
       tube(p(i),p(i+1),.21,i%3===0?'#db9c56':'#b97332',5);
     }
     part.winding={start,count:part.vertices.length/9-start};
-    path([[30,-12,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
-    path([[30,12,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
+    path([[30,-14.5,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
+    path([[30,14.5,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
     group('tuning-capacitor',[-5,11,-47],[-8,34,-30]);
     box([0,0,0],[21,12,20],'#232a27');box([0,6.5,0],[22,1,21],'#b9c0b8');
     tube([0,7,0],[0,16,0],2.4,'#a9b1a9',20);
@@ -80,7 +80,8 @@
     path([[66,6,-27],[77,10,-24],[91,6,-40]],.6,'#444f48');
     return parts;
   }
-  const inductance = (turns=75) => 60**2*turns**2/(457*60+1016*25);
+  // Use the submitted Table 4 inductance for the teaching experiment.
+  const inductance = (turns=75) => (globalThis.window?.RADIO_CONTENT?.milestones[0].results.predictions.find(row => row.key === 'inductance')?.value ?? 249.43)*(turns/75)**2;
   const resonance = (capPf,turns=75,probePf=0) => 1/(2*Math.PI*Math.sqrt(inductance(turns)*1e-6*(capPf+probePf)*1e-12));
   globalThis.RadioGeometry={build,inductance,resonance};
 })();

@@ -47,7 +47,7 @@ README.md
 
 Open `js/content.js`. Its commented sections contain the identity, team, story, theory descriptions, measurements, media, and interface labels. Text is escaped before rendering. Use plain text, not HTML. A token such as `[[TBD: measured f0]]` is automatically highlighted.
 
-M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. The receiver has 75 turns and the generator test loop has 5 turns. Only the axial winding length remains pending clarification, so submitted predictions are preserved with a conditional recalculation note. M2 and M3 remain **Soon**.
+M1 is **Done**, following the team’s confirmation of grader sign-off. The actual coil diameter is 60 mm. The receiver has 75 turns and the generator test loop has 5 turns. The confirmed axial winding length is 29 mm. The website and tuning experiment use L = 249.43 µH from submitted Table 4. M2 and M3 remain **Soon**.
 
 Keep `project.date` in `YYYY-MM-DD` format and update `dateLabel` alongside it. Replace `project.repo` with your actual HTTPS GitHub repository URL to activate the footer link.
 
@@ -55,7 +55,7 @@ The HTML includes a static page title, description, and Open Graph metadata so s
 
 ## Enter results and get the chart
 
-Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, with a visible note about the coil-geometry calculation discrepancy.
+Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, including L = 249.43 µH.
 
 The Table 6 `detector` array has six rows:
 
