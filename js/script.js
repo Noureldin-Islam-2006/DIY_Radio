@@ -7,6 +7,7 @@
   const rich = value => escape(value).replace(/\[\[TBD[^\]]*\]\]/g, '<mark class="tbd">$&</mark>');
   const number = value => typeof value === 'number' && Number.isFinite(value);
   const format = value => number(value) ? new Intl.NumberFormat('en', { maximumFractionDigits: 3 }).format(value) : rich(value);
+  const measurement = value => number(value) ? new Intl.NumberFormat('en', { maximumFractionDigits: 10 }).format(value) : rich(value);
   const safePath = value => /^(?!\/|[a-z]+:|.*(?:^|\/)\.\.\/)[^<>]+$/i.test(value || '') ? value : '';
   const external = value => { try { const url = new URL(value); return url.protocol === 'https:' ? url.href : ''; } catch (_) { return ''; } };
   const unique = new Set();
@@ -49,7 +50,7 @@
     const y = n => 260 - n / maxY * 220;
     const ticks = Array.from({ length: 5 }, (_, i) => {
       const t = i / 4;
-      return `<line class="grid-line" x1="70" y1="${y(t * maxY)}" x2="680" y2="${y(t * maxY)}"/>${points.length ? `<text x="58" y="${y(t * maxY) + 4}" text-anchor="end">${format(t * maxY)}</text><text x="${x(t * maxX)}" y="283" text-anchor="middle">${format(t * maxX)}</text>` : ''}`;
+      return `<line class="grid-line" x1="70" y1="${y(t * maxY)}" x2="680" y2="${y(t * maxY)}"/>${points.length ? `<text x="58" y="${y(t * maxY) + 4}" text-anchor="end">${Math.round(t * maxY)}</text><text x="${x(t * maxX)}" y="283" text-anchor="middle">${Math.round(t * maxX)}</text>` : ''}`;
     }).join('');
     return `<figure class="chart"><h4>${rich(ui.chart)}</h4><svg viewBox="0 0 720 330" role="img" aria-labelledby="${id}-chart-title ${id}-chart-desc"><title id="${id}-chart-title">${escape(ui.chart)}</title><desc id="${id}-chart-desc">${escape(points.length ? `${points.length} measured pairs plotted from Table 6. Read the table for exact values.` : 'No measured data yet. Axes only; no fabricated response curve.')}</desc>${ticks}<path class="axis" d="M70 35V260H685"/><text x="375" y="318" text-anchor="middle">${escape(ui.chartAxisX)}</text><text transform="translate(18 150) rotate(-90)" text-anchor="middle">${escape(ui.chartAxisY)}</text>${points.length > 1 ? `<polyline class="plot" points="${points.map(r => `${x(r.tp1)},${y(r.tp3)}`).join(' ')}"/>` : ''}${points.map(r => `<circle class="plot-point" cx="${x(r.tp1)}" cy="${y(r.tp3)}" r="4"><title>TP1 ${r.tp1} mV; TP3 ${r.tp3} mV</title></circle>`).join('')}</svg>${!points.length ? `<p class="chart-empty">${rich(ui.chartEmpty)}</p>` : ''}<figcaption>${rich(ui.chartNote)}</figcaption></figure>`;
   }
@@ -57,10 +58,12 @@
     const r = m.results || {};
     const values = tankValues(r);
     let html = `<p class="section-intro">${rich(r.note || '[[TBD: results]]')}</p>`;
+    if(r.source && safePath(r.source.src)) html += `<p><a href="${escape(safePath(r.source.src))}" target="_blank" rel="noopener">${rich(r.source.label)}</a></p>`;
+    if(r.reviewNotes?.length) html += `<aside class="note"><ul>${r.reviewNotes.map(note=>`<li>${rich(note)}</li>`).join('')}</ul></aside>`;
     if (r.stats) html += `<div class="stats measured-stats">${r.stats.map(s => `<div><strong>${format(values[s.key] ?? '[[TBD]]')} <small>${escape(s.unit)}</small></strong><span>${rich(s.label)}</span></div>`).join('')}</div>`;
     if (r.predictions) html += table(ui.predictions, [ui.quantity, ui.value], r.predictions.map(v => [rich(v.label), `${format(v.value)} <span class="unit">${escape(v.unit)}</span>`]));
     if (r.tank) html += table(ui.tank, [ui.quantity, ui.value], r.tank.map(v => [rich(v.label), `${format(values[v.key])} <span class="unit">${escape(v.unit)}</span>`]));
-    if (r.detector) html += table(ui.detector, [ui.sourceAmplitude, ui.tp1, ui.tp3], r.detector.map(v => [format(v.source), format(v.tp1), format(v.tp3)])) + chart(r.detector, m.id);
+    if (r.detector) html += table(ui.detector, [ui.sourceAmplitude, ui.tp1, ui.tp3], r.detector.map(v => [measurement(v.source), measurement(v.tp1), measurement(v.tp3)])) + chart(r.detector, m.id);
     if (r.comparisons) {
       html += table(ui.comparison, [ui.quantity, ui.prediction, ui.measured, ui.error], r.comparisons.map(c => {
         const pred = r.predictions.find(v => v.key === c.predictionKey);

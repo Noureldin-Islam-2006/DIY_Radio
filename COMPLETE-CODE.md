@@ -731,7 +731,7 @@ window.RADIO_CONTENT = {
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-06', dateLabel: '06 November 2026',
+    term: 'Fall 2026', date: '2026-11-07', dateLabel: '07 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf',
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
   },
@@ -794,8 +794,8 @@ window.RADIO_CONTENT = {
     ],
     tuningTitle: 'Find the signal.',
     tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
-    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 30 is assumed. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
-    targetKhz:819, assumedQ:30,
+    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 4.48 uses the value reported in Table 5; L still uses the nominal geometry, not a measured inductance. The submitted Table 4 inductance is flagged for confirmation in the results. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
+    targetKhz:819, assumedQ:4.48,
     challenge:'Can you bring the resonance within 5 kHz of the target?',
     matched:'On target. Now add the probe and try again.',
     unmatched:'Keep tuning: more capacitance lowers the resonant frequency.'
@@ -816,7 +816,7 @@ window.RADIO_CONTENT = {
     {
       id: 'm1', label: 'M1', title: 'Finding our frequency.', name: 'Tuner & detector',
       summary: 'From 75 turns of copper to our first experiments with a signal.',
-      status: 'In progress', statusNote: 'Build documented · measurements and sign-off [[TBD: confirm M1 completion]]',
+      status: 'In progress', statusNote: 'Measurements recorded · [[TBD: confirm grader sign-off]]',
       objective: 'Build the front end of an AM receiver. The coil and tuning capacitor form a tank circuit that selects one station’s frequency. A peak-rectifier detector then follows the wave’s envelope: a DC level for a steady sine, or the sound carried by an AM signal.',
       // Facts here are construction specifications, not measured results.
       specs: [
@@ -831,7 +831,7 @@ window.RADIO_CONTENT = {
         { title: 'Follow the peaks.', text: 'Next came the detector: a 1N60P diode from TP1 to TP3, with its band facing TP3. A 15 kΩ resistor and a 3.3 nF capacitor sit in parallel between TP3 and ground. Their RC is 49.5 µs, rounded to the lab’s 50 µs. The diode charges the capacitor near each peak; the resistor gives that charge a controlled way to fall.', media: 'schematic' },
         { title: 'A detour through an ESP32.', text: 'The function generator available to us initially had a limited frequency range. With help from Team 20, we tried an ESP32 circuit as a signal source for the test loop. It became our workaround while we looked for a generator that could reach the range we needed.', note: 'This exact sketch produces a sampled sine, not an AM carrier. 100 samples × 10 µs suggests about 1 kHz before sinf(), dacWrite(), and loop overhead; the actual frequency is lower. FREQ is declared but unused. This was a proof-of-concept detour, not a verified medium-wave source.', media: 'esp32', code: '#include <Arduino.h>\n#include <math.h>\n\n#define DAC_PIN 25\n#define FREQ 1000\n#define SAMPLES 100\n\nvoid setup() {\n  Serial.begin(115200);\n}\n\nvoid loop() {\n  for (int i = 0; i < SAMPLES; i++) {\n    float phase = 2.0f * PI * i / SAMPLES;\n    int value = 128 + 100 * sinf(phase);\n\n    dacWrite(DAC_PIN, value);\n\n    delayMicroseconds(10);\n  }\n}', credit: 'Sketch credit: Team 20, who helped us try this approach. Hardware note: this uses a DAC-capable ESP32 with DAC output on GPIO25; it is not portable to every ESP32 variant.' },
         { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn loop a few centimetres from the main coil, with both coils on the same axis. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
-        { title: 'Now, put numbers to the response.', text: 'The next documentation step is to record the resonance at half capacitor travel, find both tuning limits, then sweep to the 0.7-of-peak points for bandwidth. At resonance, six source amplitudes will let us map TP1’s peak to TP3’s DC output.', note: '[[TBD: our measurements and what changed as we turned the capacitor]]', media: 'wave' }
+        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the coil dimensions used for Table 4 and the settings visible in our scope capture]]', media: 'wave' }
       ],
       // Formula text is rendered with native MathML; descriptions should explain the intuition.
       theory: [
@@ -851,30 +851,36 @@ window.RADIO_CONTENT = {
       ],
       // Table 4 and Table 5: enter numeric values only (units are separate).
       results: {
-        note: 'The construction is here; the measurement record is still being filled in. Blank values below are intentional. Nominal component values are not measured performance.',
+        note: 'Tables 4–6 are transcribed from our solved Part B sheet, pages 5–6. Predictions remain as submitted; measurements are recorded separately. The comparison errors below use those submitted predictions, pending the geometry check.',
+        source: { src: 'LAB2solvedpartB.pdf', label: 'Read our solved Part B sheet ↗' },
+        reviewNotes: [
+          'Calculation check: Table 4 reports L = 249.43 µH. Wheeler’s formula with the stated 75 turns, 50 mm diameter and 25 mm winding length gives L ≈ 291.451 µH, C at 819 kHz ≈ 129.571 pF, and tuning limits ≈ 557.133 kHz–2.085 MHz. [[TBD: confirm the dimensions used for the submitted predictions]]',
+          'The recorded bandwidth is 1194 − 956.3 = 237.7 kHz, giving Q = 1065 / 237.7 ≈ 4.4804, consistent with the reported 4.48. Tuning limits and the bandwidth points are different measurements: bandwidth is swept at a fixed capacitor position.',
+          'The six recorded points rise from TP1 = 44.53 mV / TP3 = 11.72 mV to TP1 = 1348 mV / TP3 = 851.9 mV. They do not establish a flat dead zone or a precise diode threshold. More points below 44.53 mV at TP1 would help characterize the low-output region.'
+        ],
         predictions: [
-          { key: 'inductance', label: 'Coil inductance L', value: '[[TBD: predicted L]]', unit: 'µH' },
-          { key: 'cap819', label: 'C for 819 kHz', value: '[[TBD: C at 819 kHz]]', unit: 'pF' },
-          { key: 'bandLow', label: 'f at 280 pF', value: '[[TBD: predicted low end]]', unit: 'kHz' },
-          { key: 'bandHigh', label: 'f at 20 pF', value: '[[TBD: predicted high end]]', unit: 'MHz' },
-          { key: 'rc', label: 'RC (rounded nominal)', value: 50, unit: 'µs' }
+          { key: 'inductance', label: 'Coil inductance L', value: 249.43, unit: 'µH' },
+          { key: 'cap819', label: 'C for 819 kHz', value: 151.4, unit: 'pF' },
+          { key: 'bandLow', label: 'f at 280 pF', value: 602.24, unit: 'kHz' },
+          { key: 'bandHigh', label: 'f at 20 pF', value: 2.253, unit: 'MHz' },
+          { key: 'rc', label: 'RC (nominal calculation)', value: 49.5, unit: 'µs' }
         ],
         tank: [
-          { key: 'bandLow', label: 'Band low end', value: '[[TBD: measured low end]]', unit: 'kHz' },
-          { key: 'bandHigh', label: 'Band high end', value: '[[TBD: measured high end]]', unit: 'MHz' },
-          { key: 'f0', label: 'f₀ at half travel', value: '[[TBD: measured f0]]', unit: 'kHz' },
-          { key: 'fLow', label: 'f_low at 0.7 of peak', value: '[[TBD: measured f_low]]', unit: 'kHz' },
-          { key: 'fHigh', label: 'f_high at 0.7 of peak', value: '[[TBD: measured f_high]]', unit: 'kHz' },
-          { key: 'q', label: 'Quality factor Q', value: '[[TBD: Q]]', unit: '' }
+          { key: 'bandLow', label: 'Band low end', value: 965.5, unit: 'kHz' },
+          { key: 'bandHigh', label: 'Band high end', value: 1.119, unit: 'MHz' },
+          { key: 'f0', label: 'f₀ at half travel', value: 1065, unit: 'kHz' },
+          { key: 'fLow', label: 'f_low at 0.7 of peak', value: 956.3, unit: 'kHz' },
+          { key: 'fHigh', label: 'f_high at 0.7 of peak', value: 1194, unit: 'kHz' },
+          { key: 'q', label: 'Quality factor Q', value: 4.48, unit: '' }
         ],
         // Six Table 6 rows. Numeric tp1/tp3 pairs automatically draw the SVG chart.
         detector: [
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' }
+          { source: 1.035, tp1: 1348, tp3: 851.9 },
+          { source: 0.5, tp1: 656.3, tp3: 430.1 },
+          { source: 0.304, tp1: 382.8, tp3: 257.8 },
+          { source: 0.2031, tp1: 250, tp3: 158.2 },
+          { source: 0.09961, tp1: 109.4, tp3: 60.55 },
+          { source: 0.05, tp1: 44.53, tp3: 11.72 }
         ],
         // Match prediction/tank keys so comparisons update from the tables above.
         comparisons: [
@@ -891,9 +897,9 @@ window.RADIO_CONTENT = {
         'A source that produces a visible waveform is not automatically a source that reaches the tank’s resonant band. Our ESP32 detour made that distinction concrete.',
         'The measuring instrument is part of the circuit: probe capacitance changes what the tank sees.',
         'A steady sine gives the detector a DC level; an AM wave gives it an envelope to follow.',
-        '[[TBD: what our measured bandwidth and detector curve taught us]]'
+        'Our recorded Q is about 4.48: the bandwidth is 237.7 kHz around a 1065 kHz resonance. The detector output rises across all six readings, but these points alone do not locate the diode’s dead zone.'
       ],
-      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. First, finish the M1 measurement record; then begin the next chapter.', label: 'M2 · Coming soon →' },
+      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. Resolve the prediction check and confirm M1 sign-off before the next chapter.', label: 'M2 · Coming soon →' },
       // Media types: image, video, youtube, drive. Embed src must be a provider embed/preview URL.
       // Missing images stay attractive: use missing:true until the file exists, then remove it.
       // Videos default to muted, never autoplay, and download only on playback (preload:none).
@@ -952,6 +958,7 @@ window.RADIO_CONTENT = {
   const rich = value => escape(value).replace(/\[\[TBD[^\]]*\]\]/g, '<mark class="tbd">$&</mark>');
   const number = value => typeof value === 'number' && Number.isFinite(value);
   const format = value => number(value) ? new Intl.NumberFormat('en', { maximumFractionDigits: 3 }).format(value) : rich(value);
+  const measurement = value => number(value) ? new Intl.NumberFormat('en', { maximumFractionDigits: 10 }).format(value) : rich(value);
   const safePath = value => /^(?!\/|[a-z]+:|.*(?:^|\/)\.\.\/)[^<>]+$/i.test(value || '') ? value : '';
   const external = value => { try { const url = new URL(value); return url.protocol === 'https:' ? url.href : ''; } catch (_) { return ''; } };
   const unique = new Set();
@@ -994,7 +1001,7 @@ window.RADIO_CONTENT = {
     const y = n => 260 - n / maxY * 220;
     const ticks = Array.from({ length: 5 }, (_, i) => {
       const t = i / 4;
-      return `<line class="grid-line" x1="70" y1="${y(t * maxY)}" x2="680" y2="${y(t * maxY)}"/>${points.length ? `<text x="58" y="${y(t * maxY) + 4}" text-anchor="end">${format(t * maxY)}</text><text x="${x(t * maxX)}" y="283" text-anchor="middle">${format(t * maxX)}</text>` : ''}`;
+      return `<line class="grid-line" x1="70" y1="${y(t * maxY)}" x2="680" y2="${y(t * maxY)}"/>${points.length ? `<text x="58" y="${y(t * maxY) + 4}" text-anchor="end">${Math.round(t * maxY)}</text><text x="${x(t * maxX)}" y="283" text-anchor="middle">${Math.round(t * maxX)}</text>` : ''}`;
     }).join('');
     return `<figure class="chart"><h4>${rich(ui.chart)}</h4><svg viewBox="0 0 720 330" role="img" aria-labelledby="${id}-chart-title ${id}-chart-desc"><title id="${id}-chart-title">${escape(ui.chart)}</title><desc id="${id}-chart-desc">${escape(points.length ? `${points.length} measured pairs plotted from Table 6. Read the table for exact values.` : 'No measured data yet. Axes only; no fabricated response curve.')}</desc>${ticks}<path class="axis" d="M70 35V260H685"/><text x="375" y="318" text-anchor="middle">${escape(ui.chartAxisX)}</text><text transform="translate(18 150) rotate(-90)" text-anchor="middle">${escape(ui.chartAxisY)}</text>${points.length > 1 ? `<polyline class="plot" points="${points.map(r => `${x(r.tp1)},${y(r.tp3)}`).join(' ')}"/>` : ''}${points.map(r => `<circle class="plot-point" cx="${x(r.tp1)}" cy="${y(r.tp3)}" r="4"><title>TP1 ${r.tp1} mV; TP3 ${r.tp3} mV</title></circle>`).join('')}</svg>${!points.length ? `<p class="chart-empty">${rich(ui.chartEmpty)}</p>` : ''}<figcaption>${rich(ui.chartNote)}</figcaption></figure>`;
   }
@@ -1002,10 +1009,12 @@ window.RADIO_CONTENT = {
     const r = m.results || {};
     const values = tankValues(r);
     let html = `<p class="section-intro">${rich(r.note || '[[TBD: results]]')}</p>`;
+    if(r.source && safePath(r.source.src)) html += `<p><a href="${escape(safePath(r.source.src))}" target="_blank" rel="noopener">${rich(r.source.label)}</a></p>`;
+    if(r.reviewNotes?.length) html += `<aside class="note"><ul>${r.reviewNotes.map(note=>`<li>${rich(note)}</li>`).join('')}</ul></aside>`;
     if (r.stats) html += `<div class="stats measured-stats">${r.stats.map(s => `<div><strong>${format(values[s.key] ?? '[[TBD]]')} <small>${escape(s.unit)}</small></strong><span>${rich(s.label)}</span></div>`).join('')}</div>`;
     if (r.predictions) html += table(ui.predictions, [ui.quantity, ui.value], r.predictions.map(v => [rich(v.label), `${format(v.value)} <span class="unit">${escape(v.unit)}</span>`]));
     if (r.tank) html += table(ui.tank, [ui.quantity, ui.value], r.tank.map(v => [rich(v.label), `${format(values[v.key])} <span class="unit">${escape(v.unit)}</span>`]));
-    if (r.detector) html += table(ui.detector, [ui.sourceAmplitude, ui.tp1, ui.tp3], r.detector.map(v => [format(v.source), format(v.tp1), format(v.tp3)])) + chart(r.detector, m.id);
+    if (r.detector) html += table(ui.detector, [ui.sourceAmplitude, ui.tp1, ui.tp3], r.detector.map(v => [measurement(v.source), measurement(v.tp1), measurement(v.tp3)])) + chart(r.detector, m.id);
     if (r.comparisons) {
       html += table(ui.comparison, [ui.quantity, ui.prediction, ui.measured, ui.error], r.comparisons.map(c => {
         const pred = r.predictions.find(v => v.key === c.predictionKey);
@@ -1648,7 +1657,7 @@ README.md
 
 Open `js/content.js`. Its commented sections contain the identity, team, story, theory descriptions, measurements, media, and interface labels. Text is escaped before rendering. Use plain text, not HTML. A token such as `[[TBD: measured f0]]` is automatically highlighted.
 
-M1 currently says **In progress** because measurements and sign-off are not confirmed. Set `status: 'Done'` when appropriate and update `statusNote`. The progress count updates automatically. M2 and M3 remain planned and their tabs say **Soon**.
+M1 currently says **In progress** because grader sign-off is not confirmed; Tables 4–6 are now transcribed from the solved Part B PDF. Set `status: 'Done'` when appropriate and update `statusNote`. The progress count updates automatically. M2 and M3 remain planned and their tabs say **Soon**.
 
 Keep `project.date` in `YYYY-MM-DD` format and update `dateLabel` alongside it. Replace `project.repo` with your actual HTTPS GitHub repository URL to activate the footer link.
 
@@ -1656,7 +1665,7 @@ The HTML includes a static page title, description, and Open Graph metadata so s
 
 ## Enter results and get the chart
 
-Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Predictions intentionally remain blank until the team fills them in.
+Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, with a visible note about the coil-geometry calculation discrepancy.
 
 The Table 6 `detector` array has six rows:
 
@@ -1753,7 +1762,7 @@ Relative paths support `https://<user>.github.io/<repo>/`; no rewriting, build a
 
 ## Fill the remaining gaps, in order
 
-1. **Measurements:** Table 4 predictions, Table 5 resonance/bandwidth, then all six Table 6 rows. The chart and comparison errors update from these entries.
+1. **Confirm the prediction inputs:** the submitted 249.43 µH differs from the 291.451 µH obtained with the stated 75 turns / 50 mm / 25 mm. Tables 4–6 and all six detector points have been entered; confirm the measurement setup and grader sign-off.
 2. **Evidence:** generator models/ranges, probe settings, scope channel mapping, actual fixes, and M1 sign-off/status.
 3. **Media:** coil and detector close-ups, a verified resonance screenshot, the tuning video, and meaningful descriptions/captions for the existing videos.
 4. **Publishing:** GitHub repository URL and the last-updated date. Update social metadata if you rename the project.
@@ -1768,7 +1777,7 @@ A fixed left sidebar at desktop widths follows the active milestone. On smaller 
 
 M1 now includes a dependency-free WebGL assembly with orbit/zoom controls, animated component separation, and eight selectable component illustrations. Use the hero's **Explore the circuit in 3D** button or the section sidebar. Mouse/touch dragging rotates the model; keyboard arrows rotate, +/- zoom, and Home resets the camera. Native WebGL must be enabled for the 3D view; an actual bench photo is the fallback. The descriptions and tuning experiment remain ordinary accessible HTML.
 
-The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. No real measurements were added.
+The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. The results now include the measurements from LAB2solvedpartB.pdf. Illustrative signal animations remain separate from those measurements.
 
 - `js/content.js`: workbench descriptions and component catalogue.
 - `js/circuit-model.js`: original mesh geometry and resonance functions.
@@ -1794,7 +1803,7 @@ For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTUR
 
 ## Replace these placeholders first
 
-1. Table 4 predictions, Table 5 tank measurements, and the six Table 6 rows.
+1. Confirm the coil dimensions behind Table 4; Tables 4–6 are populated from the solved PDF.
 2. Actual generator/probe settings, confirmed problems and fixes, and M1 sign-off.
 3. Missing close-ups, verified resonance capture, tuning video, and media descriptions.
 4. GitHub repository URL and last-updated date.

@@ -47,7 +47,7 @@ README.md
 
 Open `js/content.js`. Its commented sections contain the identity, team, story, theory descriptions, measurements, media, and interface labels. Text is escaped before rendering. Use plain text, not HTML. A token such as `[[TBD: measured f0]]` is automatically highlighted.
 
-M1 currently says **In progress** because measurements and sign-off are not confirmed. Set `status: 'Done'` when appropriate and update `statusNote`. The progress count updates automatically. M2 and M3 remain planned and their tabs say **Soon**.
+M1 currently says **In progress** because grader sign-off is not confirmed; Tables 4–6 are now transcribed from the solved Part B PDF. Set `status: 'Done'` when appropriate and update `statusNote`. The progress count updates automatically. M2 and M3 remain planned and their tabs say **Soon**.
 
 Keep `project.date` in `YYYY-MM-DD` format and update `dateLabel` alongside it. Replace `project.repo` with your actual HTTPS GitHub repository URL to activate the footer link.
 
@@ -55,7 +55,7 @@ The HTML includes a static page title, description, and Open Graph metadata so s
 
 ## Enter results and get the chart
 
-Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Predictions intentionally remain blank until the team fills them in.
+Enter **numbers**, not quoted strings, in the Table 4 and Table 5 `value` properties. Leave units in their separate `unit` properties. Submitted predictions are preserved from Table 4, with a visible note about the coil-geometry calculation discrepancy.
 
 The Table 6 `detector` array has six rows:
 
@@ -152,7 +152,7 @@ Relative paths support `https://<user>.github.io/<repo>/`; no rewriting, build a
 
 ## Fill the remaining gaps, in order
 
-1. **Measurements:** Table 4 predictions, Table 5 resonance/bandwidth, then all six Table 6 rows. The chart and comparison errors update from these entries.
+1. **Confirm the prediction inputs:** the submitted 249.43 µH differs from the 291.451 µH obtained with the stated 75 turns / 50 mm / 25 mm. Tables 4–6 and all six detector points have been entered; confirm the measurement setup and grader sign-off.
 2. **Evidence:** generator models/ranges, probe settings, scope channel mapping, actual fixes, and M1 sign-off/status.
 3. **Media:** coil and detector close-ups, a verified resonance screenshot, the tuning video, and meaningful descriptions/captions for the existing videos.
 4. **Publishing:** GitHub repository URL and the last-updated date. Update social metadata if you rename the project.
@@ -167,7 +167,7 @@ A fixed left sidebar at desktop widths follows the active milestone. On smaller 
 
 M1 now includes a dependency-free WebGL assembly with orbit/zoom controls, animated component separation, and eight selectable component illustrations. Use the hero's **Explore the circuit in 3D** button or the section sidebar. Mouse/touch dragging rotates the model; keyboard arrows rotate, +/- zoom, and Home resets the camera. Native WebGL must be enabled for the 3D view; an actual bench photo is the fallback. The descriptions and tuning experiment remain ordinary accessible HTML.
 
-The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. No real measurements were added.
+The tuning experiment calculates resonance from nominal coil dimensions. Its optional sound is a quiet synthesized tone, not live radio. Sound stops when the experiment leaves the viewport, a milestone changes, or the page becomes hidden. All illustrations, model limitations, and the teaching-model assumptions are labelled. The results now include the measurements from LAB2solvedpartB.pdf. Illustrative signal animations remain separate from those measurements.
 
 - `js/content.js`: workbench descriptions and component catalogue.
 - `js/circuit-model.js`: original mesh geometry and resonance functions.

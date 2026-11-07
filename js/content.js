@@ -11,7 +11,7 @@ window.RADIO_CONTENT = {
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-06', dateLabel: '06 November 2026',
+    term: 'Fall 2026', date: '2026-11-07', dateLabel: '07 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf',
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
   },
@@ -74,8 +74,8 @@ window.RADIO_CONTENT = {
     ],
     tuningTitle: 'Find the signal.',
     tuningIntro: 'A small experiment: aim the tank at an illustrative 819 kHz carrier. Move the capacitor and watch the alignment change. Try adding probe capacitance, then retune.',
-    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 30 is assumed. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
-    targetKhz:819, assumedQ:30,
+    tuningNote: 'Teaching model, not a measurement or live station. L uses Wheeler’s estimate for 75 turns, 50 mm diameter and 25 mm length. Q = 4.48 uses the value reported in Table 5; L still uses the nominal geometry, not a measured inductance. The submitted Table 4 inductance is flagged for confirmation in the results. Response = 1 / √(1 + Q²(f/f₀ − f₀/f)²). Extra probe capacitance is an illustrative 100 pF. Real parasitics, coupling, loading and tolerances are omitted.',
+    targetKhz:819, assumedQ:4.48,
     challenge:'Can you bring the resonance within 5 kHz of the target?',
     matched:'On target. Now add the probe and try again.',
     unmatched:'Keep tuning: more capacitance lowers the resonant frequency.'
@@ -96,7 +96,7 @@ window.RADIO_CONTENT = {
     {
       id: 'm1', label: 'M1', title: 'Finding our frequency.', name: 'Tuner & detector',
       summary: 'From 75 turns of copper to our first experiments with a signal.',
-      status: 'In progress', statusNote: 'Build documented · measurements and sign-off [[TBD: confirm M1 completion]]',
+      status: 'In progress', statusNote: 'Measurements recorded · [[TBD: confirm grader sign-off]]',
       objective: 'Build the front end of an AM receiver. The coil and tuning capacitor form a tank circuit that selects one station’s frequency. A peak-rectifier detector then follows the wave’s envelope: a DC level for a steady sine, or the sound carried by an AM signal.',
       // Facts here are construction specifications, not measured results.
       specs: [
@@ -111,7 +111,7 @@ window.RADIO_CONTENT = {
         { title: 'Follow the peaks.', text: 'Next came the detector: a 1N60P diode from TP1 to TP3, with its band facing TP3. A 15 kΩ resistor and a 3.3 nF capacitor sit in parallel between TP3 and ground. Their RC is 49.5 µs, rounded to the lab’s 50 µs. The diode charges the capacitor near each peak; the resistor gives that charge a controlled way to fall.', media: 'schematic' },
         { title: 'A detour through an ESP32.', text: 'The function generator available to us initially had a limited frequency range. With help from Team 20, we tried an ESP32 circuit as a signal source for the test loop. It became our workaround while we looked for a generator that could reach the range we needed.', note: 'This exact sketch produces a sampled sine, not an AM carrier. 100 samples × 10 µs suggests about 1 kHz before sinf(), dacWrite(), and loop overhead; the actual frequency is lower. FREQ is declared but unused. This was a proof-of-concept detour, not a verified medium-wave source.', media: 'esp32', code: '#include <Arduino.h>\n#include <math.h>\n\n#define DAC_PIN 25\n#define FREQ 1000\n#define SAMPLES 100\n\nvoid setup() {\n  Serial.begin(115200);\n}\n\nvoid loop() {\n  for (int i = 0; i < SAMPLES; i++) {\n    float phase = 2.0f * PI * i / SAMPLES;\n    int value = 128 + 100 * sinf(phase);\n\n    dacWrite(DAC_PIN, value);\n\n    delayMicroseconds(10);\n  }\n}', credit: 'Sketch credit: Team 20, who helped us try this approach. Hardware note: this uses a DAC-capable ESP32 with DAC output on GPIO25; it is not portable to every ESP32 variant.' },
         { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn loop a few centimetres from the main coil, with both coils on the same axis. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
-        { title: 'Now, put numbers to the response.', text: 'The next documentation step is to record the resonance at half capacitor travel, find both tuning limits, then sweep to the 0.7-of-peak points for bandwidth. At resonance, six source amplitudes will let us map TP1’s peak to TP3’s DC output.', note: '[[TBD: our measurements and what changed as we turned the capacitor]]', media: 'wave' }
+        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the coil dimensions used for Table 4 and the settings visible in our scope capture]]', media: 'wave' }
       ],
       // Formula text is rendered with native MathML; descriptions should explain the intuition.
       theory: [
@@ -131,30 +131,36 @@ window.RADIO_CONTENT = {
       ],
       // Table 4 and Table 5: enter numeric values only (units are separate).
       results: {
-        note: 'The construction is here; the measurement record is still being filled in. Blank values below are intentional. Nominal component values are not measured performance.',
+        note: 'Tables 4–6 are transcribed from our solved Part B sheet, pages 5–6. Predictions remain as submitted; measurements are recorded separately. The comparison errors below use those submitted predictions, pending the geometry check.',
+        source: { src: 'LAB2solvedpartB.pdf', label: 'Read our solved Part B sheet ↗' },
+        reviewNotes: [
+          'Calculation check: Table 4 reports L = 249.43 µH. Wheeler’s formula with the stated 75 turns, 50 mm diameter and 25 mm winding length gives L ≈ 291.451 µH, C at 819 kHz ≈ 129.571 pF, and tuning limits ≈ 557.133 kHz–2.085 MHz. [[TBD: confirm the dimensions used for the submitted predictions]]',
+          'The recorded bandwidth is 1194 − 956.3 = 237.7 kHz, giving Q = 1065 / 237.7 ≈ 4.4804, consistent with the reported 4.48. Tuning limits and the bandwidth points are different measurements: bandwidth is swept at a fixed capacitor position.',
+          'The six recorded points rise from TP1 = 44.53 mV / TP3 = 11.72 mV to TP1 = 1348 mV / TP3 = 851.9 mV. They do not establish a flat dead zone or a precise diode threshold. More points below 44.53 mV at TP1 would help characterize the low-output region.'
+        ],
         predictions: [
-          { key: 'inductance', label: 'Coil inductance L', value: '[[TBD: predicted L]]', unit: 'µH' },
-          { key: 'cap819', label: 'C for 819 kHz', value: '[[TBD: C at 819 kHz]]', unit: 'pF' },
-          { key: 'bandLow', label: 'f at 280 pF', value: '[[TBD: predicted low end]]', unit: 'kHz' },
-          { key: 'bandHigh', label: 'f at 20 pF', value: '[[TBD: predicted high end]]', unit: 'MHz' },
-          { key: 'rc', label: 'RC (rounded nominal)', value: 50, unit: 'µs' }
+          { key: 'inductance', label: 'Coil inductance L', value: 249.43, unit: 'µH' },
+          { key: 'cap819', label: 'C for 819 kHz', value: 151.4, unit: 'pF' },
+          { key: 'bandLow', label: 'f at 280 pF', value: 602.24, unit: 'kHz' },
+          { key: 'bandHigh', label: 'f at 20 pF', value: 2.253, unit: 'MHz' },
+          { key: 'rc', label: 'RC (nominal calculation)', value: 49.5, unit: 'µs' }
         ],
         tank: [
-          { key: 'bandLow', label: 'Band low end', value: '[[TBD: measured low end]]', unit: 'kHz' },
-          { key: 'bandHigh', label: 'Band high end', value: '[[TBD: measured high end]]', unit: 'MHz' },
-          { key: 'f0', label: 'f₀ at half travel', value: '[[TBD: measured f0]]', unit: 'kHz' },
-          { key: 'fLow', label: 'f_low at 0.7 of peak', value: '[[TBD: measured f_low]]', unit: 'kHz' },
-          { key: 'fHigh', label: 'f_high at 0.7 of peak', value: '[[TBD: measured f_high]]', unit: 'kHz' },
-          { key: 'q', label: 'Quality factor Q', value: '[[TBD: Q]]', unit: '' }
+          { key: 'bandLow', label: 'Band low end', value: 965.5, unit: 'kHz' },
+          { key: 'bandHigh', label: 'Band high end', value: 1.119, unit: 'MHz' },
+          { key: 'f0', label: 'f₀ at half travel', value: 1065, unit: 'kHz' },
+          { key: 'fLow', label: 'f_low at 0.7 of peak', value: 956.3, unit: 'kHz' },
+          { key: 'fHigh', label: 'f_high at 0.7 of peak', value: 1194, unit: 'kHz' },
+          { key: 'q', label: 'Quality factor Q', value: 4.48, unit: '' }
         ],
         // Six Table 6 rows. Numeric tp1/tp3 pairs automatically draw the SVG chart.
         detector: [
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' },
-          { source: '[[TBD]]', tp1: '[[TBD]]', tp3: '[[TBD]]' }
+          { source: 1.035, tp1: 1348, tp3: 851.9 },
+          { source: 0.5, tp1: 656.3, tp3: 430.1 },
+          { source: 0.304, tp1: 382.8, tp3: 257.8 },
+          { source: 0.2031, tp1: 250, tp3: 158.2 },
+          { source: 0.09961, tp1: 109.4, tp3: 60.55 },
+          { source: 0.05, tp1: 44.53, tp3: 11.72 }
         ],
         // Match prediction/tank keys so comparisons update from the tables above.
         comparisons: [
@@ -171,9 +177,9 @@ window.RADIO_CONTENT = {
         'A source that produces a visible waveform is not automatically a source that reaches the tank’s resonant band. Our ESP32 detour made that distinction concrete.',
         'The measuring instrument is part of the circuit: probe capacitance changes what the tank sees.',
         'A steady sine gives the detector a DC level; an AM wave gives it an envelope to follow.',
-        '[[TBD: what our measured bandwidth and detector curve taught us]]'
+        'Our recorded Q is about 4.48: the bandwidth is 237.7 kHz around a 1065 kHz resonance. The detector output rises across all six readings, but these points alone do not locate the diode’s dead zone.'
       ],
-      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. First, finish the M1 measurement record; then begin the next chapter.', label: 'M2 · Coming soon →' },
+      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. Resolve the prediction check and confirm M1 sign-off before the next chapter.', label: 'M2 · Coming soon →' },
       // Media types: image, video, youtube, drive. Embed src must be a provider embed/preview URL.
       // Missing images stay attractive: use missing:true until the file exists, then remove it.
       // Videos default to muted, never autoplay, and download only on playback (preload:none).
