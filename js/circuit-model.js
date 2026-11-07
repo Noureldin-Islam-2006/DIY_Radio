@@ -39,16 +39,16 @@
       for(let x=-72;x<=72;x+=4)for(let row=-5;row<=5;row++)if(row)box([x,4.2,z+row*3.5],[1.3,.25,1.3],'#59665e');
     }
     group('coil',[-63,29,0],[-22,25,0]);
-    ring(25,-25,2,50,'#d4e0d9');
-    for(const z of [-1,1])box([0,z*22,25],[8,5,1],'#242b28');
+    ring(30,-25,2,50,'#d4e0d9');
+    for(const z of [-1,1])box([0,z*22,30],[8,5,1],'#242b28');
     const start=part.vertices.length/9;
     for(let i=0;i<75*32;i++){
-      const p=t=>[25.4*Math.cos(t*TAU/32),-12.5+25*t/(75*32),25.4*Math.sin(t*TAU/32)];
+      const p=t=>[30.4*Math.cos(t*TAU/32),-12.5+25*t/(75*32),30.4*Math.sin(t*TAU/32)];
       tube(p(i),p(i+1),.21,i%3===0?'#db9c56':'#b97332',5);
     }
     part.winding={start,count:part.vertices.length/9-start};
-    path([[25,-12,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
-    path([[25,12,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
+    path([[30,-12,0],[36,-19,4],[43,-23,-20]],.35,'#b8783e');
+    path([[30,12,0],[40,18,7],[47,-23,25]],.35,'#b8783e');
     group('tuning-capacitor',[-5,11,-47],[-8,34,-30]);
     box([0,0,0],[21,12,20],'#232a27');box([0,6.5,0],[22,1,21],'#b9c0b8');
     tube([0,7,0],[0,16,0],2.4,'#a9b1a9',20);
@@ -80,7 +80,7 @@
     path([[66,6,-27],[77,10,-24],[91,6,-40]],.6,'#444f48');
     return parts;
   }
-  const inductance = (turns=75) => 50**2*turns**2/(457*50+1016*25);
+  const inductance = (turns=75) => 60**2*turns**2/(457*60+1016*25);
   const resonance = (capPf,turns=75,probePf=0) => 1/(2*Math.PI*Math.sqrt(inductance(turns)*1e-6*(capPf+probePf)*1e-12));
   globalThis.RadioGeometry={build,inductance,resonance};
 })();
