@@ -108,3 +108,5 @@ body { padding-left: 0; }
 
 .broadcast-hero h1{width:min(100%,540px);margin:12px 0 24px;line-height:1;} .project-logo{width:100%;height:auto;max-height:270px;object-fit:contain;}
 :root{--accent-ink:#bd2923;} :root[data-theme="dark"]{--accent-ink:#ff827b;} @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent-ink:#ff827b;}}
+
+.broadcast-hero h1{width:min(100%,620px);margin:28px 0 32px;} .project-logo{max-height:none;aspect-ratio:910/435;object-fit:contain;} .header-logo{width:120px;height:auto;} :root[data-theme="light"] .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;} @media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;}} @media(max-width:619px){.header-logo{width:92px}.broadcast-hero h1{margin:24px 0;}}

@@ -178,6 +178,8 @@ body { padding-left: 0; }
 
 .broadcast-hero h1{width:min(100%,540px);margin:12px 0 24px;line-height:1;} .project-logo{width:100%;height:auto;max-height:270px;object-fit:contain;}
 :root{--accent-ink:#bd2923;} :root[data-theme="dark"]{--accent-ink:#ff827b;} @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent-ink:#ff827b;}}
+
+.broadcast-hero h1{width:min(100%,620px);margin:28px 0 32px;} .project-logo{max-height:none;aspect-ratio:910/435;object-fit:contain;} .header-logo{width:120px;height:auto;} :root[data-theme="light"] .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;} @media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;}} @media(max-width:619px){.header-logo{width:92px}.broadcast-hero h1{margin:24px 0;}}
 ````
 
 ## js/experience.js
@@ -267,7 +269,7 @@ Start with the coil and tuner. We can correct those first, then boards, detector
   <meta property="og:description" content="Team 14's field notes: copper wire, a tuning capacitor, an ESP32 detour, and the journey toward sound.">
   <meta property="og:image" content="assets/m1/setup.jpg">
   <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg?v=20261109b" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/workbench.css">
   <link rel="stylesheet" href="css/experience.css">
@@ -278,7 +280,7 @@ Start with the coil and tuner. We can correct those first, then boards, detector
     } catch (_) { /* System preference still works when storage is unavailable. */ }
   </script>
   <script src="js/content.js" defer></script>
-  <script src="js/script.js" defer></script>
+  <script src="js/script.js?v=20261109b" defer></script>
   <script src="js/circuit-model.js" defer></script>
   <script src="js/workbench.js" defer></script>
   <script src="js/experience.js" defer></script>
@@ -732,7 +734,7 @@ window.RADIO_CONTENT = {
     tagline: 'Making the invisible audible.',
     // Opening exhibit: the real bench photo, a short headline and two routes into the build.
     exhibit: { kicker: 'COPPER. CURIOSITY. CAIRO.', headline: 'A small circuit. An invisible world.', detail: '75 turns / 3 students / 1 radio', action: 'Explore the circuit', signalLink: 'Follow the signal' },
-    intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
+    intro: 'A medium-wave AM radio built by Team 14 for ELEG103 Analog and Digital Electronics. This guide documents the circuit design, assembly, testing and measured results for each milestone, starting with the tuner and envelope detector.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
     term: 'Fall 2026', date: '2026-11-09', dateLabel: '09 November 2026',
@@ -1040,7 +1042,7 @@ window.RADIO_CONTENT = {
   }
   const completed = milestones.filter(m => m.status === 'Done').length;
   $('#site').innerHTML = `
-    <header class="site-header wrap"><a class="wordmark" href="#top" aria-label="${escape(p.name)} — home"><span class="radio-mark" aria-hidden="true">◉</span><span>${escape(p.transliteration)}</span></a><span class="header-term">${escape(p.department)} / ${escape(p.term)}</span><button class="theme-toggle" id="theme-toggle" type="button" aria-label="${escape(ui.theme)}"></button></header>
+    <header class="site-header wrap"><a class="wordmark" href="#top" aria-label="${escape(p.name)} — home"><img class="header-logo" src="assets/logo.svg" alt="${escape(p.name)}"></a><span class="header-term">${escape(p.department)} / ${escape(p.term)}</span><button class="theme-toggle" id="theme-toggle" type="button" aria-label="${escape(ui.theme)}"></button></header>
     <main id="top" class="wrap">
       <section class="hero" aria-labelledby="project-title"><div class="hero-copy"><p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> ${rich(ui.journal)} <span class="edition">NO. ${escape(p.team)}</span></p><h1 id="project-title" lang="ar" dir="rtl">${escape(p.name)}</h1><p class="tagline">${rich(p.tagline)}</p><p class="hero-intro">${rich(p.intro)}</p><a class="primary-link" href="#${escape(milestones[0].id)}" data-jump>${rich(ui.read)} <span aria-hidden="true">↘</span></a><div class="team-line"><span class="team-label">${rich(ui.team)} ${escape(p.team)}</span><ul>${p.members.map(name => `<li>${escape(name)}</li>`).join('')}</ul></div></div><figure class="hero-photo"><img src="${escape(safePath(p.hero.src))}" alt="${escape(p.hero.alt)}" width="1600" height="1200" fetchpriority="high"><span class="photo-label" aria-hidden="true">WORK IN<br>PROGRESS</span><figcaption>${rich(p.hero.caption)}</figcaption></figure></section>
       <section class="overview" aria-labelledby="overview-title"><div class="overview-head"><div><p class="eyebrow">${rich(ui.overview)}</p><h2 id="overview-title">${rich(ui.overviewTitle)}</h2></div><p>${rich(ui.overviewText)}</p></div><ol class="signal-chain" aria-label="Radio signal chain">${chain.map(c => `<li class="${c.current ? 'current' : ''}"><strong>${rich(c.title)}</strong><span>${rich(c.detail)}</span></li>`).join('')}</ol><div class="progress-row"><div class="progress-caption"><span>${rich(ui.progress)}</span><strong>${completed} / ${milestones.length} ${rich(ui.done)}</strong></div><progress value="${completed}" max="${milestones.length}" aria-label="${escape(ui.progress)}">${completed}/${milestones.length}</progress><ul>${milestones.map(m => `<li><span class="status-dot ${m.status === 'Planned' ? 'planned' : ''}" aria-hidden="true"></span>${escape(m.label)} <span>${rich(m.status)}</span></li>`).join('')}</ul></div></section>
@@ -1580,7 +1582,7 @@ Use case: product-mockup / photo-informed educational reconstruction. Create ONE
 ## assets/favicon.svg
 
 ````svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#a4472c"/><g fill="none" stroke="#fff9ef" stroke-width="3"><circle cx="32" cy="32" r="7"/><path d="M21 21a16 16 0 0 0 0 22m22-22a16 16 0 0 1 0 22M14 14a26 26 0 0 0 0 36m36-36a26 26 0 0 1 0 36"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#e93830"/><g fill="none" stroke="#fff9ef" stroke-width="3"><circle cx="32" cy="32" r="7"/><path d="M21 21a16 16 0 0 0 0 22m22-22a16 16 0 0 1 0 22M14 14a26 26 0 0 0 0 36m36-36a26 26 0 0 1 0 36"/></g></svg>
 ````
 
 ## assets/placeholder.svg
