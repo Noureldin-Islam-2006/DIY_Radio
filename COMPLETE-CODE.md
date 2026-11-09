@@ -109,7 +109,7 @@ body { padding-left: 0; }
 .problem-card,.theory-grid > div { background: transparent; border-width: 1px 0 0; border-radius: 0; padding-inline: 0; }
 .problem-grid,.theory-grid { gap: 32px; }
 .bench-layout { border-radius: 10px; overflow: hidden; }
-.bench-stage { background: #191d1c; }
+.bench-stage { background: #292e32; }
 .part-inspector { background: var(--soft); }
 .part-portrait { height: 150px; }
 .part-portrait img { max-height: 140px; }
@@ -130,23 +130,23 @@ body { padding-left: 0; }
 @media print{.opening-exhibit,.editorial-title,.focus-option{display:none}.milestones{margin-left:0}.hero{display:block}.section-sidebar{display:none!important}}
 
 /* Atmospheric radio direction: real photography and a quiet interactive signal study. */
-.broadcast-hero { isolation:isolate; display:block; min-height:660px; margin:24px 0 0; padding:64px 48px 94px; background:#111714; color:#fff7eb; overflow:hidden; border-radius:3px; }
+.broadcast-hero { isolation:isolate; display:block; min-height:660px; margin:24px 0 0; padding:64px 48px 94px; background:#292e32; color:#f4f7f9; overflow:hidden; border-radius:3px; }
 .broadcast-photo { position:absolute; inset:0; z-index:-2; }
 .broadcast-photo img { width:100%; height:100%; object-fit:cover; object-position:72% 50%; opacity:.65; transform:scale(1.04) translate(var(--photo-x,0px),var(--photo-y,0px)); transition:transform .6s ease-out; }
-.broadcast-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#0c120ff5 0%,#0c120fd9 35%,#0c120f25 100%),linear-gradient(0deg,#0c120f 0%,transparent 50%); }
-.broadcast-photo figcaption { position:absolute; right:24px; bottom:80px; font:10px monospace; color:#e1d5c9; max-width:28ch; text-align:right; }
+.broadcast-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#292e32f5 0%,#292e32d9 35%,#292e3225 100%),linear-gradient(0deg,#292e32 0%,transparent 50%); }
+.broadcast-photo figcaption { position:absolute; right:24px; bottom:80px; font:10px monospace; color:#b8c8d2; max-width:28ch; text-align:right; }
 .broadcast-hero .hero-copy { position:relative; z-index:1; max-width:660px; }
-.broadcast-hero .eyebrow { color:#dcc7b5; margin-bottom:18px; }
+.broadcast-hero .eyebrow { color:#b8c8d2; margin-bottom:18px; }
 .broadcast-hero h1 { font:700 clamp(62px,8.2vw,118px)/1.5 'Segoe UI',Arial,sans-serif; margin:0; letter-spacing:-.04em; text-shadow:0 5px 40px #0006; }
 .broadcast-hero .tagline { font:italic clamp(24px,3vw,42px)/1.22 Georgia,serif; max-width:20ch; margin:0 0 20px; }
-.broadcast-hero .hero-intro { color:#d9ded6; max-width:46ch; font-size:14px; line-height:1.8; }
+.broadcast-hero .hero-intro { color:#e5ebef; max-width:46ch; font-size:14px; line-height:1.8; }
 .hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:20px; margin-top:16px; }
-.broadcast-hero .workbench-jump { background:#f1e9da; color:#18201b; margin:0; padding:15px 22px; min-height:48px; }
-.broadcast-hero .primary-link { background:transparent; border-bottom:1px solid #9caa9f; color:#f1e9da; padding:12px 0; }
-.broadcast-hero .team-line { color:#e0e4da; border-color:#ffffff30; margin-top:30px; font-size:11px; }
-.broadcast-hero .team-label { color:#d7b39a; }
-.broadcast-band { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:22px 28px; border-top:1px solid #ffffff20; font:10px monospace; letter-spacing:.08em; background:#0b110fc9; z-index:2; }
-.broadcast-band a { color:#efc3a6; text-decoration:none; padding:5px; }
+.broadcast-hero .workbench-jump { background:#f4f7f9; color:#292e32; margin:0; padding:15px 22px; min-height:48px; }
+.broadcast-hero .primary-link { background:transparent; border-bottom:1px solid #607d8b; color:#f4f7f9; padding:12px 0; }
+.broadcast-hero .team-line { color:#e5ebef; border-color:#ffffff30; margin-top:30px; font-size:11px; }
+.broadcast-hero .team-label { color:#b8c8d2; }
+.broadcast-band { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:22px 28px; border-top:1px solid #ffffff20; font:10px monospace; letter-spacing:.08em; background:#292e32c9; z-index:2; }
+.broadcast-band a { color:#ff827b; text-decoration:none; padding:5px; }
 .hero-wave { position:absolute; right:-8%; bottom:90px; width:60%; height:160px; z-index:-1; opacity:.45; pointer-events:none; }
 .hero-wave path { fill:none; stroke:color-mix(in srgb,var(--accent),white 45%); stroke-width:1.4; }
 .signal-story { padding:100px 0 70px; scroll-margin-top:30px; }
@@ -172,9 +172,12 @@ body { padding-left: 0; }
 .signal-screen-footer>span { font-size:10px; color:var(--muted); }
 .signal-screen-footer button { border:0; background:transparent; color:var(--accent-ink); font-size:12px; padding:12px 0 12px 12px; min-height:44px; white-space:nowrap; }
 @media(max-width:959px){.broadcast-hero{padding:40px 30px 110px;min-height:640px}.broadcast-hero h1{font-size:82px}.signal-story-head{gap:20px 40px}.signal-explorer{grid-template-columns:190px 1fr}.signal-screen{padding:25px}.signal-description p{min-height:6.5em}}
-@media(max-width:619px){.broadcast-hero{padding:30px 22px 120px;min-height:690px}.broadcast-hero h1{font-size:clamp(48px,13.6vw,78px)}.broadcast-hero .hero-intro{font-size:12px}.broadcast-hero .tagline{font-size:28px}.broadcast-photo img{object-position:60% center;opacity:.4}.broadcast-photo::after{background:linear-gradient(90deg,#0c120fee,#0c120f70)}.broadcast-photo figcaption{display:none}.broadcast-hero .team-line{margin-top:25px}.broadcast-band{padding:18px;font-size:9px}.broadcast-band>span:nth-child(2){display:none}.hero-actions{gap:12px}.hero-wave{width:100%;bottom:70px}.signal-story{padding:60px 0 35px}.signal-story-head{display:block}.signal-story-head h2{margin:15px 0 20px;max-width:15ch}.signal-explorer{display:block}.signal-stages{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 0;gap:5px}.signal-stages button{flex:0 0 145px;font-size:13px;min-height:75px}.signal-screen{padding:22px 10px}.signal-screen svg{height:130px}.signal-description h3{font-size:25px}.signal-description p{min-height:8em}.signal-screen-label{font-size:8px}}
+@media(max-width:619px){.broadcast-hero{padding:30px 22px 120px;min-height:690px}.broadcast-hero h1{font-size:clamp(48px,13.6vw,78px)}.broadcast-hero .hero-intro{font-size:12px}.broadcast-hero .tagline{font-size:28px}.broadcast-photo img{object-position:60% center;opacity:.4}.broadcast-photo::after{background:linear-gradient(90deg,#292e32ee,#292e3270)}.broadcast-photo figcaption{display:none}.broadcast-hero .team-line{margin-top:25px}.broadcast-band{padding:18px;font-size:9px}.broadcast-band>span:nth-child(2){display:none}.hero-actions{gap:12px}.hero-wave{width:100%;bottom:70px}.signal-story{padding:60px 0 35px}.signal-story-head{display:block}.signal-story-head h2{margin:15px 0 20px;max-width:15ch}.signal-explorer{display:block}.signal-stages{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px 0;gap:5px}.signal-stages button{flex:0 0 145px;font-size:13px;min-height:75px}.signal-screen{padding:22px 10px}.signal-screen svg{height:130px}.signal-description h3{font-size:25px}.signal-description p{min-height:8em}.signal-screen-label{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.broadcast-photo img{transform:none!important}}
 @media print{.broadcast-hero{min-height:0;padding:20px;color:#111;background:white}.broadcast-photo,.hero-wave,.broadcast-band,.hero-actions{display:none}.broadcast-hero .hero-intro,.broadcast-hero .eyebrow,.broadcast-hero .team-line{color:#333}.signal-story{padding:20px 0}.signal-stages{display:none}.signal-explorer{display:block}.signal-screen-footer button{display:none}}
+
+.broadcast-hero h1{width:min(100%,540px);margin:12px 0 24px;line-height:1;} .project-logo{width:100%;height:auto;max-height:270px;object-fit:contain;}
+:root{--accent-ink:#bd2923;} :root[data-theme="dark"]{--accent-ink:#ff827b;} @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent-ink:#ff827b;}}
 ````
 
 ## js/experience.js
@@ -185,10 +188,11 @@ body { padding-left: 0; }
   const p=window.RADIO_CONTENT.project,c=p.exhibit,s=window.RADIO_CONTENT.signalStory;
   if(!c||!s)return;
   const esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const guide=document.createElement('a');guide.href=p.capacitorGuide.src;guide.textContent=p.capacitorGuide.label;document.querySelector('#m1-gallery').parentElement.after(guide);
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const hero=document.querySelector('.hero');hero.classList.add('broadcast-hero');
   const photo=hero.querySelector('.hero-photo');photo.className='broadcast-photo';photo.querySelector('.photo-label')?.remove();
-  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').textContent=c.headline;
+  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').remove();copy.querySelector('h1').innerHTML='<img class="project-logo" src="assets/logo.svg" alt="هنا القاهرة">';
   const actions=document.createElement('div');actions.className='hero-actions';
   const follow=copy.querySelector('.primary-link'),jump=copy.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
   actions.append(jump,follow);copy.querySelector('.team-line').before(actions);
@@ -302,10 +306,10 @@ Start with the coil and tuner. We can correct those first, then boards, detector
 ````css
 /* Change --accent to recolour the site. Dark mode derives a lighter tint from it. */
 :root {
-  --accent: #a4472c;
-  --paper: #f7f5ef; --surface: #fdfcf8; --ink: #262923; --muted: #62665c;
-  --line: #d8d9ce; --soft: #eeeee5; --accent-ink: var(--accent);
-  --highlight: #f3e7d7; --highlight-ink: #794329;
+  --accent: #e93830;
+  --paper: #f3f5f6; --surface: #ffffff; --ink: #292e32; --muted: #566975;
+  --line: #b8c8d2; --soft: #e5ebef; --accent-ink: var(--accent);
+  --highlight: #e5ebef; --highlight-ink: #994039;
   --space-1: .5rem; --space-2: 1rem; --space-3: 1.5rem;
   --space-4: 2rem; --space-5: 3rem; --space-6: 5rem; --space-7: 7rem;
   --max-width: 1240px; --radius: 4px;
@@ -315,15 +319,15 @@ Start with the coil and tuner. We can correct those first, then boards, detector
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #191d1a; --surface: #202520; --ink: #f1f0e7; --muted: #b0b6aa;
-    --line: #3b433b; --soft: #272e28; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
-    --highlight: #3c2f25; --highlight-ink: #eac1a1; color-scheme: dark;
+    --paper: #292e32; --surface: #30383e; --ink: #f4f7f9; --muted: #b8c8d2;
+    --line: #607d8b; --soft: #35434c; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
+    --highlight: #45383b; --highlight-ink: #ffb6ad; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #191d1a; --surface: #202520; --ink: #f1f0e7; --muted: #b0b6aa;
-  --line: #3b433b; --soft: #272e28; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
-  --highlight: #3c2f25; --highlight-ink: #eac1a1; color-scheme: dark;
+  --paper: #292e32; --surface: #30383e; --ink: #f4f7f9; --muted: #b8c8d2;
+  --line: #607d8b; --soft: #35434c; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
+  --highlight: #45383b; --highlight-ink: #ffb6ad; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
@@ -719,7 +723,7 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
 
 ````javascript
 /* EDIT THIS FILE: all project copy, media, and measurements live here.
-   Use numbers (without units) for measurements; keep unknowns as [[TBD: ...]].
+   Use numbers (without units) for measurements; keep unknowns as.
    Paths are relative to index.html. No server, imports, or fetch are needed. */
 window.RADIO_CONTENT = {
   // Identity, dates, repository, and the opening story. Replace repo with your HTTPS URL.
@@ -731,8 +735,8 @@ window.RADIO_CONTENT = {
     intro: 'A coil of copper wire. A handful of components. A signal waiting to become sound. We’re three students building a medium-wave radio—and keeping the notes we wish we had at the start.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-07', dateLabel: '07 November 2026',
-    repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf',
+    term: 'Fall 2026', date: '2026-11-09', dateLabel: '09 November 2026',
+    repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf', capacitorGuide: {src:'assets/m1/variable-cap.pdf',label:'Variable capacitor pinout guide ↗'},
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
   },
   // Interactive signal story: illustrative shapes, not oscilloscope readings. Add stages here.
@@ -767,7 +771,7 @@ window.RADIO_CONTENT = {
     tp1: 'TP1 peak (mV)', tp3: 'TP3 DC (mV)',
     comparison: 'Predicted vs measured', prediction: 'Prediction', measured: 'Measured', error: 'Error (%)',
     errorFormula: 'Signed error = 100 × (prediction − measured) / measured. Values must use the same unit; a zero measured value has no defined percentage error.',
-    chart: 'The detector’s response', chartEmpty: '[[TBD: add the six Table 6 measurement pairs to draw the chart]]',
+    chart: 'The detector’s response', chartEmpty: 'No measured data yet.',
     chartNote: 'Only entered measurements are plotted. At small TP1 peaks, look for a nearly flat TP3 region: the diode’s dead zone. No assumed threshold or invented curve is added.',
     chartAxisX: 'TP1 peak (mV)', chartAxisY: 'TP3 DC (mV)',
     mediaMissing: 'Awaiting a bench capture', loadEmbed: 'Load external video',
@@ -784,7 +788,7 @@ window.RADIO_CONTENT = {
     imageNote: 'Reference photographs and original instrument diagrams. The 3D reconstruction follows visible shapes; unmeasured dimensions and wire routing remain approximate.',
     parts: [
       {id:'coil',name:'The hand-wound coil',short:'Coil',value:'75 turns · Ø 60 mm',image:'assets/m1/setup.jpg',role:'Stores energy in a magnetic field. Together with the tuning capacitor, it chooses the resonant frequency.',detail:'Our pale PVC former, copper winding, and black tape are reconstructed from the bench photographs. The model uses the team-confirmed 60 mm diameter, the confirmed 75 main-coil turns, and the team-confirmed 29 mm axial winding length. Both windings share this PVC former: the 75-turn band is 29 mm wide, and the five-turn band is below it. The axial gap is illustrated as about 24 mm; its exact value and the pipe height are not measured. Four leads connect the two electrically separate windings.',connection:'Two receiver leads go to TP1 and ground; the other two leads belong to the generator winding.'},
-      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor-reference.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. The AM terminal pair still needs confirmation in our build notes.',connection:'AM section across the coil: TP1 to ground.'},
+      {id:'tuning-capacitor',name:'The tuning capacitor',short:'Tuner',value:'20–280 pF',image:'assets/components/tuning-capacitor-reference.png',role:'Changes the electric energy stored in the tank. More capacitance moves resonance down the dial.',detail:'The square housing and shaft follow the visible component. We used the supplied variable-capacitor pinout guide to identify its terminals.',connection:'AM section across the coil: TP1 to ground.'},
       {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode-reference.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'Orange glass-style axial package with a dark cathode band, following the supplied 1N60P reference. The band faces TP3.',connection:'Anode at TP1; banded cathode toward TP3.'},
       {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor-reference.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
       {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor-reference.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'Yellow dipped radial package marked 332: 3300 pF, or 3.3 nF, following the supplied reference.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
@@ -828,12 +832,12 @@ window.RADIO_CONTENT = {
       ],
       // Tell the build in your own words. media refers to an ID in this milestone's media array.
       journey: [
-        { title: 'First, make the coil.', text: 'We followed the LAB2 winding method, but our coil diameter was 60 mm rather than the brief’s 50 mm. Our receiver coil has 75 turns of 0.3 mm enamelled copper wire. At a 30 mm radius, 2πr × 75 estimates about 14.14 m of wire around the pipe, excluding the connection leads. The axial winding length—the width of the copper-covered band along the pipe—is 29 mm, confirmed by our team. We scraped roughly 1 cm of enamel off each end so the connections reached bare copper.', note: '[[TBD: how we kept the turns together without gaps or crossings]]', media: 'setup' },
-        { title: 'Give it a frequency to choose.', text: 'We fixed the 20–280 pF tuning capacitor to the pipe and connected its AM section across the coil. Turning the shaft changes the capacitance, which changes the frequency the tank prefers.', note: '[[TBD: the AM terminal pair we used and how we identified it]]', media: 'top' },
+        { title: 'First, make the coil.', text: 'We followed the LAB2 winding method, but our coil diameter was 60 mm rather than the brief’s 50 mm. Our receiver coil has 75 turns of 0.3 mm enamelled copper wire. At a 30 mm radius, 2πr × 75 estimates about 14.14 m of wire around the pipe, excluding the connection leads. The axial winding length—the width of the copper-covered band along the pipe—is 29 mm, confirmed by our team. We scraped roughly 1 cm of enamel off each end so the connections reached bare copper.', note: 'We kept neighbouring turns as close together as we could. After every few turns, we secured the winding with tape, then repeated the process along the pipe.', media: 'setup' },
+        { title: 'Give it a frequency to choose.', text: 'We fixed the 20–280 pF tuning capacitor to the pipe and connected its AM section across the coil. Turning the shaft changes the capacitance, which changes the frequency the tank prefers.', media: 'top' },
         { title: 'Follow the peaks.', text: 'Next came the detector: a 1N60P diode from TP1 to TP3, with its band facing TP3. A 15 kΩ resistor and a 3.3 nF capacitor sit in parallel between TP3 and ground. Their RC is 49.5 µs, rounded to the lab’s 50 µs. The diode charges the capacitor near each peak; the resistor gives that charge a controlled way to fall.', media: 'schematic' },
         { title: 'A detour through an ESP32.', text: 'The function generator available to us initially had a limited frequency range. With help from Team 20, we tried an ESP32 circuit as a signal source for the test loop. It became our workaround while we looked for a generator that could reach the range we needed.', note: 'This exact sketch produces a sampled sine, not an AM carrier. 100 samples × 10 µs suggests about 1 kHz before sinf(), dacWrite(), and loop overhead; the actual frequency is lower. FREQ is declared but unused. This was a proof-of-concept detour, not a verified medium-wave source.', media: 'esp32', code: '#include <Arduino.h>\n#include <math.h>\n\n#define DAC_PIN 25\n#define FREQ 1000\n#define SAMPLES 100\n\nvoid setup() {\n  Serial.begin(115200);\n}\n\nvoid loop() {\n  for (int i = 0; i < SAMPLES; i++) {\n    float phase = 2.0f * PI * i / SAMPLES;\n    int value = 128 + 100 * sinf(phase);\n\n    dacWrite(DAC_PIN, value);\n\n    delayMicroseconds(10);\n  }\n}', credit: 'Sketch credit: Team 20, who helped us try this approach. Hardware note: this uses a DAC-capable ESP32 with DAC output on GPIO25; it is not portable to every ESP32 variant.' },
-        { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn winding on the same PVC pipe as the 75-turn receiver winding, separated along the pipe by a few centimetres. Its two leads connect to the generator output and return; the receiver winding has its own two leads to the tank circuit. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10. [[TBD: confirm our probe settings, generator model, and frequency range]]', media: 'generator1' },
-        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6. [[TBD: the settings visible in our scope capture]]', media: 'wave' }
+        { title: 'Back to the signal generator.', text: 'We eventually found a function generator with a wider frequency range and moved on from the ESP32 approach. Our test arrangement uses a five-turn winding on the same PVC pipe as the 75-turn receiver winding, separated along the pipe by a few centimetres. Its two leads connect to the generator output and return; the receiver winding has its own two leads to the tank circuit. We read TP1 on the oscilloscope and TP3’s DC level on the multimeter.', note: 'The lab procedure calls for a compensated ×10 probe and the scope channel set to ×10.', media: 'generator1' },
+        { title: 'The response gets a measurement record.', text: 'Our solved sheet records a resonance of 1065 kHz at half travel and tuning limits of 965.5 kHz and 1.119 MHz. At the fixed half-travel setting, the 0.7-of-peak frequencies are 956.3 and 1194 kHz: a 237.7 kHz bandwidth and Q of about 4.48. Six amplitude settings now trace how TP3 rises with TP1.', note: 'These numbers come from Tables 5 and 6.', media: 'wave' }
       ],
       // Formula text is rendered with native MathML; descriptions should explain the intuition.
       theory: [
@@ -844,12 +848,10 @@ window.RADIO_CONTENT = {
       ],
       // Record what actually happened. Unconfirmed starter cards deliberately retain TBD markers.
       problems: [
-        { problem: 'The first generator could not reach the range we needed.', why: 'Its available frequency range was limited. [[TBD: original generator model and upper limit]]', solution: 'We tried the ESP32 approach with Team 20’s help, then switched to a function generator with a wider frequency range.' },
-        { problem: 'Winding the coil without gaps or crossings.', why: '[[TBD: what happened while we wound our coil]]', solution: '[[TBD: our winding solution]]' },
-        { problem: 'The probe can shift the resonance.', why: 'A ×1 probe adds about 100 pF across the tank, changing its effective capacitance.', solution: 'Compensate the probe and use ×10 on both the probe and scope channel. [[TBD: confirm we did this]]' },
-        { problem: 'A weak signal may barely move TP3.', why: 'Small tank peaks can sit in the detector’s low-output region.', solution: '[[TBD: whether we encountered this and how we resolved it]]' },
-        { problem: 'Finding the capacitor’s AM terminals.', why: '[[TBD: what made the terminal pair unclear on our capacitor]]', solution: '[[TBD: how we identified the right pair]]' },
-        { problem: '[[TBD: another problem we actually faced]]', why: '[[TBD: its cause]]', solution: '[[TBD: our fix]]' }
+        { problem: 'The first generator could not reach the range we needed.', why: 'Its available frequency range was limited.', solution: 'We tried the ESP32 approach with Team 20’s help, then switched to a function generator with a wider frequency range.' },
+        { problem: 'Winding the coil without gaps or crossings.', why: 'Keeping neighbouring turns close together took care as we wound the wire.', solution: 'We wound a few turns at a time and secured them with tape before continuing. The tape is visible in our coil photograph.' },
+        { problem: 'The probe can shift the resonance.', why: 'A ×1 probe adds about 100 pF across the tank, changing its effective capacitance.', solution: 'We compensated the probe and used ×10 on both the probe and the scope channel.' },
+        { problem: 'Finding the capacitor’s AM terminals.', why: 'The capacitor has several terminals and sections, so we needed a pinout guide.', solution: 'We used the variable-capacitor pinout PDF to identify the terminals and guide our connections. The guide is included in the gallery below.' },
       ],
       // Table 4 and Table 5: enter numeric values only (units are separate).
       results: {
@@ -909,40 +911,34 @@ window.RADIO_CONTENT = {
         { id: 'setup', type: 'image', src: 'assets/m1/setup.jpg', alt: 'Copper coil, tuning capacitor, two breadboards, and probes in the complete bench setup.', caption: 'The whole setup, with our wound coil at the centre.' },
         { id: 'top', type: 'image', src: 'assets/m1/top-view.jpg', alt: 'Top view of the coil between a capacitor breadboard and the ESP32 breadboard.', caption: 'An overhead view of the connections during the ESP32 experiments.' },
         { id: 'esp32', type: 'image', src: 'assets/m1/esp32-circuit.jpg', alt: 'ESP32 development board, jumper wires, and components on a breadboard beside the main coil.', caption: 'The ESP32 detour. Thanks to Team 20 for helping us try it.' },
-        { id: 'wave', type: 'image', src: 'assets/m1/esp32-wave.jpg', alt: 'Oscilloscope photograph with cyan and yellow traces captured during the ESP32 experiments.', caption: 'Our scope capture during the ESP32 approach. [[TBD: channel connections and signal settings; this is not yet a verified TP1 resonance measurement]]' },
-        { id: 'esp32video', type: 'video', src: 'assets/m1/esp32-wave.mp4', poster: 'assets/m1/esp32-wave.jpg', muted: true, caption: 'ESP32 waveform experiment · starts muted.', description: '[[TBD: describe the trace changes in this clip and add a transcript if speech is relevant]]' },
-        { id: 'generator1', type: 'video', src: 'assets/m1/generator-01.mp4', muted: true, caption: 'After switching to the wider-range function generator · part 1.', description: '[[TBD: test settings and a text description of what this clip demonstrates]]' },
-        { id: 'generator2', type: 'video', src: 'assets/m1/generator-02.mp4', muted: true, caption: 'After switching to the wider-range function generator · part 2.', description: '[[TBD: test settings and a text description of what this clip demonstrates]]' },
+        { id: 'wave', type: 'image', src: 'assets/m1/lower-limit.png', alt: 'Oscilloscope showing a yellow waveform, 942.1 kHz frequency and 1.836 V peak-to-peak.', caption: 'Capture near the lower tuning limit: the screen reads 942.1 kHz and 1.836 V peak-to-peak. Table 5 retains the separately recorded lower limit of 965.5 kHz.' },
+        { id: 'esp32video', type: 'video', src: 'assets/m1/esp32-wave.mp4', poster: 'assets/m1/esp32-wave.jpg', muted: true, caption: 'ESP32 waveform experiment · starts muted.', description: '' },
+        { id: 'generator1', type: 'video', src: 'assets/m1/generator-01.mp4', muted: true, caption: 'After switching to the wider-range function generator · part 1.', description: '' },
+        { id: 'generator2', type: 'video', src: 'assets/m1/generator-02.mp4', muted: true, caption: 'After switching to the wider-range function generator · part 2.', description: '' },
         { id: 'schematic', type: 'image', src: 'assets/m1/schematic.svg', alt: 'Five-turn generator loop inductively couples to a parallel 75-turn coil and 20–280 pF capacitor at TP1. A 1N60P diode points toward TP3, with a 15 kilohm resistor and 3.3 nanofarad capacitor in parallel to ground.', caption: 'M1 test circuit · redrawn from LAB2, Figure 3. The diode band faces TP3.' },
-        { id: 'coil', type: 'image', src: 'assets/m1/coil.jpg', missing: true, alt: '[[TBD: description of our close-up coil photograph]]', caption: '[[TBD: a close-up of the winding and stripped wire ends]]' },
-        { id: 'detector', type: 'image', src: 'assets/m1/detector.jpg', missing: true, alt: '[[TBD: description of our detector close-up]]', caption: '[[TBD: close-up of the 1N60P, 15 kΩ resistor, and 3.3 nF capacitor]]' },
-        { id: 'resonance', type: 'image', src: 'assets/m1/resonance.jpg', missing: true, alt: '[[TBD: TP1 resonance scope screenshot]]', caption: '[[TBD: resonance at TP1 with frequency, probe ratio, and scale visible]]' },
-        { id: 'tuning', type: 'video', src: 'assets/m1/tuning.mp4', missing: true, caption: '[[TBD: a short video turning the capacitor while TP3 changes]]' }
       ]
     },
     // M2: fill this same template when the next build starts; its tab is linkable now.
     {
       id: 'm2', label: 'M2', name: 'Coming soon', title: 'The next chapter.', status: 'Planned',
-      summary: '[[TBD: milestone 2 title and short summary]]',
-      objective: '[[TBD: what M2 adds to our radio and why it matters]]',
-      journey: [{ title: '[[TBD: our first M2 step]]', text: '[[TBD: what we tried, built, and changed]]' }],
-      problems: [{ problem: '[[TBD: M2 problem]]', why: '[[TBD: cause]]', solution: '[[TBD: solution]]' }],
-      results: { note: '[[TBD: M2 measurements and results]]' },
-      learned: ['[[TBD: what we learned in M2]]'],
-      next: { id: 'm3', text: '[[TBD: how M2 leads into M3]]', label: 'M3 · Coming soon →' },
-      media: [{ id: 'm2photo', type: 'image', src: 'assets/m2/placeholder.svg', missing: true, caption: '[[TBD: M2 build photographs and videos]]' }]
+      media: [], summary: 'Coming soon.',
+      objective: 'Coming soon.',
+      journey: [{ title: 'Coming soon.', text: 'Coming soon.' }],
+      problems: [{ problem: 'Coming soon.', why: 'Coming soon.', solution: 'Coming soon.' }],
+      results: { note: 'Coming soon.' },
+      learned: ['Coming soon.'],
+      next: { id: 'm3', text: 'Coming soon.', label: 'M3 · Coming soon →' },
     },
     // M3: duplicate this object for M4, change its ID/label, then fill the sections.
     {
       id: 'm3', label: 'M3', name: 'Coming soon', title: 'More to tune into.', status: 'Planned',
-      summary: '[[TBD: milestone 3 title and short summary]]',
-      objective: '[[TBD: what M3 adds to our radio and why it matters]]',
-      journey: [{ title: '[[TBD: our first M3 step]]', text: '[[TBD: what we tried, built, and changed]]' }],
-      problems: [{ problem: '[[TBD: M3 problem]]', why: '[[TBD: cause]]', solution: '[[TBD: solution]]' }],
-      results: { note: '[[TBD: M3 measurements and results]]' },
-      learned: ['[[TBD: what we learned in M3]]'],
-      next: { text: '[[TBD: the next milestone after M3]]' },
-      media: [{ id: 'm3photo', type: 'image', src: 'assets/m3/placeholder.svg', missing: true, caption: '[[TBD: M3 build photographs and videos]]' }]
+      media: [], summary: 'Coming soon.',
+      objective: 'Coming soon.',
+      journey: [{ title: 'Coming soon.', text: 'Coming soon.' }],
+      problems: [{ problem: 'Coming soon.', why: 'Coming soon.', solution: 'Coming soon.' }],
+      results: { note: 'Coming soon.' },
+      learned: ['Coming soon.'],
+      next: { text: 'Coming soon.' },
     }
   ]
 };

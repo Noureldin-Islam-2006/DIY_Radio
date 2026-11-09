@@ -3,10 +3,11 @@
   const p=window.RADIO_CONTENT.project,c=p.exhibit,s=window.RADIO_CONTENT.signalStory;
   if(!c||!s)return;
   const esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
+  const guide=document.createElement('a');guide.href=p.capacitorGuide.src;guide.textContent=p.capacitorGuide.label;document.querySelector('#m1-gallery').parentElement.after(guide);
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const hero=document.querySelector('.hero');hero.classList.add('broadcast-hero');
   const photo=hero.querySelector('.hero-photo');photo.className='broadcast-photo';photo.querySelector('.photo-label')?.remove();
-  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').textContent=c.headline;
+  const copy=hero.querySelector('.hero-copy');copy.querySelector('.tagline').remove();copy.querySelector('h1').innerHTML='<img class="project-logo" src="assets/logo.svg" alt="هنا القاهرة">';
   const actions=document.createElement('div');actions.className='hero-actions';
   const follow=copy.querySelector('.primary-link'),jump=copy.querySelector('.workbench-jump');jump.textContent=c.action+' ↗';
   actions.append(jump,follow);copy.querySelector('.team-line').before(actions);

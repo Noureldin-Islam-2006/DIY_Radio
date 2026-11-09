@@ -1,9 +1,9 @@
 /* Change --accent to recolour the site. Dark mode derives a lighter tint from it. */
 :root {
-  --accent: #a4472c;
-  --paper: #f7f5ef; --surface: #fdfcf8; --ink: #262923; --muted: #62665c;
-  --line: #d8d9ce; --soft: #eeeee5; --accent-ink: var(--accent);
-  --highlight: #f3e7d7; --highlight-ink: #794329;
+  --accent: #e93830;
+  --paper: #f3f5f6; --surface: #ffffff; --ink: #292e32; --muted: #566975;
+  --line: #b8c8d2; --soft: #e5ebef; --accent-ink: var(--accent);
+  --highlight: #e5ebef; --highlight-ink: #994039;
   --space-1: .5rem; --space-2: 1rem; --space-3: 1.5rem;
   --space-4: 2rem; --space-5: 3rem; --space-6: 5rem; --space-7: 7rem;
   --max-width: 1240px; --radius: 4px;
@@ -13,15 +13,15 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #191d1a; --surface: #202520; --ink: #f1f0e7; --muted: #b0b6aa;
-    --line: #3b433b; --soft: #272e28; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
-    --highlight: #3c2f25; --highlight-ink: #eac1a1; color-scheme: dark;
+    --paper: #292e32; --surface: #30383e; --ink: #f4f7f9; --muted: #b8c8d2;
+    --line: #607d8b; --soft: #35434c; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
+    --highlight: #45383b; --highlight-ink: #ffb6ad; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #191d1a; --surface: #202520; --ink: #f1f0e7; --muted: #b0b6aa;
-  --line: #3b433b; --soft: #272e28; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
-  --highlight: #3c2f25; --highlight-ink: #eac1a1; color-scheme: dark;
+  --paper: #292e32; --surface: #30383e; --ink: #f4f7f9; --muted: #b8c8d2;
+  --line: #607d8b; --soft: #35434c; --accent-ink: color-mix(in srgb, var(--accent), #fff 50%);
+  --highlight: #45383b; --highlight-ink: #ffb6ad; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
