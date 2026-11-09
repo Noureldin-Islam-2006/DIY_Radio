@@ -180,6 +180,18 @@ body { padding-left: 0; }
 :root{--accent-ink:#bd2923;} :root[data-theme="dark"]{--accent-ink:#ff827b;} @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent-ink:#ff827b;}}
 
 .broadcast-hero h1{width:min(100%,620px);margin:28px 0 32px;} .project-logo{max-height:none;aspect-ratio:910/435;object-fit:contain;} .header-logo{width:120px;height:auto;} :root[data-theme="light"] .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;} @media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;}} @media(max-width:619px){.header-logo{width:92px}.broadcast-hero h1{margin:24px 0;}}
+
+/* Hero composition: description left, project identity right, shared team footer. */
+.broadcast-hero .hero-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);max-width:none;width:100%;column-gap:5%;align-items:center;}
+.broadcast-hero .hero-copy>.eyebrow{grid-column:1/-1;grid-row:1;margin-bottom:48px;}
+.broadcast-hero h1{grid-column:2;grid-row:2/4;width:100%;margin:0;align-self:center;}
+.broadcast-hero .hero-intro{grid-column:1;grid-row:2;margin:0;align-self:end;max-width:48ch;font-size:15px;}
+.broadcast-hero .hero-actions{grid-column:1;grid-row:3;align-self:start;margin-top:24px;}
+.broadcast-hero .hero-wave{position:relative;grid-column:1/-1;grid-row:4;left:auto;right:auto;bottom:auto;width:min(100%,820px);height:100px;margin:36px auto 8px;z-index:0;}
+.broadcast-hero .team-line{grid-column:1/-1;grid-row:5;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;margin:0;padding-top:12px;text-align:center;}
+.broadcast-hero .team-line ul{justify-content:center;}
+.broadcast-photo figcaption{display:none;}
+@media(max-width:700px){.broadcast-hero .hero-copy{grid-template-columns:1fr}.broadcast-hero .hero-copy>.eyebrow{margin-bottom:24px}.broadcast-hero h1{grid-column:1;grid-row:2;width:85%;justify-self:end;margin-bottom:28px}.broadcast-hero .hero-intro{grid-row:3;font-size:14px}.broadcast-hero .hero-actions{grid-row:4}.broadcast-hero .hero-wave{grid-row:5;height:70px;margin-top:24px}.broadcast-hero .team-line{grid-row:6;gap:12px}.broadcast-hero{min-height:0;padding-bottom:110px}}
 ````
 
 ## js/experience.js
@@ -202,7 +214,7 @@ body { padding-left: 0; }
   band.innerHTML=`<span>${esc(c.kicker)}</span><span>${esc(c.detail)}</span><a href="#signal-story">${esc(c.signalLink)} ↓</a>`;hero.append(band);
   const wave=document.createElementNS('http://www.w3.org/2000/svg','svg');wave.classList.add('hero-wave');wave.setAttribute('viewBox','0 0 1200 160');wave.setAttribute('aria-hidden','true');
   const line=document.createElementNS(wave.namespaceURI,'path');
-  line.setAttribute('d',Array.from({length:601},(_,i)=>`${i?'L':'M'}${i*2},${80+Math.sin(i*.23)*(12+50*Math.exp(-Math.pow((i-400)/110,2)))}`).join(' '));wave.append(line);hero.append(wave);
+  line.setAttribute('d',Array.from({length:601},(_,i)=>`${i?'L':'M'}${i*2},${80+Math.sin(i*.23)*(12+50*Math.exp(-Math.pow((i-400)/110,2)))}`).join(' '));wave.append(line);copy.querySelector('.team-line').before(wave);
   const story=document.createElement('section');story.id='signal-story';story.className='signal-story';story.setAttribute('aria-labelledby','signal-story-title');
   story.innerHTML=`<div class="signal-story-head"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="signal-story-title">${esc(s.title)}</h2><p>${esc(s.intro)}</p></div><div class="signal-explorer"><div class="signal-stages" role="group" aria-label="${esc(s.controls)}">${s.stages.map((v,i)=>`<button type="button" data-signal="${i}" aria-pressed="${i===0}"><span>0${i+1}</span>${esc(v.name)}<small>${esc(v.status)}</small></button>`).join('')}</div><div class="signal-screen"><div class="signal-screen-label"><span>${esc(s.screenLabel)}</span><span id="signal-stage-number"></span></div><svg viewBox="0 0 800 180" role="img" aria-labelledby="signal-svg-title"><title id="signal-svg-title"></title><path class="signal-baseline" d="M0 90H800"/><path id="signal-path"/></svg><div class="signal-description" aria-live="polite" aria-atomic="true"><h3 id="signal-name"></h3><p id="signal-copy"></p></div><div class="signal-screen-footer"><span>${esc(s.note)}</span><button type="button" id="signal-next">${esc(s.next)} →</button></div></div></div>`;
   document.querySelector('.overview').before(story);
@@ -270,25 +282,25 @@ Start with the coil and tuner. We can correct those first, then boards, detector
   <meta property="og:image" content="assets/m1/setup.jpg">
   <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
   <link rel="icon" href="assets/favicon.svg?v=20261109b" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/workbench.css">
-  <link rel="stylesheet" href="css/experience.css">
+  <link rel="stylesheet" href="css/style.css?v=20261109-layout2">
+  <link rel="stylesheet" href="css/workbench.css?v=20261109-layout2">
+  <link rel="stylesheet" href="css/experience.css?v=20261109-layout2">
   <script>
     try {
       const saved = localStorage.getItem('radio-theme');
       if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
     } catch (_) { /* System preference still works when storage is unavailable. */ }
   </script>
-  <script src="js/content.js" defer></script>
-  <script src="js/script.js?v=20261109b" defer></script>
-  <script src="js/circuit-model.js" defer></script>
-  <script src="js/workbench.js" defer></script>
-  <script src="js/experience.js" defer></script>
+  <script src="js/content.js?v=20261109-layout2" defer></script>
+  <script src="js/script.js?v=20261109-layout2" defer></script>
+  <script src="js/circuit-model.js?v=20261109-layout2" defer></script>
+  <script src="js/workbench.js?v=20261109-layout2" defer></script>
+  <script src="js/experience.js?v=20261109-layout2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#milestones">Skip to the build log</a>
   <div id="site"></div>
-  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js.</p></main></noscript>
+  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js?v=20261109-layout2.</p></main></noscript>
   <dialog id="lightbox" aria-labelledby="lightbox-caption">
     <div class="lightbox-tools">
       <button type="button" id="lightbox-prev" aria-label="Previous image">←</button>

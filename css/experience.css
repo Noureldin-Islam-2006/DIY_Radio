@@ -110,3 +110,15 @@ body { padding-left: 0; }
 :root{--accent-ink:#bd2923;} :root[data-theme="dark"]{--accent-ink:#ff827b;} @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent-ink:#ff827b;}}
 
 .broadcast-hero h1{width:min(100%,620px);margin:28px 0 32px;} .project-logo{max-height:none;aspect-ratio:910/435;object-fit:contain;} .header-logo{width:120px;height:auto;} :root[data-theme="light"] .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;} @media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .wordmark{background:#292e32;border-radius:5px;padding:5px 10px;}} @media(max-width:619px){.header-logo{width:92px}.broadcast-hero h1{margin:24px 0;}}
+
+/* Hero composition: description left, project identity right, shared team footer. */
+.broadcast-hero .hero-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);max-width:none;width:100%;column-gap:5%;align-items:center;}
+.broadcast-hero .hero-copy>.eyebrow{grid-column:1/-1;grid-row:1;margin-bottom:48px;}
+.broadcast-hero h1{grid-column:2;grid-row:2/4;width:100%;margin:0;align-self:center;}
+.broadcast-hero .hero-intro{grid-column:1;grid-row:2;margin:0;align-self:end;max-width:48ch;font-size:15px;}
+.broadcast-hero .hero-actions{grid-column:1;grid-row:3;align-self:start;margin-top:24px;}
+.broadcast-hero .hero-wave{position:relative;grid-column:1/-1;grid-row:4;left:auto;right:auto;bottom:auto;width:min(100%,820px);height:100px;margin:36px auto 8px;z-index:0;}
+.broadcast-hero .team-line{grid-column:1/-1;grid-row:5;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;margin:0;padding-top:12px;text-align:center;}
+.broadcast-hero .team-line ul{justify-content:center;}
+.broadcast-photo figcaption{display:none;}
+@media(max-width:700px){.broadcast-hero .hero-copy{grid-template-columns:1fr}.broadcast-hero .hero-copy>.eyebrow{margin-bottom:24px}.broadcast-hero h1{grid-column:1;grid-row:2;width:85%;justify-self:end;margin-bottom:28px}.broadcast-hero .hero-intro{grid-row:3;font-size:14px}.broadcast-hero .hero-actions{grid-row:4}.broadcast-hero .hero-wave{grid-row:5;height:70px;margin-top:24px}.broadcast-hero .team-line{grid-row:6;gap:12px}.broadcast-hero{min-height:0;padding-bottom:110px}}
