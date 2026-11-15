@@ -282,25 +282,25 @@ Start with the coil and tuner. We can correct those first, then boards, detector
   <meta property="og:image" content="assets/m1/setup.jpg">
   <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
   <link rel="icon" href="assets/favicon.svg?v=20261109b" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=20261115-m2">
-  <link rel="stylesheet" href="css/workbench.css?v=20261115-m2">
-  <link rel="stylesheet" href="css/experience.css?v=20261115-m2">
+  <link rel="stylesheet" href="css/style.css?v=20261115-m2b">
+  <link rel="stylesheet" href="css/workbench.css?v=20261115-m2b">
+  <link rel="stylesheet" href="css/experience.css?v=20261115-m2b">
   <script>
     try {
       const saved = localStorage.getItem('radio-theme');
       if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
     } catch (_) { /* System preference still works when storage is unavailable. */ }
   </script>
-  <script src="js/content.js?v=20261115-m2" defer></script>
-  <script src="js/script.js?v=20261115-m2" defer></script>
-  <script src="js/circuit-model.js?v=20261115-m2" defer></script>
-  <script src="js/workbench.js?v=20261115-m2" defer></script>
-  <script src="js/experience.js?v=20261115-m2" defer></script>
+  <script src="js/content.js?v=20261115-m2b" defer></script>
+  <script src="js/script.js?v=20261115-m2b" defer></script>
+  <script src="js/circuit-model.js?v=20261115-m2b" defer></script>
+  <script src="js/workbench.js?v=20261115-m2b" defer></script>
+  <script src="js/experience.js?v=20261115-m2b" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#milestones">Skip to the build log</a>
   <div id="site"></div>
-  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js?v=20261115-m2.</p></main></noscript>
+  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js?v=20261115-m2b.</p></main></noscript>
   <dialog id="lightbox" aria-labelledby="lightbox-caption">
     <div class="lightbox-tools">
       <button type="button" id="lightbox-prev" aria-label="Previous image">←</button>
@@ -1791,14 +1791,14 @@ window.RADIO_CONTENT = {
     selected=id;const p=c.parts.find(p=>p.id===id);
     $('#part-image').src=p.image;$('#part-image').alt=`Reference view of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
+  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
+  }
     if(c.steps){
     const plan=document.createElement('div');plan.className='build-plan';
     plan.innerHTML=`<p class="eyebrow">BUILD PLAN · NOT COMPLETED WORK</p><nav aria-label="Build steps">${c.steps.map((s,i)=>`<button type="button" data-step="${i}" aria-pressed="${i===0}">${i+1}</button>`).join('')}</nav><div aria-live="polite"><h4></h4><p class="plan-copy"></p></div>`;
     section.querySelector('.parts-tray').before(plan);
     const show=(i,zoom)=>{const step=c.steps[i];plan.querySelector('h4').textContent=step.title;plan.querySelector('.plan-copy').textContent=step.text;plan.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.step===i)));if(zoom)select(step.part);};
     plan.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.step,true)));show(0,false);
-  }
-  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
   $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});

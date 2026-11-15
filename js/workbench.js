@@ -40,14 +40,14 @@
     selected=id;const p=c.parts.find(p=>p.id===id);
     $('#part-image').src=p.image;$('#part-image').alt=`Reference view of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
+  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
+  }
     if(c.steps){
     const plan=document.createElement('div');plan.className='build-plan';
     plan.innerHTML=`<p class="eyebrow">BUILD PLAN · NOT COMPLETED WORK</p><nav aria-label="Build steps">${c.steps.map((s,i)=>`<button type="button" data-step="${i}" aria-pressed="${i===0}">${i+1}</button>`).join('')}</nav><div aria-live="polite"><h4></h4><p class="plan-copy"></p></div>`;
     section.querySelector('.parts-tray').before(plan);
     const show=(i,zoom)=>{const step=c.steps[i];plan.querySelector('h4').textContent=step.title;plan.querySelector('.plan-copy').textContent=step.text;plan.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.step===i)));if(zoom)select(step.part);};
     plan.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.step,true)));show(0,false);
-  }
-  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
   $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
