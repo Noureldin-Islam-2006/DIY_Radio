@@ -1,19 +1,20 @@
 /* Native WebGL, pointer controls, and a small teaching model. No framework or dependencies. */
 (() => {
   'use strict';
-  const c=window.RADIO_CONTENT.workbench, G=window.RadioGeometry;
-  if(!c||!G||!document.querySelector('#panel-m1'))return;
+  function mount(c,id){
+  const G=window.RadioGeometry;
+  if(!c||!G||!document.querySelector(`#panel-${id}`))return;
   const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
-  const section=document.createElement('section');section.className='chapter-section workbench';section.setAttribute('aria-labelledby','m1-workbench');
-  section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="m1-workbench">${esc(c.title)}</h3></div>
+  const section=document.createElement('section');section.className='chapter-section workbench';section.setAttribute('aria-labelledby',`${id}-workbench`);
+  section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="${id}-workbench">${esc(c.title)}</h3></div>
   <p class="eyebrow">${esc(c.eyebrow)}</p><p class="section-intro">${esc(c.intro)}</p>
-  <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY 01</span><span class="bench-live">EXPLORE IN 3D</span></div>
+  <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY ${id.slice(1).padStart(2,"0")}</span><span class="bench-live">EXPLORE IN 3D</span></div>
     <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Scroll to zoom. Click a component to inspect. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
     <img class="bench-fallback" src="assets/m1/setup.jpg" alt="Our actual coil and breadboard circuit, shown when 3D is unavailable." hidden>
     <p class="bench-hint">Drag to rotate · scroll to zoom · click a component</p><div class="bench-toolbar"><button type="button" data-camera="home">Whole circuit</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
   </div><aside class="part-inspector" aria-live="polite" aria-atomic="true"><div class="part-portrait"><img id="part-image" alt="" loading="lazy"></div><div class="part-copy"><p class="eyebrow" id="part-value"></p><h4 id="part-name"></h4><p id="part-role"></p><p class="part-connection" id="part-connection"></p><details><summary>About this reconstruction</summary><p id="part-detail"></p><p class="fine-print">${esc(c.imageNote)}</p></details></div></aside></div>
   <div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
-  <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/m1/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
+  <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/${id}/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
   <div class="tuning-lab"><div class="tuning-story"><p class="eyebrow">A LITTLE BENCH EXPERIMENT</p><h4>${esc(c.tuningTitle)}</h4><p>${esc(c.tuningIntro)}</p><p class="tuning-challenge">${esc(c.challenge)}</p><label class="probe-switch"><input id="probe-load" type="checkbox"> Add 100 pF probe capacitance</label><button type="button" class="text-button" id="listen-tuning" aria-pressed="false">Listen to alignment ♪</button><p class="fine-print">Optional synthesized tone, not received radio audio.</p></div>
   <div class="tuning-console"><div class="console-readout"><div><span>TANK RESONANCE</span><output id="tuned-frequency">—</output></div><div><span>TARGET</span><strong>${c.targetKhz}<small> kHz</small></strong></div></div>
   <svg class="tuning-dial" viewBox="0 0 600 110" role="img" aria-label="Frequency scale with target and tank resonance"><defs><pattern id="dial-ticks" width="15" height="55" patternUnits="userSpaceOnUse"><path d="M0 0V18" stroke="currentColor" stroke-width="1"/></pattern></defs><path d="M30 20H570" stroke="currentColor" opacity=".3"/><rect x="30" y="20" width="540" height="55" fill="url(#dial-ticks)" opacity=".5"/><text x="30" y="92">500 kHz</text><text x="510" y="92">2.2 MHz</text><path id="target-needle" d="M0 18V68" stroke-dasharray="3 3"/><path id="tuning-needle" d="M0 10V70"/><circle id="tuning-dot" r="4" cy="10"/></svg>
@@ -21,18 +22,32 @@
   <div class="alignment-row"><span>Signal alignment</span><output id="signal-strength"></output></div><meter id="signal-meter" min="0" max="1" value="0" aria-label="Calculated signal alignment"></meter>
   <svg class="scope-mini" viewBox="0 0 600 100" role="img" aria-label="Illustrative amplitude-modulated waveform; its height follows the calculated tank response"><path d="M0 50H600" class="scope-axis"/><path id="scope-wave"/></svg><p class="tune-feedback" id="tune-feedback" role="status"></p></div></div>
   <details class="bench-assumptions"><summary>What this experiment assumes</summary><p>${esc(c.tuningNote)}</p></details>`;
-  document.querySelector('#panel-m1 .chapter-heading').after(section);
+  if(id!=='m1'){
+    section.querySelector('.tuning-lab').remove();section.querySelector('.bench-assumptions').remove();
+    section.querySelector('.bench-fallback').src='assets/m2/lab3-circuit.png';
+    section.querySelector('.bench-fallback').alt='LAB3 Figure 3 amplifier circuit';
+    section.innerHTML=section.innerHTML.replace(/id="(?!m2-workbench)([^"]+)"/g,(_,key)=>`id="${id}-${key}"`);
+  }
+  document.querySelector(`#panel-${id} .chapter-heading`).after(section);
   document.dispatchEvent(new Event('radio:content'));
-  const $=s=>section.querySelector(s), $$=s=>[...section.querySelectorAll(s)];
+  const scoped=s=>id==='m1'?s:s.replace(/#(?!m2-workbench)([\w-]+)/g,`#${id}-$1`);
+  const $=s=>section.querySelector(scoped(s)), $$=s=>[...section.querySelectorAll(scoped(s))];
   const jump=document.createElement('button');jump.className='workbench-jump';jump.type='button';jump.textContent='Explore the circuit in 3D ↗';
-  document.querySelector('.primary-link').after(jump);
+  if(id==='m1')document.querySelector('.primary-link').after(jump);
   jump.addEventListener('click',()=>{document.querySelector('#tab-m1').click();$('#m1-workbench').tabIndex=-1;$('#m1-workbench').focus({preventScroll:true});section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
   const canvas=$('#radio-model');let selected='coil',render=()=>{},focusPart=()=>{},modelReady=false;
   function select(id,zoom=true) {
     selected=id;const p=c.parts.find(p=>p.id===id);
     $('#part-image').src=p.image;$('#part-image').alt=`Reference view of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
-    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
+    if(c.steps){
+    const plan=document.createElement('div');plan.className='build-plan';
+    plan.innerHTML=`<p class="eyebrow">BUILD PLAN · NOT COMPLETED WORK</p><nav aria-label="Build steps">${c.steps.map((s,i)=>`<button type="button" data-step="${i}" aria-pressed="${i===0}">${i+1}</button>`).join('')}</nav><div aria-live="polite"><h4></h4><p class="plan-copy"></p></div>`;
+    section.querySelector('.parts-tray').before(plan);
+    const show=(i,zoom)=>{const step=c.steps[i];plan.querySelector('h4').textContent=step.title;plan.querySelector('.plan-copy').textContent=step.text;plan.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.step===i)));if(zoom)select(step.part);};
+    plan.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.step,true)));show(0,false);
+  }
+  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
   $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
@@ -49,15 +64,15 @@
     if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);gl.enable(gl.DEPTH_TEST);
     const attrs=['pos','normal','colour'].map(n=>gl.getAttribLocation(program,n));attrs.forEach(a=>gl.enableVertexAttribArray(a));
     const u=Object.fromEntries(['center','offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
-    const models=G.build().map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
-    let yaw=-.3,pitch=.6,distance=570,desiredDistance=570,center=[-25,28,-48],desiredCenter=[-25,28,-48],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
+    const models=G.build(id).map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
+    let yaw=-.3,pitch=.6,distance=c.cameraDistance||570,desiredDistance=c.cameraDistance||570,center=c.cameraCenter||[-25,28,-48],desiredCenter=c.cameraCenter||[-25,28,-48],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
     focusPart=id=>{const part=models.find(p=>p.id===id);if(!part)return;focused=id;
       const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
       for(let j=0;j<part.vertices.length;j+=9)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],part.vertices[j+k]);hi[k]=Math.max(hi[k],part.vertices[j+k]);}
       desiredCenter=lo.map((v,k)=>(v+hi[k])/2+part.position[k]);desiredDistance=Math.max(25,Math.hypot(...lo.map((v,k)=>(hi[k]-v)/2))*3.1);
       target=0;$('#bench-explode').setAttribute('aria-pressed','false');$('#bench-explode').textContent='Separate parts ↗';canvas.dataset.view=id;$('.bench-hint').textContent='Component close-up · drag to rotate · Whole circuit to return';render();};
     function draw(now=0) {
-      frame=0;if(!visible||document.hidden||document.querySelector('#panel-m1').hidden)return;
+      frame=0;if(!visible||document.hidden||document.querySelector(`#panel-${id}`).hidden)return;
       const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
       const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(rect.width*dpr),h=Math.round(rect.height*dpr);
       if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
@@ -67,11 +82,11 @@
       center=center.map((v,i)=>Math.abs(v-desiredCenter[i])<.02?desiredCenter[i]:v+(desiredCenter[i]-v)*ease);
       distance=Math.abs(distance-desiredDistance)<.02?desiredDistance:distance+(desiredDistance-distance)*ease;
       gl.uniform3fv(u.center,center);last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
-      for(const p of models){if(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id)))continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
+      for(const p of models){if(focused&&p.id!==focused&&!(['coil',id==='m2'?'link':'test-loop'].includes(focused)&&['coil',id==='m2'?'link':'test-loop'].includes(p.id)))continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
       if(explode!==target||distance!==desiredDistance||center.some((v,i)=>v!==desiredCenter[i]))frame=requestAnimationFrame(draw);
     }
     render=()=>{if(frame)cancelAnimationFrame(frame);frame=0;draw(performance.now());};
-    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=570;desiredCenter=[-25,28,-48];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · scroll to zoom · click a component";render();};
+    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=c.cameraDistance||570;desiredCenter=c.cameraCenter||[-25,28,-48];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · scroll to zoom · click a component";render();};
     $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{desiredDistance=Math.max(15,Math.min(1000,desiredDistance+(b.dataset.camera==='in'?-30:30)));render();}}));
     $('#bench-explode').addEventListener('click',()=>{if(focused)reset();target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
     canvas.addEventListener('wheel',e=>{e.preventDefault();const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?canvas.clientHeight:1);desiredDistance=Math.max(15,Math.min(1000,desiredDistance*Math.exp(Math.max(-120,Math.min(120,delta))*.002)));render();},{passive:false});
@@ -80,7 +95,7 @@
       const rect=canvas.getBoundingClientRect(),aspect=rect.width/rect.height,D=distance*Math.max(1,1.3/aspect);
       const x=(clientX-rect.left)/rect.width*2-1,y=1-(clientY-rect.top)/rect.height*2;
       let hit=null,best=Infinity;
-      for(const p of models){if(!c.parts.some(q=>q.id===p.id)||(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id))))continue;
+      for(const p of models){if(!c.parts.some(q=>q.id===p.id)||(focused&&p.id!==focused&&!(['coil',id==='m2'?'link':'test-loop'].includes(focused)&&['coil',id==='m2'?'link':'test-loop'].includes(p.id))))continue;
         const project=j=>{const v=[0,1,2].map(k=>p.vertices[j+k]+p.position[k]+p.explode[k]*explode-center[k]);const qx=v[0]*Math.cos(yaw)+v[2]*Math.sin(yaw),qz=-v[0]*Math.sin(yaw)+v[2]*Math.cos(yaw),vy=v[1]*Math.cos(pitch)-qz*Math.sin(pitch),z=D-v[1]*Math.sin(pitch)-qz*Math.cos(pitch);return [qx*2.45/aspect/z,vy*2.45/z,z];};
         for(let j=0;j<p.vertices.length;j+=27){const a=project(j),b=project(j+9),c=project(j+18);if(Math.min(a[2],b[2],c[2])<=1)continue;const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(den)<1e-12)continue;const u=((b[1]-c[1])*(x-c[0])+(c[0]-b[0])*(y-c[1]))/den,v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(y-c[1]))/den;if(u<0||v<0||u+v>1)continue;const depth=1/(u/a[2]+v/b[2]+(1-u-v)/c[2]);if(depth<best){best=depth;hit=p.id;}}
       }if(hit)select(hit);
@@ -97,6 +112,7 @@
   }
   if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();initModel();}},{rootMargin:'300px'});observer.observe(section);}else initModel();
 
+  if(id!=='m1')return;
   // The optional sound is a quiet 440 Hz cue, never radio audio. It stops offscreen or on tab changes.
   let audio=null,oscillator=null,gain=null,amplitude=0,audioRequest=0,audioPending=false;
   function stopAudio(){audioRequest++;audioPending=false;if(oscillator){oscillator.stop();oscillator.disconnect();oscillator=null;}if(gain){gain.disconnect();gain=null;}if(audio)audio.suspend();$('#listen-tuning').setAttribute('aria-pressed','false');$('#listen-tuning').textContent='Listen to alignment ♪';}
@@ -116,4 +132,7 @@
   $('#tune-capacitance').addEventListener('input',tune);$('#probe-load').addEventListener('change',tune);tune();
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});document.addEventListener('radio:tab',stopAudio);
   if('IntersectionObserver' in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stopAudio();}).observe($('.tuning-lab'));
+  }
+  mount(window.RADIO_CONTENT.workbench,'m1');
+  for(const m of window.RADIO_CONTENT.milestones)if(m.workbench)mount({...window.RADIO_CONTENT.workbench,...m.workbench},m.id);
 })();

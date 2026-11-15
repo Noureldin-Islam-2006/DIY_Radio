@@ -8,7 +8,7 @@
   const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
   const norm = a => scale(a,1/(Math.hypot(...a)||1));
   const rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
-  function build() {
+  function build(milestone='m1') {
     const parts = [];
     let part;
     function group(id,position,explode) { part={id,position,explode,vertices:[]}; parts.push(part); }
@@ -33,7 +33,7 @@
       }
     }
     group('breadboard',[35,0,0],[0,-24,0]);
-    for(const z of [-47,47]) {
+    for(const z of [-47]) {
       box([0,2,z],[160,4,56],'#e5e8df');box([0,4.05,z],[151,.2,3],'#9ca8a3');
       for(const dz of [-23,23])box([0,4.2,z+dz],[150,.15,.45],dz<0?'#a55845':'#588d92');
       for(let x=-72;x<=72;x+=4)for(let row=-5;row<=5;row++)if(row)box([x,4.2,z+row*3.5],[1.3,.25,1.3],'#59665e');
@@ -108,6 +108,38 @@
     path([[-94,12,-71],[-93,6,-50],[-133,6,-22],[-118,6,-10]],1.1,'#343d39');
     tube([-118,6,-14],[-118,6,-10],1.4,'#af4b3c');path([[-118,6,-10],[-124,7,-10]],.9,'#343d39');
     path([[-5,5,-33],[2,6,-24],[66,5,-27]],.6,'#343d39');
+
+    if(milestone==='m2'){
+      const originals=parts.slice();parts.length=0;
+      const reuse=(source,id,position)=>{const old=originals.find(p=>p.id===source);parts.push({...old,id,position,explode:[0,25,0]});};
+      reuse('coil','coil',[-63,29,0]);reuse('tuning-capacitor','tuning-capacitor',[-12,11,-40]);
+      reuse('breadboard','breadboard',[200,0,0]);
+      reuse('generator','generator',[-150,25,-120]);reuse('oscilloscope','oscilloscope',[220,38,-140]);
+      // Separate generator loop for LAB3's distance test; the six-turn link stays on the tank.
+      group('test-loop',[-63,29,140],[0,0,35]);
+      for(let k=0;k<5;k++)path(Array.from({length:49},(_,i)=>[30*Math.cos(i*TAU/48),k*.6,30*Math.sin(i*TAU/48)]),.24,'#b77a38');
+      group('link',[-63,29,0],[0,25,0]);
+      for(let i=0;i<6*48;i++){const point=t=>[31.2*Math.cos(t*TAU/48),7+5*t/(6*48),31.2*Math.sin(t*TAU/48)];tube(point(i),point(i+1),.42,'#447d9a');}
+      group('pot',[136,12,-47],[0,25,0]);box([0,0,0],[10,9,10],'#3f7692');tube([0,4.5,0],[0,5.5,0],3,'#b9c6c7');box([0,5.7,0],[4,.4,.6],'#303b40');
+      for(const x of [-4,0,4])tube([x,-4,0],[x,-8,0],.4,'#b9c6c7');
+      for(const [id,x] of [['q1',166],['q2',230]]){group(id,[x,12,-47],[0,30,0]);tube([0,0,-1.5],[0,0,1.5],3.5,'#252d30',20);box([0,-1.5,1.4],[7,4,.7],'#30383d');for(const dx of [-2,0,2])path([[dx,-2,0],[dx,-6,0],[dx,-8,0]],.3,'#aebcc2');}
+      const resistor=(id,x,z)=>{group(id,[x,11,z],[0,25,0]);tube([0,0,-5],[0,0,5],2,'#cabb91',16);const bands=id.startsWith('rc')?['#cf493d','#292e32','#d44635']:id.startsWith('rf')?['#744b2c','#292e32','#dccd47']:id==='supply-resistor'?['#cf493d','#cf493d','#744b2c']:['#744b2c','#37604b','#c26c2f'];[...bands,'#b8984a'].forEach((c,i)=>tube([0,0,-3+i*2],[0,0,-2.3+i*2],2.04,c,16));for(const z of [-1,1])path([[0,-6,z*12],[0,0,z*12],[0,0,z*5]],.35,'#aab2a9');};
+      resistor('rc1',166,-66);resistor('rf1',151,-40);resistor('rc2',230,-66);resistor('rf2',212,-40);
+      resistor('supply-resistor',145,-64);resistor('detector-resistor',262,-40);
+      reuse('diode','detector-diode',[250,11,-47]);reuse('detector-capacitor','detector-capacitor',[275,11,-40]);
+      group('protection',[130,11,-64],[0,25,0]);tube([-4,0,0],[4,0,0],2,'#242d32',16);tube([2,0,0],[3,0,0],2.05,'#bdc8cf');path([[-10,-6,0],[-10,0,0],[-4,0,0]],.35,'#b8c8d2');path([[4,0,0],[10,0,0],[10,-6,0]],.35,'#b8c8d2');
+      for(const [id,x,z] of [['cin',150,-47],['coupling',194,-47],['decouple',175,-66]]){group(id,[x,12,z],[0,25,0]);box([0,0,0],[6,6,3],'#ca9e41');for(const dx of [-2,2])tube([dx,-3,0],[dx,-8,0],.3,'#b8c8d2');}
+      for(const [id,x,z] of [['bulk',156,-66],['output',280,-47]]){group(id,[x,12,z],[0,28,0]);tube([0,-5,0],[0,5,0],3,'#354b60',20);box([0,0,3],[1.3,9,.25],'#b8c8d2');for(const dx of [-1.5,1.5])tube([dx,-5,0],[dx,-8,0],.3,'#b8c8d2');}
+      group('battery',[85,8,55],[0,20,30]);box([0,0,0],[55,8,48],'#242d32');for(const z of [-15,0,15]){tube([-24,6,z],[24,6,z],6,'#b5bec2',20);tube([15,6,z],[23,6,z],6.1,'#dd5447');}
+      group('connections',[0,0,0],[0,0,0]);
+      // Connection routes explain nodes; breadboard holes are not a wiring prescription.
+      path([[-33,36,0],[-15,30,-28],[-12,5,-26]],.5,'#b77a38');path([[-33,65,0],[0,30,-15],[-4,5,-26]],.5,'#b77a38');
+      for(let k=0;k<2;k++)path([[-32,38+k,0],[10,7+k,-20],[70,7+k,-28],[132+k*4,5,-47]],.55,k?'#333d42':'#447d9a');
+      path([[140,5,-47],[146,6,-47]],.5,'#447d9a');path([[154,6,-47],[166,5,-47]],.5,'#447d9a');
+      path([[168,5,-47],[190,6,-47]],.5,'#447d9a');path([[198,6,-47],[230,5,-47]],.5,'#447d9a');
+      path([[232,5,-47],[240,6,-47]],.5,'#dd5447');path([[264,6,-47],[280,6,-47]],.5,'#dd5447');
+      path([[61,14,55],[90,5,20],[93,5,-64]],.7,'#dd5447');path([[109,14,55],[115,5,15],[125,5,-24]],.7,'#333d42');
+    }
     return parts;
   }
   // Use the submitted Table 4 inductance for the teaching experiment.

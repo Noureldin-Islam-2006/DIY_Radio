@@ -11,7 +11,7 @@ window.RADIO_CONTENT = {
     intro: 'A medium-wave AM radio built by Team 14 for ELEG103 Analog and Digital Electronics. This guide documents the circuit design, assembly, testing and measured results for each milestone, starting with the tuner and envelope detector.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-09', dateLabel: '09 November 2026',
+    term: 'Fall 2026', date: '2026-11-15', dateLabel: '15 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf', capacitorGuide: {src:'assets/m1/variable-cap.pdf',label:'Variable capacitor pinout guide ↗'},
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
   },
@@ -68,7 +68,7 @@ window.RADIO_CONTENT = {
       {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode-reference.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'Orange glass-style axial package with a dark cathode band, following the supplied 1N60P reference. The band faces TP3.',connection:'Anode at TP1; banded cathode toward TP3.'},
       {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor-reference.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
       {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor-reference.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'Yellow dipped radial package marked 332: 3300 pF, or 3.3 nF, following the supplied reference.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
-      {id:'breadboard',name:'Our temporary workbench',short:'Boards',value:'Two solderless boards',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The two-board arrangement follows our overhead photo. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
+      {id:'breadboard',name:'Our temporary workbench',short:'Board',value:'One solderless board',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The model shows the detector board; the spare board from the earlier ESP32 setup is omitted. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
       {id:'generator',name:'The function generator',short:'Generator',value:'GW Instek GFG-8020H',image:'assets/components/generator.svg',role:'Supplies the test signal to the five-turn winding. Magnetic coupling excites the receiver tank.',detail:'Based on the supplied GFG-8020H reference: grey case, carry handle, counter, range buttons and tuning controls. Panel geometry is approximate; the display is illustrative. Product reference: https://www.rapidonline.com/gw-instek-function-generator-gfg-8020h-85-2064',connection:'Output centre and return connect to the two leads of the five-turn winding, not directly to the 75-turn tank.'},
       {id:'oscilloscope',name:'Watch the tank respond',short:'Scope',value:'SDS1102 reference',image:'assets/components/oscilloscope.svg',role:'Shows the waveform at TP1 while we sweep the source and find resonance.',detail:'Front-panel layout follows the supplied SDS1102 listing, with a wide screen, controls and two channel connectors. The trace is illustrative, not a recorded measurement. Reference: https://www.ebay.com/itm/365605442585',connection:'Probe tip at TP1, ground clip at circuit ground. The lab calls for a compensated ×10 probe and matching channel setting.'},
       {id:'probe',name:'The probe is part of the circuit',short:'Probe',value:'Compensated ×10 probe',image:'assets/components/probe-reference.png',role:'Connects TP1 to the oscilloscope while reducing capacitive loading compared with ×1.',detail:'Black probe body, yellow selector and collar, metal tip, ground lead and coaxial cable follow the supplied reference. The generator instead uses its output cable and a two-lead breakout.',connection:'Oscilloscope channel → probe tip at TP1; short ground clip → circuit ground.'},
@@ -179,7 +179,7 @@ window.RADIO_CONTENT = {
         'A steady sine gives the detector a DC level; an AM wave gives it an envelope to follow.',
         'Our recorded Q is about 4.48: the bandwidth is 237.7 kHz around a 1065 kHz resonance. The detector output rises across all six readings, but these points alone do not locate the diode’s dead zone.'
       ],
-      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. M1 is signed off. We are ready to prepare for the next chapter.', label: 'M2 · Coming soon →' },
+      next: { id: 'm2', text: 'M1 is signed off. For M2, keep the tank, remove its detector and add the six-turn link to the new RF amplifier.', label: 'M2 · Build plan →' },
       // Media types: image, video, youtube, drive. Embed src must be a provider embed/preview URL.
       // Missing images stay attractive: use missing:true until the file exists, then remove it.
       // Videos default to muted, never autoplay, and download only on playback (preload:none).
@@ -194,17 +194,396 @@ window.RADIO_CONTENT = {
         { id: 'schematic', type: 'image', src: 'assets/m1/schematic.svg', alt: 'Five-turn generator loop inductively couples to a parallel 75-turn coil and 20–280 pF capacitor at TP1. A 1N60P diode points toward TP3, with a 15 kilohm resistor and 3.3 nanofarad capacitor in parallel to ground.', caption: 'M1 test circuit · redrawn from LAB2, Figure 3. The diode band faces TP3.' },
       ]
     },
-    // M2: fill this same template when the next build starts; its tab is linkable now.
+    // M2: planned LAB3 Part B build. Add actual observations and results after testing.
+{
+  "id": "m2",
+  "label": "M2",
+  "name": "RF amplifier",
+  "title": "Two stages before detection.",
+  "status": "Planned",
+  "summary": "LAB3 Part B · build plan prepared; assembly and measurements pending.",
+  "objective": "Amplify the tuned RF signal using two 2N3904 stages, then recover its envelope with a new 1N4148 detector. Keep M1’s tank, remove its detector, and connect the amplifier through a six-turn link winding.",
+  "journey": [
     {
-      id: 'm2', label: 'M2', name: 'Coming soon', title: 'The next chapter.', status: 'Planned',
-      media: [], summary: 'Coming soon.',
-      objective: 'Coming soon.',
-      journey: [{ title: 'Coming soon.', text: 'Coming soon.' }],
-      problems: [{ problem: 'Coming soon.', why: 'Coming soon.', solution: 'Coming soon.' }],
-      results: { note: 'Coming soon.' },
-      learned: ['Coming soon.'],
-      next: { id: 'm3', text: 'Coming soon.', label: 'M3 · Coming soon →' },
+      "title": "Prepare the circuit and predictions",
+      "text": "Use LAB3 Part B, Figure 3. Calculate the two transistor bias points with β = 100, VBE = 0.7 V and an estimated 3.9 V rail. Simulate DC and AC from 300 kHz to 3 MHz in Qucs; include the 220 Ω supply resistor, 10 kΩ / 10 Ω input divider and 15 pF probe load at TP2. Record predicted gain at 531 kHz, 1 MHz and 1.6 MHz."
     },
+    {
+      "title": "Lay out the RF board",
+      "text": "Arrange IN and the gain pot, Q1, Q2, then the detector and OUT. Keep Q1’s base at least ten breadboard rows from Q2’s collector. Keep leads short and flat, bridge split supply rails if necessary, and keep output wiring away from the input."
+    },
+    {
+      "title": "Build the protected supply",
+      "text": "Feed three AA cells (4.5 V) through the 1N5819 and 220 Ω resistor. Place 10 µF and 100 nF bypass capacitors across the internal rail and ground. Check diode orientation, electrolytic polarity and continuity before power. For bench power, use 4.5 V with a current limit of about 20 mA."
+    },
+    {
+      "title": "Add the first gain stage",
+      "text": "Connect the 1 kΩ pot across IN and ground; its wiper feeds Q1’s base through 10 nF. Q1 is a 2N3904 with grounded emitter, 2 kΩ collector load and 100 kΩ collector-to-base feedback resistor. Verify the actual transistor pinout before insertion."
+    },
+    {
+      "title": "Add the second gain stage",
+      "text": "Couple Q1’s collector through another 10 nF capacitor to Q2’s base. Q2 uses the same 2 kΩ load, 100 kΩ feedback resistor and grounded emitter. Its collector is TP2."
+    },
+    {
+      "title": "Build the new detector and output",
+      "text": "Connect a 1N4148 from TP2 to TP3, with its band toward TP3. Connect 15 kΩ and 3.3 nF in parallel from TP3 to ground. TP3 is LEVEL; take OUT through 1 µF. Keep IN, OUT, LEVEL, V+ and GND on separate rows; headers wait until M3."
+    },
+    {
+      "title": "Test the board before connecting the tank",
+      "text": "Disconnect the six-turn link for bench tests. Drive IN through 10 kΩ, with 10 Ω from IN to ground (input approximately source / 1001). Keep the generator at or below 1 V. Check DC bias and supply current, then sweep the pot with the generator output off to check for oscillation. With the pot at maximum, measure gain at 1 MHz using 0.1 V source, then at 531 kHz and 1.6 MHz; use a ×10 probe and ×10 scope setting at TP2."
+    },
+    {
+      "title": "Measure detection and clipping",
+      "text": "At 1 MHz, use source amplitudes 0.05, 0.1, 0.2, 0.3, 0.5 and 1 V. Record TP2 amplitude and TP3 rise above its no-signal baseline, stating the amplitude convention. At 1 V, check clipping and lower the pot until the waveform peaks are rounded. Record the setting."
+    },
+    {
+      "title": "Reconnect the tuner through six turns",
+      "text": "Remove M1’s detector from the tank. Wind six turns of insulated wire over the ground end of the 75-turn winding, in the same direction; twist the link leads to IN and GND. Keep the amplifier at least 15 cm from the tank, with its output end farthest away. Check stability again through the full pot range."
+    },
+    {
+      "title": "Run the coupled-loop test",
+      "text": "For this M2 test, move the generator’s separate five-turn loop about 10 cm away on the tank axis. Drive it at 0.1 V, tune for maximum TP3 and reduce gain if clipping occurs. With the pot fully up, increase distance until TP3 rises about 10 mV above baseline. Record the distance. Broadcast reception near a window is optional, not the sign-off requirement."
+    }
+  ],
+  "problems": [],
+  "results": {
+    "note": "Not measured yet. After the build we will add Table 4 (DC operating points), Table 5 (RF gain), Table 6 (detector response above baseline), and Table 7 (coupled-loop distance). Simulation, clipping observations and sign-off are also pending."
+  },
+  "learned": [
+    "Build observations will be added after assembly and testing."
+  ],
+  "next": {
+    "id": "m3",
+    "text": "Complete the LAB3 measurements and checkpoint before moving to the next stage.",
+    "label": "M3 · Coming soon →"
+  },
+  "media": [
+    {
+      "id": "schematic",
+      "type": "image",
+      "src": "assets/m2/lab3-circuit.png",
+      "alt": "LAB3 Part B Figure 3: two-stage transistor RF amplifier, supply protection and envelope detector.",
+      "caption": "Planning reference: LAB3 Part B, Figure 3. Component values are starting points; record any changes and why."
+    }
+  ],
+  "workbench": {
+    "title": "Plan the RF amplifier.",
+    "eyebrow": "M2 / PLANNED ASSEMBLY",
+    "intro": "Explore the planned circuit, then select a build step to inspect its main component. The board is shown in the coupled-loop test arrangement.",
+    "modelNote": "Provisional educational assembly based on LAB3 Figure 3, not a verified breadboard wiring map. New packages and lead routes are approximate; the separate input-divider test fixture is not shown.",
+    "imageNote": "New component appearances are provisional until bench photographs are available.",
+    "cameraDistance": 850,
+    "cameraCenter": [
+      70,
+      30,
+      -30
+    ],
+    "parts": [
+      {
+        "id": "coil",
+        "short": "Tank coil",
+        "name": "Tank coil",
+        "value": "75 turns · 249.43 µH",
+        "role": "Reuses the M1 tuned circuit; its original detector is removed.",
+        "connection": "Across TP1 and ground, alongside the tuning capacitor.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "tuning-capacitor",
+        "short": "Tuning capacitor",
+        "name": "Tuning capacitor",
+        "value": "20–280 pF",
+        "role": "Selects the received frequency with the tank coil.",
+        "connection": "Across the 75-turn coil.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "link",
+        "short": "Input link",
+        "name": "Input link",
+        "value": "6 turns",
+        "role": "Couples the tank to the amplifier without a direct signal connection.",
+        "connection": "Same winding direction, over the ground end of the main winding; twisted leads to IN and GND.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "test-loop",
+        "short": "Generator loop",
+        "name": "Generator loop",
+        "value": "5 turns",
+        "role": "Provides the test field, separate from the six-turn input link.",
+        "connection": "To generator output and return; moved off the PVC for M2 distance testing.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "breadboard",
+        "short": "RF board",
+        "name": "RF board",
+        "value": "Board 1′",
+        "role": "Holds the two RF stages and the new detector.",
+        "connection": "At least 15 cm from the tank; input nearest the tank.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "generator",
+        "short": "Function generator",
+        "name": "Function generator",
+        "value": "GFG-8020H",
+        "role": "Supplies the bench test signal.",
+        "connection": "Via the 10 kΩ / 10 Ω divider for standalone tests, or the five-turn loop for coupled tests.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "oscilloscope",
+        "short": "Oscilloscope",
+        "name": "Oscilloscope",
+        "value": "×10 at TP2",
+        "role": "Checks gain, waveform shape and unwanted oscillation.",
+        "connection": "Probe tip to TP2; ground to circuit ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "pot",
+        "short": "Gain control",
+        "name": "Gain control",
+        "value": "1 kΩ",
+        "role": "Adjusts the input signal before Q1.",
+        "connection": "Across IN / GND; wiper through 10 nF to Q1 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "q1",
+        "short": "Q1",
+        "name": "Q1",
+        "value": "2N3904",
+        "role": "First common-emitter RF gain stage.",
+        "connection": "Emitter grounded; collector load and collector-to-base feedback.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "q2",
+        "short": "Q2",
+        "name": "Q2",
+        "value": "2N3904",
+        "role": "Second common-emitter RF gain stage.",
+        "connection": "Collector is TP2, feeding the detector.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-diode",
+        "short": "Detector diode",
+        "name": "Detector diode",
+        "value": "1N4148",
+        "role": "Rectifies the amplified carrier.",
+        "connection": "Anode to TP2; band toward TP3 / LEVEL.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-capacitor",
+        "short": "Detector capacitor",
+        "name": "Detector capacitor",
+        "value": "3.3 nF",
+        "role": "Smooths the rectified carrier into its envelope.",
+        "connection": "TP3 to ground, parallel with 15 kΩ.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "protection",
+        "short": "Supply protection",
+        "name": "Supply protection",
+        "value": "1N5819",
+        "role": "Protects against reversed battery polarity.",
+        "connection": "V+ to diode anode, band toward the 220 Ω resistor.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "battery",
+        "short": "Battery pack",
+        "name": "Battery pack",
+        "value": "3 × AA · 4.5 V",
+        "role": "Powers the amplifier.",
+        "connection": "Positive to V+; negative to GND.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "bulk",
+        "short": "Bulk bypass",
+        "name": "Bulk bypass",
+        "value": "10 µF",
+        "role": "Bypasses the supply rail.",
+        "connection": "Rail to ground; negative terminal to ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "output",
+        "short": "Output coupling",
+        "name": "Output coupling",
+        "value": "1 µF",
+        "role": "Blocks detector DC from the next stage.",
+        "connection": "LEVEL through the capacitor to OUT.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rc1",
+        "short": "Q1 load",
+        "name": "Q1 load",
+        "value": "2 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rf1",
+        "short": "Q1 feedback",
+        "name": "Q1 feedback",
+        "value": "100 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rc2",
+        "short": "Q2 load",
+        "name": "Q2 load",
+        "value": "2 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q2 collector to rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rf2",
+        "short": "Q2 feedback",
+        "name": "Q2 feedback",
+        "value": "100 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q2 collector to base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "supply-resistor",
+        "short": "Supply resistor",
+        "name": "Supply resistor",
+        "value": "220 Ω",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Protection diode to bypassed rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-resistor",
+        "short": "Detector resistor",
+        "name": "Detector resistor",
+        "value": "15 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "TP3 to ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "cin",
+        "short": "Input coupling",
+        "name": "Input coupling",
+        "value": "10 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Pot wiper to Q1 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "coupling",
+        "short": "Interstage coupling",
+        "name": "Interstage coupling",
+        "value": "10 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to Q2 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "decouple",
+        "short": "RF bypass",
+        "name": "RF bypass",
+        "value": "100 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Rail to ground at supply entry.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare the circuit and predictions",
+        "text": "Use LAB3 Part B, Figure 3. Calculate the two transistor bias points with β = 100, VBE = 0.7 V and an estimated 3.9 V rail. Simulate DC and AC from 300 kHz to 3 MHz in Qucs; include the 220 Ω supply resistor, 10 kΩ / 10 Ω input divider and 15 pF probe load at TP2. Record predicted gain at 531 kHz, 1 MHz and 1.6 MHz.",
+        "part": "coil"
+      },
+      {
+        "title": "Lay out the RF board",
+        "text": "Arrange IN and the gain pot, Q1, Q2, then the detector and OUT. Keep Q1’s base at least ten breadboard rows from Q2’s collector. Keep leads short and flat, bridge split supply rails if necessary, and keep output wiring away from the input.",
+        "part": "breadboard"
+      },
+      {
+        "title": "Build the protected supply",
+        "text": "Feed three AA cells (4.5 V) through the 1N5819 and 220 Ω resistor. Place 10 µF and 100 nF bypass capacitors across the internal rail and ground. Check diode orientation, electrolytic polarity and continuity before power. For bench power, use 4.5 V with a current limit of about 20 mA.",
+        "part": "protection"
+      },
+      {
+        "title": "Add the first gain stage",
+        "text": "Connect the 1 kΩ pot across IN and ground; its wiper feeds Q1’s base through 10 nF. Q1 is a 2N3904 with grounded emitter, 2 kΩ collector load and 100 kΩ collector-to-base feedback resistor. Verify the actual transistor pinout before insertion.",
+        "part": "q1"
+      },
+      {
+        "title": "Add the second gain stage",
+        "text": "Couple Q1’s collector through another 10 nF capacitor to Q2’s base. Q2 uses the same 2 kΩ load, 100 kΩ feedback resistor and grounded emitter. Its collector is TP2.",
+        "part": "q2"
+      },
+      {
+        "title": "Build the new detector and output",
+        "text": "Connect a 1N4148 from TP2 to TP3, with its band toward TP3. Connect 15 kΩ and 3.3 nF in parallel from TP3 to ground. TP3 is LEVEL; take OUT through 1 µF. Keep IN, OUT, LEVEL, V+ and GND on separate rows; headers wait until M3.",
+        "part": "detector-diode"
+      },
+      {
+        "title": "Test the board before connecting the tank",
+        "text": "Disconnect the six-turn link for bench tests. Drive IN through 10 kΩ, with 10 Ω from IN to ground (input approximately source / 1001). Keep the generator at or below 1 V. Check DC bias and supply current, then sweep the pot with the generator output off to check for oscillation. With the pot at maximum, measure gain at 1 MHz using 0.1 V source, then at 531 kHz and 1.6 MHz; use a ×10 probe and ×10 scope setting at TP2.",
+        "part": "oscilloscope"
+      },
+      {
+        "title": "Measure detection and clipping",
+        "text": "At 1 MHz, use source amplitudes 0.05, 0.1, 0.2, 0.3, 0.5 and 1 V. Record TP2 amplitude and TP3 rise above its no-signal baseline, stating the amplitude convention. At 1 V, check clipping and lower the pot until the waveform peaks are rounded. Record the setting.",
+        "part": "pot"
+      },
+      {
+        "title": "Reconnect the tuner through six turns",
+        "text": "Remove M1’s detector from the tank. Wind six turns of insulated wire over the ground end of the 75-turn winding, in the same direction; twist the link leads to IN and GND. Keep the amplifier at least 15 cm from the tank, with its output end farthest away. Check stability again through the full pot range.",
+        "part": "link"
+      },
+      {
+        "title": "Run the coupled-loop test",
+        "text": "For this M2 test, move the generator’s separate five-turn loop about 10 cm away on the tank axis. Drive it at 0.1 V, tune for maximum TP3 and reduce gain if clipping occurs. With the pot fully up, increase distance until TP3 rises about 10 mV above baseline. Record the distance. Broadcast reception near a window is optional, not the sign-off requirement.",
+        "part": "test-loop"
+      }
+    ]
+  }
+},
     // M3: duplicate this object for M4, change its ID/label, then fill the sections.
     {
       id: 'm3', label: 'M3', name: 'Coming soon', title: 'More to tune into.', status: 'Planned',

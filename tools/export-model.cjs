@@ -1,7 +1,9 @@
 // Optional authoring utility: node tools/export-model.cjs. The website needs no build step.
 const fs=require('node:fs');
 require('../js/circuit-model.js');
-const parts=globalThis.RadioGeometry.build();
+const milestone=process.argv[2]||'m1';
+if(!['m1','m2'].includes(milestone))throw Error('Unknown milestone');
+const parts=globalThis.RadioGeometry.build(milestone);
 const json={asset:{version:'2.0',generator:'Team 14 original procedural reconstruction'},scene:0,scenes:[{nodes:[]}],nodes:[],meshes:[],materials:[{name:'Vertex-coloured lab materials',doubleSided:true,pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:.15,roughnessFactor:.65}}],buffers:[{byteLength:0}],bufferViews:[],accessors:[],extras:{description:'Photo-informed educational assembly; nominal geometry, representative housings and placement. Not a scan or a breadboard wiring plan. Units: metres.'}};
 const blocks=[];let offset=0;
 for(const p of parts){
@@ -18,5 +20,5 @@ json.buffers[0].byteLength=offset;
 const raw=Buffer.from(JSON.stringify(json));const j=Buffer.alloc(Math.ceil(raw.length/4)*4,32);raw.copy(j);const bin=Buffer.concat(blocks);
 const header=Buffer.alloc(12);header.writeUInt32LE(0x46546c67,0);header.writeUInt32LE(2,4);header.writeUInt32LE(12+8+j.length+8+bin.length,8);
 const chunk=(length,type)=>{const b=Buffer.alloc(8);b.writeUInt32LE(length);b.writeUInt32LE(type,4);return b;};
-fs.writeFileSync('assets/m1/radio-assembly.glb',Buffer.concat([header,chunk(j.length,0x4e4f534a),j,chunk(bin.length,0x004e4942),bin]));
+fs.writeFileSync(`assets/${milestone}/radio-assembly.glb`,Buffer.concat([header,chunk(j.length,0x4e4f534a),j,chunk(bin.length,0x004e4942),bin]));
 console.log(`Exported ${parts.length} meshes; ${offset.toLocaleString()} bytes of vertex data.`);

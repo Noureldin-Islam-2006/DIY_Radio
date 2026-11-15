@@ -197,3 +197,7 @@ For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTUR
 Click a visible 3D component or its button to focus it automatically. Drag to orbit, scroll over the canvas to zoom, and use Whole circuit to return. Keyboard arrows, +/- and Home remain available. The focus checkbox has been removed.
 
 The assembly uses a shared 60 mm PVC former with a 75-turn, 29 mm-wide receiver winding and a separate five-turn generator winding. There are four winding leads. The illustrated 24 mm gap and overall pipe height remain approximate. The generator replaces the ESP32 in the model; the ESP32 remains in the historical journey. The supplied GFG-8020H and SDS1102 links guide the instrument shapes, and supplied component photos guide their packages. This is a visual reconstruction, not a dimensionally certified CAD model or breadboard wiring plan.
+
+
+## M2 build plan
+M2 follows LAB3.pdf Part B. Its interactive workbench reuses M1 shapes and adds provisional amplifier components. Select a numbered build step to focus its component. Measurements and sign-off are pending. New component photos will refine the package shapes. Export either model with `node tools/export-model.cjs m1` or `node tools/export-model.cjs m2`; this optional authoring command is not needed to run the site.

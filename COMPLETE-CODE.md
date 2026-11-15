@@ -282,25 +282,25 @@ Start with the coil and tuner. We can correct those first, then boards, detector
   <meta property="og:image" content="assets/m1/setup.jpg">
   <meta property="og:image:alt" content="Our hand-wound copper coil and breadboard radio circuit on the bench">
   <link rel="icon" href="assets/favicon.svg?v=20261109b" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=20261109-layout2">
-  <link rel="stylesheet" href="css/workbench.css?v=20261109-layout2">
-  <link rel="stylesheet" href="css/experience.css?v=20261109-layout2">
+  <link rel="stylesheet" href="css/style.css?v=20261115-m2">
+  <link rel="stylesheet" href="css/workbench.css?v=20261115-m2">
+  <link rel="stylesheet" href="css/experience.css?v=20261115-m2">
   <script>
     try {
       const saved = localStorage.getItem('radio-theme');
       if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
     } catch (_) { /* System preference still works when storage is unavailable. */ }
   </script>
-  <script src="js/content.js?v=20261109-layout2" defer></script>
-  <script src="js/script.js?v=20261109-layout2" defer></script>
-  <script src="js/circuit-model.js?v=20261109-layout2" defer></script>
-  <script src="js/workbench.js?v=20261109-layout2" defer></script>
-  <script src="js/experience.js?v=20261109-layout2" defer></script>
+  <script src="js/content.js?v=20261115-m2" defer></script>
+  <script src="js/script.js?v=20261115-m2" defer></script>
+  <script src="js/circuit-model.js?v=20261115-m2" defer></script>
+  <script src="js/workbench.js?v=20261115-m2" defer></script>
+  <script src="js/experience.js?v=20261115-m2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#milestones">Skip to the build log</a>
   <div id="site"></div>
-  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js?v=20261109-layout2.</p></main></noscript>
+  <noscript><main class="wrap"><h1 lang="ar" dir="rtl">هنا القاهرة</h1><p>Team 14's AM radio build log needs JavaScript to display its milestones. Enable JavaScript, or read the content in js/content.js?v=20261115-m2.</p></main></noscript>
   <dialog id="lightbox" aria-labelledby="lightbox-caption">
     <div class="lightbox-tools">
       <button type="button" id="lightbox-prev" aria-label="Previous image">←</button>
@@ -638,8 +638,8 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
 .bench-stage::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#ced6ba07 1px,transparent 1px),linear-gradient(90deg,#ced6ba07 1px,transparent 1px); background-size: 38px 38px; pointer-events: none; }
 .bench-stage-top { position: absolute; top: 22px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 15px; pointer-events: none; font: .6rem Consolas, monospace; letter-spacing: .12em; color: #c9d1c4; z-index: 1; }
 .bench-live { color: #ebba8f; }
-#radio-model { width: 100%; height: 400px; display: block; touch-action: none; cursor: grab; outline-offset: -5px; }
-#radio-model:active { cursor: grabbing; }
+.bench-stage canvas { width: 100%; height: 400px; display: block; touch-action: none; cursor: grab; outline-offset: -5px; }
+.bench-stage canvas:active { cursor: grabbing; }
 .bench-fallback { width: 100%; height: 400px; object-fit: contain; }
 .bench-hint { text-align: center; margin: -10px 15px 16px; color: #bbc8bb; font-size: .7rem; pointer-events: none; }
 .bench-toolbar { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 12px 18px; margin-top: auto; }
@@ -703,7 +703,7 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
   .part-inspector { display: block; border-left: 1px solid var(--line); }
   .part-portrait { margin-bottom: 22px; }
   .part-portrait img { height: 160px; }
-  #radio-model { height: 480px; }
+  .bench-stage canvas { height: 480px; }
   .parts-tray { grid-template-columns: repeat(8,minmax(0,1fr)); }
   .parts-tray button { flex-direction: column; gap: 8px; }
   .bench-footnote { flex-direction: row; justify-content: space-between; gap: 30px; }
@@ -712,7 +712,7 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
 @media (max-width: 480px) {
   .workbench-jump { margin-left: 0; display: block; }
   .bench-stage-top { left: 15px; right: 15px; font-size: .5rem; }
-  #radio-model { height: 340px; }
+  .bench-stage canvas { height: 340px; }
   .bench-stage { min-height: 390px; }
   .bench-toolbar button { padding: 7px 8px; }
   .part-inspector { grid-template-columns: 85px 1fr; padding: 16px; gap: 16px; }
@@ -731,6 +731,11 @@ dialog::backdrop { background: #090e0be8; backdrop-filter: blur(5px); }
   .tuning-lab { display: block; }
   .tuning-console { break-inside: avoid; }
 }
+
+.build-plan { margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; }
+.build-plan nav { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+.build-plan button { padding:.6rem .9rem; border:1px solid currentColor; border-radius:2rem; color:inherit; background:transparent; cursor:pointer; }
+.build-plan button[aria-pressed="true"] { background:var(--accent); color:white; }
 ````
 
 ## js/content.js
@@ -749,7 +754,7 @@ window.RADIO_CONTENT = {
     intro: 'A medium-wave AM radio built by Team 14 for ELEG103 Analog and Digital Electronics. This guide documents the circuit design, assembly, testing and measured results for each milestone, starting with the tuner and envelope detector.',
     members: ['Rawan Kotb', 'Bassel Mostafa', 'Noureldin Islam'],
     department: 'SBME Department', course: 'ELEG103 · Analog and Digital Electronics',
-    term: 'Fall 2026', date: '2026-11-09', dateLabel: '09 November 2026',
+    term: 'Fall 2026', date: '2026-11-15', dateLabel: '15 November 2026',
     repo: 'https://github.com/Noureldin-Islam-2006/DIY_Radio', source: 'LAB2.pdf', capacitorGuide: {src:'assets/m1/variable-cap.pdf',label:'Variable capacitor pinout guide ↗'},
     hero: { src: 'assets/m1/setup.jpg', alt: 'Hand-wound copper coil on a PVC pipe, tuning capacitor, breadboards, and oscilloscope probes on our workbench.', caption: '01 / On the bench · Our tuner and detector taking shape.' }
   },
@@ -806,7 +811,7 @@ window.RADIO_CONTENT = {
       {id:'diode',name:'The envelope’s gatekeeper',short:'Diode',value:'1N60P',image:'assets/components/diode-reference.png',role:'Conducts near positive peaks to charge the detector capacitor. Small signals produce very little output.',detail:'Orange glass-style axial package with a dark cathode band, following the supplied 1N60P reference. The band faces TP3.',connection:'Anode at TP1; banded cathode toward TP3.'},
       {id:'resistor',name:'A controlled way to discharge',short:'Resistor',value:'15 kΩ',image:'assets/components/resistor-reference.png',role:'Lets the detector capacitor discharge between peaks instead of holding its voltage indefinitely.',detail:'Brown–green–orange is the nominal 15 kΩ colour code. The illustration is not a resistance measurement.',connection:'TP3 to ground, in parallel with 3.3 nF.'},
       {id:'detector-capacitor',name:'Hold the peaks, follow the sound',short:'3.3 nF',value:'RC = 49.5 µs',image:'assets/components/detector-capacitor-reference.png',role:'Smooths the carrier peaks while the resistor sets how quickly its stored charge falls.',detail:'Yellow dipped radial package marked 332: 3300 pF, or 3.3 nF, following the supplied reference.',connection:'TP3 to ground, in parallel with 15 kΩ.'},
-      {id:'breadboard',name:'Our temporary workbench',short:'Boards',value:'Two solderless boards',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The two-board arrangement follows our overhead photo. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
+      {id:'breadboard',name:'Our temporary workbench',short:'Board',value:'One solderless board',image:'assets/components/breadboard.png',role:'Holds the connections while we experiment, measure, and make changes.',detail:'The model shows the detector board; the spare board from the earlier ESP32 setup is omitted. Hole positions and hidden contacts are illustrative, not a pin-by-pin wiring plan.',connection:'Check continuity on the actual board before wiring.'},
       {id:'generator',name:'The function generator',short:'Generator',value:'GW Instek GFG-8020H',image:'assets/components/generator.svg',role:'Supplies the test signal to the five-turn winding. Magnetic coupling excites the receiver tank.',detail:'Based on the supplied GFG-8020H reference: grey case, carry handle, counter, range buttons and tuning controls. Panel geometry is approximate; the display is illustrative. Product reference: https://www.rapidonline.com/gw-instek-function-generator-gfg-8020h-85-2064',connection:'Output centre and return connect to the two leads of the five-turn winding, not directly to the 75-turn tank.'},
       {id:'oscilloscope',name:'Watch the tank respond',short:'Scope',value:'SDS1102 reference',image:'assets/components/oscilloscope.svg',role:'Shows the waveform at TP1 while we sweep the source and find resonance.',detail:'Front-panel layout follows the supplied SDS1102 listing, with a wide screen, controls and two channel connectors. The trace is illustrative, not a recorded measurement. Reference: https://www.ebay.com/itm/365605442585',connection:'Probe tip at TP1, ground clip at circuit ground. The lab calls for a compensated ×10 probe and matching channel setting.'},
       {id:'probe',name:'The probe is part of the circuit',short:'Probe',value:'Compensated ×10 probe',image:'assets/components/probe-reference.png',role:'Connects TP1 to the oscilloscope while reducing capacitive loading compared with ×1.',detail:'Black probe body, yellow selector and collar, metal tip, ground lead and coaxial cable follow the supplied reference. The generator instead uses its output cable and a two-lead breakout.',connection:'Oscilloscope channel → probe tip at TP1; short ground clip → circuit ground.'},
@@ -917,7 +922,7 @@ window.RADIO_CONTENT = {
         'A steady sine gives the detector a DC level; an AM wave gives it an envelope to follow.',
         'Our recorded Q is about 4.48: the bandwidth is 237.7 kHz around a 1065 kHz resonance. The detector output rises across all six readings, but these points alone do not locate the diode’s dead zone.'
       ],
-      next: { id: 'm2', text: 'Keep the tuner and detector intact: the later stages build on them. The measurement record is now entered. M1 is signed off. We are ready to prepare for the next chapter.', label: 'M2 · Coming soon →' },
+      next: { id: 'm2', text: 'M1 is signed off. For M2, keep the tank, remove its detector and add the six-turn link to the new RF amplifier.', label: 'M2 · Build plan →' },
       // Media types: image, video, youtube, drive. Embed src must be a provider embed/preview URL.
       // Missing images stay attractive: use missing:true until the file exists, then remove it.
       // Videos default to muted, never autoplay, and download only on playback (preload:none).
@@ -932,17 +937,396 @@ window.RADIO_CONTENT = {
         { id: 'schematic', type: 'image', src: 'assets/m1/schematic.svg', alt: 'Five-turn generator loop inductively couples to a parallel 75-turn coil and 20–280 pF capacitor at TP1. A 1N60P diode points toward TP3, with a 15 kilohm resistor and 3.3 nanofarad capacitor in parallel to ground.', caption: 'M1 test circuit · redrawn from LAB2, Figure 3. The diode band faces TP3.' },
       ]
     },
-    // M2: fill this same template when the next build starts; its tab is linkable now.
+    // M2: planned LAB3 Part B build. Add actual observations and results after testing.
+{
+  "id": "m2",
+  "label": "M2",
+  "name": "RF amplifier",
+  "title": "Two stages before detection.",
+  "status": "Planned",
+  "summary": "LAB3 Part B · build plan prepared; assembly and measurements pending.",
+  "objective": "Amplify the tuned RF signal using two 2N3904 stages, then recover its envelope with a new 1N4148 detector. Keep M1’s tank, remove its detector, and connect the amplifier through a six-turn link winding.",
+  "journey": [
     {
-      id: 'm2', label: 'M2', name: 'Coming soon', title: 'The next chapter.', status: 'Planned',
-      media: [], summary: 'Coming soon.',
-      objective: 'Coming soon.',
-      journey: [{ title: 'Coming soon.', text: 'Coming soon.' }],
-      problems: [{ problem: 'Coming soon.', why: 'Coming soon.', solution: 'Coming soon.' }],
-      results: { note: 'Coming soon.' },
-      learned: ['Coming soon.'],
-      next: { id: 'm3', text: 'Coming soon.', label: 'M3 · Coming soon →' },
+      "title": "Prepare the circuit and predictions",
+      "text": "Use LAB3 Part B, Figure 3. Calculate the two transistor bias points with β = 100, VBE = 0.7 V and an estimated 3.9 V rail. Simulate DC and AC from 300 kHz to 3 MHz in Qucs; include the 220 Ω supply resistor, 10 kΩ / 10 Ω input divider and 15 pF probe load at TP2. Record predicted gain at 531 kHz, 1 MHz and 1.6 MHz."
     },
+    {
+      "title": "Lay out the RF board",
+      "text": "Arrange IN and the gain pot, Q1, Q2, then the detector and OUT. Keep Q1’s base at least ten breadboard rows from Q2’s collector. Keep leads short and flat, bridge split supply rails if necessary, and keep output wiring away from the input."
+    },
+    {
+      "title": "Build the protected supply",
+      "text": "Feed three AA cells (4.5 V) through the 1N5819 and 220 Ω resistor. Place 10 µF and 100 nF bypass capacitors across the internal rail and ground. Check diode orientation, electrolytic polarity and continuity before power. For bench power, use 4.5 V with a current limit of about 20 mA."
+    },
+    {
+      "title": "Add the first gain stage",
+      "text": "Connect the 1 kΩ pot across IN and ground; its wiper feeds Q1’s base through 10 nF. Q1 is a 2N3904 with grounded emitter, 2 kΩ collector load and 100 kΩ collector-to-base feedback resistor. Verify the actual transistor pinout before insertion."
+    },
+    {
+      "title": "Add the second gain stage",
+      "text": "Couple Q1’s collector through another 10 nF capacitor to Q2’s base. Q2 uses the same 2 kΩ load, 100 kΩ feedback resistor and grounded emitter. Its collector is TP2."
+    },
+    {
+      "title": "Build the new detector and output",
+      "text": "Connect a 1N4148 from TP2 to TP3, with its band toward TP3. Connect 15 kΩ and 3.3 nF in parallel from TP3 to ground. TP3 is LEVEL; take OUT through 1 µF. Keep IN, OUT, LEVEL, V+ and GND on separate rows; headers wait until M3."
+    },
+    {
+      "title": "Test the board before connecting the tank",
+      "text": "Disconnect the six-turn link for bench tests. Drive IN through 10 kΩ, with 10 Ω from IN to ground (input approximately source / 1001). Keep the generator at or below 1 V. Check DC bias and supply current, then sweep the pot with the generator output off to check for oscillation. With the pot at maximum, measure gain at 1 MHz using 0.1 V source, then at 531 kHz and 1.6 MHz; use a ×10 probe and ×10 scope setting at TP2."
+    },
+    {
+      "title": "Measure detection and clipping",
+      "text": "At 1 MHz, use source amplitudes 0.05, 0.1, 0.2, 0.3, 0.5 and 1 V. Record TP2 amplitude and TP3 rise above its no-signal baseline, stating the amplitude convention. At 1 V, check clipping and lower the pot until the waveform peaks are rounded. Record the setting."
+    },
+    {
+      "title": "Reconnect the tuner through six turns",
+      "text": "Remove M1’s detector from the tank. Wind six turns of insulated wire over the ground end of the 75-turn winding, in the same direction; twist the link leads to IN and GND. Keep the amplifier at least 15 cm from the tank, with its output end farthest away. Check stability again through the full pot range."
+    },
+    {
+      "title": "Run the coupled-loop test",
+      "text": "For this M2 test, move the generator’s separate five-turn loop about 10 cm away on the tank axis. Drive it at 0.1 V, tune for maximum TP3 and reduce gain if clipping occurs. With the pot fully up, increase distance until TP3 rises about 10 mV above baseline. Record the distance. Broadcast reception near a window is optional, not the sign-off requirement."
+    }
+  ],
+  "problems": [],
+  "results": {
+    "note": "Not measured yet. After the build we will add Table 4 (DC operating points), Table 5 (RF gain), Table 6 (detector response above baseline), and Table 7 (coupled-loop distance). Simulation, clipping observations and sign-off are also pending."
+  },
+  "learned": [
+    "Build observations will be added after assembly and testing."
+  ],
+  "next": {
+    "id": "m3",
+    "text": "Complete the LAB3 measurements and checkpoint before moving to the next stage.",
+    "label": "M3 · Coming soon →"
+  },
+  "media": [
+    {
+      "id": "schematic",
+      "type": "image",
+      "src": "assets/m2/lab3-circuit.png",
+      "alt": "LAB3 Part B Figure 3: two-stage transistor RF amplifier, supply protection and envelope detector.",
+      "caption": "Planning reference: LAB3 Part B, Figure 3. Component values are starting points; record any changes and why."
+    }
+  ],
+  "workbench": {
+    "title": "Plan the RF amplifier.",
+    "eyebrow": "M2 / PLANNED ASSEMBLY",
+    "intro": "Explore the planned circuit, then select a build step to inspect its main component. The board is shown in the coupled-loop test arrangement.",
+    "modelNote": "Provisional educational assembly based on LAB3 Figure 3, not a verified breadboard wiring map. New packages and lead routes are approximate; the separate input-divider test fixture is not shown.",
+    "imageNote": "New component appearances are provisional until bench photographs are available.",
+    "cameraDistance": 850,
+    "cameraCenter": [
+      70,
+      30,
+      -30
+    ],
+    "parts": [
+      {
+        "id": "coil",
+        "short": "Tank coil",
+        "name": "Tank coil",
+        "value": "75 turns · 249.43 µH",
+        "role": "Reuses the M1 tuned circuit; its original detector is removed.",
+        "connection": "Across TP1 and ground, alongside the tuning capacitor.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "tuning-capacitor",
+        "short": "Tuning capacitor",
+        "name": "Tuning capacitor",
+        "value": "20–280 pF",
+        "role": "Selects the received frequency with the tank coil.",
+        "connection": "Across the 75-turn coil.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "link",
+        "short": "Input link",
+        "name": "Input link",
+        "value": "6 turns",
+        "role": "Couples the tank to the amplifier without a direct signal connection.",
+        "connection": "Same winding direction, over the ground end of the main winding; twisted leads to IN and GND.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "test-loop",
+        "short": "Generator loop",
+        "name": "Generator loop",
+        "value": "5 turns",
+        "role": "Provides the test field, separate from the six-turn input link.",
+        "connection": "To generator output and return; moved off the PVC for M2 distance testing.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "breadboard",
+        "short": "RF board",
+        "name": "RF board",
+        "value": "Board 1′",
+        "role": "Holds the two RF stages and the new detector.",
+        "connection": "At least 15 cm from the tank; input nearest the tank.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "generator",
+        "short": "Function generator",
+        "name": "Function generator",
+        "value": "GFG-8020H",
+        "role": "Supplies the bench test signal.",
+        "connection": "Via the 10 kΩ / 10 Ω divider for standalone tests, or the five-turn loop for coupled tests.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "oscilloscope",
+        "short": "Oscilloscope",
+        "name": "Oscilloscope",
+        "value": "×10 at TP2",
+        "role": "Checks gain, waveform shape and unwanted oscillation.",
+        "connection": "Probe tip to TP2; ground to circuit ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "pot",
+        "short": "Gain control",
+        "name": "Gain control",
+        "value": "1 kΩ",
+        "role": "Adjusts the input signal before Q1.",
+        "connection": "Across IN / GND; wiper through 10 nF to Q1 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "q1",
+        "short": "Q1",
+        "name": "Q1",
+        "value": "2N3904",
+        "role": "First common-emitter RF gain stage.",
+        "connection": "Emitter grounded; collector load and collector-to-base feedback.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "q2",
+        "short": "Q2",
+        "name": "Q2",
+        "value": "2N3904",
+        "role": "Second common-emitter RF gain stage.",
+        "connection": "Collector is TP2, feeding the detector.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-diode",
+        "short": "Detector diode",
+        "name": "Detector diode",
+        "value": "1N4148",
+        "role": "Rectifies the amplified carrier.",
+        "connection": "Anode to TP2; band toward TP3 / LEVEL.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-capacitor",
+        "short": "Detector capacitor",
+        "name": "Detector capacitor",
+        "value": "3.3 nF",
+        "role": "Smooths the rectified carrier into its envelope.",
+        "connection": "TP3 to ground, parallel with 15 kΩ.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "protection",
+        "short": "Supply protection",
+        "name": "Supply protection",
+        "value": "1N5819",
+        "role": "Protects against reversed battery polarity.",
+        "connection": "V+ to diode anode, band toward the 220 Ω resistor.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "battery",
+        "short": "Battery pack",
+        "name": "Battery pack",
+        "value": "3 × AA · 4.5 V",
+        "role": "Powers the amplifier.",
+        "connection": "Positive to V+; negative to GND.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "bulk",
+        "short": "Bulk bypass",
+        "name": "Bulk bypass",
+        "value": "10 µF",
+        "role": "Bypasses the supply rail.",
+        "connection": "Rail to ground; negative terminal to ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "output",
+        "short": "Output coupling",
+        "name": "Output coupling",
+        "value": "1 µF",
+        "role": "Blocks detector DC from the next stage.",
+        "connection": "LEVEL through the capacitor to OUT.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rc1",
+        "short": "Q1 load",
+        "name": "Q1 load",
+        "value": "2 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rf1",
+        "short": "Q1 feedback",
+        "name": "Q1 feedback",
+        "value": "100 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rc2",
+        "short": "Q2 load",
+        "name": "Q2 load",
+        "value": "2 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q2 collector to rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "rf2",
+        "short": "Q2 feedback",
+        "name": "Q2 feedback",
+        "value": "100 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q2 collector to base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "supply-resistor",
+        "short": "Supply resistor",
+        "name": "Supply resistor",
+        "value": "220 Ω",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Protection diode to bypassed rail.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "detector-resistor",
+        "short": "Detector resistor",
+        "name": "Detector resistor",
+        "value": "15 kΩ",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "TP3 to ground.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "cin",
+        "short": "Input coupling",
+        "name": "Input coupling",
+        "value": "10 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Pot wiper to Q1 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "coupling",
+        "short": "Interstage coupling",
+        "name": "Interstage coupling",
+        "value": "10 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Q1 collector to Q2 base.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      },
+      {
+        "id": "decouple",
+        "short": "RF bypass",
+        "name": "RF bypass",
+        "value": "100 nF",
+        "role": "Part of the LAB3 amplifier network.",
+        "connection": "Rail to ground at supply entry.",
+        "detail": "Provisional component shape and illustrative placement. Follow LAB3 Figure 3 for wiring and verify the physical part pinout.",
+        "image": "assets/m2/placeholder.svg"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare the circuit and predictions",
+        "text": "Use LAB3 Part B, Figure 3. Calculate the two transistor bias points with β = 100, VBE = 0.7 V and an estimated 3.9 V rail. Simulate DC and AC from 300 kHz to 3 MHz in Qucs; include the 220 Ω supply resistor, 10 kΩ / 10 Ω input divider and 15 pF probe load at TP2. Record predicted gain at 531 kHz, 1 MHz and 1.6 MHz.",
+        "part": "coil"
+      },
+      {
+        "title": "Lay out the RF board",
+        "text": "Arrange IN and the gain pot, Q1, Q2, then the detector and OUT. Keep Q1’s base at least ten breadboard rows from Q2’s collector. Keep leads short and flat, bridge split supply rails if necessary, and keep output wiring away from the input.",
+        "part": "breadboard"
+      },
+      {
+        "title": "Build the protected supply",
+        "text": "Feed three AA cells (4.5 V) through the 1N5819 and 220 Ω resistor. Place 10 µF and 100 nF bypass capacitors across the internal rail and ground. Check diode orientation, electrolytic polarity and continuity before power. For bench power, use 4.5 V with a current limit of about 20 mA.",
+        "part": "protection"
+      },
+      {
+        "title": "Add the first gain stage",
+        "text": "Connect the 1 kΩ pot across IN and ground; its wiper feeds Q1’s base through 10 nF. Q1 is a 2N3904 with grounded emitter, 2 kΩ collector load and 100 kΩ collector-to-base feedback resistor. Verify the actual transistor pinout before insertion.",
+        "part": "q1"
+      },
+      {
+        "title": "Add the second gain stage",
+        "text": "Couple Q1’s collector through another 10 nF capacitor to Q2’s base. Q2 uses the same 2 kΩ load, 100 kΩ feedback resistor and grounded emitter. Its collector is TP2.",
+        "part": "q2"
+      },
+      {
+        "title": "Build the new detector and output",
+        "text": "Connect a 1N4148 from TP2 to TP3, with its band toward TP3. Connect 15 kΩ and 3.3 nF in parallel from TP3 to ground. TP3 is LEVEL; take OUT through 1 µF. Keep IN, OUT, LEVEL, V+ and GND on separate rows; headers wait until M3.",
+        "part": "detector-diode"
+      },
+      {
+        "title": "Test the board before connecting the tank",
+        "text": "Disconnect the six-turn link for bench tests. Drive IN through 10 kΩ, with 10 Ω from IN to ground (input approximately source / 1001). Keep the generator at or below 1 V. Check DC bias and supply current, then sweep the pot with the generator output off to check for oscillation. With the pot at maximum, measure gain at 1 MHz using 0.1 V source, then at 531 kHz and 1.6 MHz; use a ×10 probe and ×10 scope setting at TP2.",
+        "part": "oscilloscope"
+      },
+      {
+        "title": "Measure detection and clipping",
+        "text": "At 1 MHz, use source amplitudes 0.05, 0.1, 0.2, 0.3, 0.5 and 1 V. Record TP2 amplitude and TP3 rise above its no-signal baseline, stating the amplitude convention. At 1 V, check clipping and lower the pot until the waveform peaks are rounded. Record the setting.",
+        "part": "pot"
+      },
+      {
+        "title": "Reconnect the tuner through six turns",
+        "text": "Remove M1’s detector from the tank. Wind six turns of insulated wire over the ground end of the 75-turn winding, in the same direction; twist the link leads to IN and GND. Keep the amplifier at least 15 cm from the tank, with its output end farthest away. Check stability again through the full pot range.",
+        "part": "link"
+      },
+      {
+        "title": "Run the coupled-loop test",
+        "text": "For this M2 test, move the generator’s separate five-turn loop about 10 cm away on the tank axis. Drive it at 0.1 V, tune for maximum TP3 and reduce gain if clipping occurs. With the pot fully up, increase distance until TP3 rises about 10 mV above baseline. Record the distance. Broadcast reception near a window is optional, not the sign-off requirement.",
+        "part": "test-loop"
+      }
+    ]
+  }
+},
     // M3: duplicate this object for M4, change its ID/label, then fill the sections.
     {
       id: 'm3', label: 'M3', name: 'Coming soon', title: 'More to tune into.', status: 'Planned',
@@ -1045,7 +1429,7 @@ window.RADIO_CONTENT = {
       ${section(m, 'objective', `<p class="objective-copy">${rich(m.objective)}</p>${m.specs ? `<div class="stats">${m.specs.map(s => `<div><strong>${rich(s.value)} <small>${rich(s.unit)}</small></strong><span>${rich(s.label)}</span></div>`).join('')}</div>` : ''}`)}
       ${section(m, 'journey', `<ol class="timeline">${(m.journey || []).map((step, i) => `<li><div class="step-copy"><span class="step-number">${String(i + 1).padStart(2, '0')}</span><h4>${rich(step.title)}</h4><p>${rich(step.text)}</p>${step.note ? `<aside class="note">${rich(step.note)}</aside>` : ''}${step.code ? `<details class="code-details"><summary>${rich(ui.code)} <span aria-hidden="true">↗</span></summary><pre><code>${escape(step.code)}</code></pre><p class="fine-print">${rich(step.credit)}</p></details>` : ''}</div>${media((m.media || []).find(item => item.id === step.media))}</li>`).join('')}</ol>`)}
       ${m.theory?.length ? section(m, 'theory', `<div class="theory-grid">${m.theory.map(t => `<div><h4>${rich(t.title)}</h4>${formulas[t.kind] ? `<math display="block">${formulas[t.kind]}</math>` : ''}<p>${rich(t.text)}</p></div>`).join('')}</div>`) : ''}
-      ${section(m, 'problems', `<div class="problem-grid">${(m.problems || []).map((item, i) => `<article class="problem-card"><span class="eyebrow">FIELD NOTE ${String(i + 1).padStart(2, '0')}</span><h4><span class="sr-only">${escape(ui.problem)}: </span>${rich(item.problem)}</h4><dl><dt>${rich(ui.why)}</dt><dd>${rich(item.why)}</dd><dt>${rich(ui.solution)}</dt><dd>${rich(item.solution)}</dd></dl></article>`).join('')}</div>`)}
+      ${section(m, 'problems', `${m.problems?.length ? '' : '<p>No build issues recorded yet; this milestone is still planned.</p>'}<div class="problem-grid">${(m.problems || []).map((item, i) => `<article class="problem-card"><span class="eyebrow">FIELD NOTE ${String(i + 1).padStart(2, '0')}</span><h4><span class="sr-only">${escape(ui.problem)}: </span>${rich(item.problem)}</h4><dl><dt>${rich(ui.why)}</dt><dd>${rich(item.why)}</dd><dt>${rich(ui.solution)}</dt><dd>${rich(item.solution)}</dd></dl></article>`).join('')}</div>`)}
       ${section(m, 'results', results(m))}
       ${section(m, 'learned', `<ul class="lessons">${(m.learned || []).map(item => `<li>${rich(item)}</li>`).join('')}</ul>`)}
       ${section(m, 'gallery', `<p class="section-intro">${rich(ui.galleryHint)}</p><div class="gallery">${(m.media || []).map(media).join('')}</div>`)}
@@ -1058,7 +1442,7 @@ window.RADIO_CONTENT = {
     <main id="top" class="wrap">
       <section class="hero" aria-labelledby="project-title"><div class="hero-copy"><p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> ${rich(ui.journal)} <span class="edition">NO. ${escape(p.team)}</span></p><h1 id="project-title" lang="ar" dir="rtl">${escape(p.name)}</h1><p class="tagline">${rich(p.tagline)}</p><p class="hero-intro">${rich(p.intro)}</p><a class="primary-link" href="#${escape(milestones[0].id)}" data-jump>${rich(ui.read)} <span aria-hidden="true">↘</span></a><div class="team-line"><span class="team-label">${rich(ui.team)} ${escape(p.team)}</span><ul>${p.members.map(name => `<li>${escape(name)}</li>`).join('')}</ul></div></div><figure class="hero-photo"><img src="${escape(safePath(p.hero.src))}" alt="${escape(p.hero.alt)}" width="1600" height="1200" fetchpriority="high"><span class="photo-label" aria-hidden="true">WORK IN<br>PROGRESS</span><figcaption>${rich(p.hero.caption)}</figcaption></figure></section>
       <section class="overview" aria-labelledby="overview-title"><div class="overview-head"><div><p class="eyebrow">${rich(ui.overview)}</p><h2 id="overview-title">${rich(ui.overviewTitle)}</h2></div><p>${rich(ui.overviewText)}</p></div><ol class="signal-chain" aria-label="Radio signal chain">${chain.map(c => `<li class="${c.current ? 'current' : ''}"><strong>${rich(c.title)}</strong><span>${rich(c.detail)}</span></li>`).join('')}</ol><div class="progress-row"><div class="progress-caption"><span>${rich(ui.progress)}</span><strong>${completed} / ${milestones.length} ${rich(ui.done)}</strong></div><progress value="${completed}" max="${milestones.length}" aria-label="${escape(ui.progress)}">${completed}/${milestones.length}</progress><ul>${milestones.map(m => `<li><span class="status-dot ${m.status === 'Planned' ? 'planned' : ''}" aria-hidden="true"></span>${escape(m.label)} <span>${rich(m.status)}</span></li>`).join('')}</ul></div></section>
-      <section id="milestones" class="milestones" aria-label="${escape(ui.milestones)}"><div class="tab-bar"><div role="tablist" aria-label="${escape(ui.milestones)}">${milestones.map(m => `<button type="button" role="tab" id="tab-${m.id}" aria-controls="panel-${m.id}" aria-selected="false" tabindex="-1" data-tab="${m.id}"><span>${escape(m.label)}</span><span class="tab-name">${rich(m.status === 'Planned' ? ui.soon : m.name)}</span></button>`).join('')}</div><button type="button" class="print-button" id="print-button">${rich(ui.print)} ↗</button></div>${milestones.map(panel).join('')}</section>
+      <section id="milestones" class="milestones" aria-label="${escape(ui.milestones)}"><div class="tab-bar"><div role="tablist" aria-label="${escape(ui.milestones)}">${milestones.map(m => `<button type="button" role="tab" id="tab-${m.id}" aria-controls="panel-${m.id}" aria-selected="false" tabindex="-1" data-tab="${m.id}"><span>${escape(m.label)}</span><span class="tab-name">${rich(m.status === 'Planned' && !m.workbench ? ui.soon : m.name)}</span></button>`).join('')}</div><button type="button" class="print-button" id="print-button">${rich(ui.print)} ↗</button></div>${milestones.map(panel).join('')}</section>
     </main><footer class="site-footer wrap"><div><span class="footer-name" lang="ar" dir="rtl">${escape(p.name)}</span><p>${rich(ui.footer)}</p></div><div><p>${rich(p.department)}<br>${rich(p.course)}<br>${rich(p.term)} · <time datetime="${escape(p.date)}">${escape(p.dateLabel)}</time></p></div><div class="footer-links"><a href="${escape(safePath(p.source))}" target="_blank" rel="noopener">${rich(ui.source)}</a>${external(p.repo) ? `<a href="${escape(external(p.repo))}" target="_blank" rel="noopener">${rich(ui.repository)}</a>` : `<span>${rich(p.repo)}</span>`}</div></footer>`;
 
   // Theme follows the OS until the reader chooses an explicit override. Cycle back to System.
@@ -1221,7 +1605,7 @@ window.RADIO_CONTENT = {
   const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
   const norm = a => scale(a,1/(Math.hypot(...a)||1));
   const rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
-  function build() {
+  function build(milestone='m1') {
     const parts = [];
     let part;
     function group(id,position,explode) { part={id,position,explode,vertices:[]}; parts.push(part); }
@@ -1246,7 +1630,7 @@ window.RADIO_CONTENT = {
       }
     }
     group('breadboard',[35,0,0],[0,-24,0]);
-    for(const z of [-47,47]) {
+    for(const z of [-47]) {
       box([0,2,z],[160,4,56],'#e5e8df');box([0,4.05,z],[151,.2,3],'#9ca8a3');
       for(const dz of [-23,23])box([0,4.2,z+dz],[150,.15,.45],dz<0?'#a55845':'#588d92');
       for(let x=-72;x<=72;x+=4)for(let row=-5;row<=5;row++)if(row)box([x,4.2,z+row*3.5],[1.3,.25,1.3],'#59665e');
@@ -1321,6 +1705,38 @@ window.RADIO_CONTENT = {
     path([[-94,12,-71],[-93,6,-50],[-133,6,-22],[-118,6,-10]],1.1,'#343d39');
     tube([-118,6,-14],[-118,6,-10],1.4,'#af4b3c');path([[-118,6,-10],[-124,7,-10]],.9,'#343d39');
     path([[-5,5,-33],[2,6,-24],[66,5,-27]],.6,'#343d39');
+
+    if(milestone==='m2'){
+      const originals=parts.slice();parts.length=0;
+      const reuse=(source,id,position)=>{const old=originals.find(p=>p.id===source);parts.push({...old,id,position,explode:[0,25,0]});};
+      reuse('coil','coil',[-63,29,0]);reuse('tuning-capacitor','tuning-capacitor',[-12,11,-40]);
+      reuse('breadboard','breadboard',[200,0,0]);
+      reuse('generator','generator',[-150,25,-120]);reuse('oscilloscope','oscilloscope',[220,38,-140]);
+      // Separate generator loop for LAB3's distance test; the six-turn link stays on the tank.
+      group('test-loop',[-63,29,140],[0,0,35]);
+      for(let k=0;k<5;k++)path(Array.from({length:49},(_,i)=>[30*Math.cos(i*TAU/48),k*.6,30*Math.sin(i*TAU/48)]),.24,'#b77a38');
+      group('link',[-63,29,0],[0,25,0]);
+      for(let i=0;i<6*48;i++){const point=t=>[31.2*Math.cos(t*TAU/48),7+5*t/(6*48),31.2*Math.sin(t*TAU/48)];tube(point(i),point(i+1),.42,'#447d9a');}
+      group('pot',[136,12,-47],[0,25,0]);box([0,0,0],[10,9,10],'#3f7692');tube([0,4.5,0],[0,5.5,0],3,'#b9c6c7');box([0,5.7,0],[4,.4,.6],'#303b40');
+      for(const x of [-4,0,4])tube([x,-4,0],[x,-8,0],.4,'#b9c6c7');
+      for(const [id,x] of [['q1',166],['q2',230]]){group(id,[x,12,-47],[0,30,0]);tube([0,0,-1.5],[0,0,1.5],3.5,'#252d30',20);box([0,-1.5,1.4],[7,4,.7],'#30383d');for(const dx of [-2,0,2])path([[dx,-2,0],[dx,-6,0],[dx,-8,0]],.3,'#aebcc2');}
+      const resistor=(id,x,z)=>{group(id,[x,11,z],[0,25,0]);tube([0,0,-5],[0,0,5],2,'#cabb91',16);const bands=id.startsWith('rc')?['#cf493d','#292e32','#d44635']:id.startsWith('rf')?['#744b2c','#292e32','#dccd47']:id==='supply-resistor'?['#cf493d','#cf493d','#744b2c']:['#744b2c','#37604b','#c26c2f'];[...bands,'#b8984a'].forEach((c,i)=>tube([0,0,-3+i*2],[0,0,-2.3+i*2],2.04,c,16));for(const z of [-1,1])path([[0,-6,z*12],[0,0,z*12],[0,0,z*5]],.35,'#aab2a9');};
+      resistor('rc1',166,-66);resistor('rf1',151,-40);resistor('rc2',230,-66);resistor('rf2',212,-40);
+      resistor('supply-resistor',145,-64);resistor('detector-resistor',262,-40);
+      reuse('diode','detector-diode',[250,11,-47]);reuse('detector-capacitor','detector-capacitor',[275,11,-40]);
+      group('protection',[130,11,-64],[0,25,0]);tube([-4,0,0],[4,0,0],2,'#242d32',16);tube([2,0,0],[3,0,0],2.05,'#bdc8cf');path([[-10,-6,0],[-10,0,0],[-4,0,0]],.35,'#b8c8d2');path([[4,0,0],[10,0,0],[10,-6,0]],.35,'#b8c8d2');
+      for(const [id,x,z] of [['cin',150,-47],['coupling',194,-47],['decouple',175,-66]]){group(id,[x,12,z],[0,25,0]);box([0,0,0],[6,6,3],'#ca9e41');for(const dx of [-2,2])tube([dx,-3,0],[dx,-8,0],.3,'#b8c8d2');}
+      for(const [id,x,z] of [['bulk',156,-66],['output',280,-47]]){group(id,[x,12,z],[0,28,0]);tube([0,-5,0],[0,5,0],3,'#354b60',20);box([0,0,3],[1.3,9,.25],'#b8c8d2');for(const dx of [-1.5,1.5])tube([dx,-5,0],[dx,-8,0],.3,'#b8c8d2');}
+      group('battery',[85,8,55],[0,20,30]);box([0,0,0],[55,8,48],'#242d32');for(const z of [-15,0,15]){tube([-24,6,z],[24,6,z],6,'#b5bec2',20);tube([15,6,z],[23,6,z],6.1,'#dd5447');}
+      group('connections',[0,0,0],[0,0,0]);
+      // Connection routes explain nodes; breadboard holes are not a wiring prescription.
+      path([[-33,36,0],[-15,30,-28],[-12,5,-26]],.5,'#b77a38');path([[-33,65,0],[0,30,-15],[-4,5,-26]],.5,'#b77a38');
+      for(let k=0;k<2;k++)path([[-32,38+k,0],[10,7+k,-20],[70,7+k,-28],[132+k*4,5,-47]],.55,k?'#333d42':'#447d9a');
+      path([[140,5,-47],[146,6,-47]],.5,'#447d9a');path([[154,6,-47],[166,5,-47]],.5,'#447d9a');
+      path([[168,5,-47],[190,6,-47]],.5,'#447d9a');path([[198,6,-47],[230,5,-47]],.5,'#447d9a');
+      path([[232,5,-47],[240,6,-47]],.5,'#dd5447');path([[264,6,-47],[280,6,-47]],.5,'#dd5447');
+      path([[61,14,55],[90,5,20],[93,5,-64]],.7,'#dd5447');path([[109,14,55],[115,5,15],[125,5,-24]],.7,'#333d42');
+    }
     return parts;
   }
   // Use the submitted Table 4 inductance for the teaching experiment.
@@ -1336,19 +1752,20 @@ window.RADIO_CONTENT = {
 /* Native WebGL, pointer controls, and a small teaching model. No framework or dependencies. */
 (() => {
   'use strict';
-  const c=window.RADIO_CONTENT.workbench, G=window.RadioGeometry;
-  if(!c||!G||!document.querySelector('#panel-m1'))return;
+  function mount(c,id){
+  const G=window.RadioGeometry;
+  if(!c||!G||!document.querySelector(`#panel-${id}`))return;
   const esc=s=>String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[x]);
-  const section=document.createElement('section');section.className='chapter-section workbench';section.setAttribute('aria-labelledby','m1-workbench');
-  section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="m1-workbench">${esc(c.title)}</h3></div>
+  const section=document.createElement('section');section.className='chapter-section workbench';section.setAttribute('aria-labelledby',`${id}-workbench`);
+  section.innerHTML=`<div class="section-label"><span aria-hidden="true">↗</span><h3 id="${id}-workbench">${esc(c.title)}</h3></div>
   <p class="eyebrow">${esc(c.eyebrow)}</p><p class="section-intro">${esc(c.intro)}</p>
-  <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY 01</span><span class="bench-live">EXPLORE IN 3D</span></div>
+  <div class="bench-layout"><div class="bench-stage"><div class="bench-stage-top"><span>TEAM 14 / ASSEMBLY ${id.slice(1).padStart(2,"0")}</span><span class="bench-live">EXPLORE IN 3D</span></div>
     <canvas id="radio-model" tabindex="0" aria-label="Interactive 3D radio assembly. Drag to rotate. Scroll to zoom. Click a component to inspect. Arrow keys rotate, plus and minus zoom, Home resets. Use the component buttons below for descriptions."></canvas>
     <img class="bench-fallback" src="assets/m1/setup.jpg" alt="Our actual coil and breadboard circuit, shown when 3D is unavailable." hidden>
     <p class="bench-hint">Drag to rotate · scroll to zoom · click a component</p><div class="bench-toolbar"><button type="button" data-camera="home">Whole circuit</button><button type="button" data-camera="top">From above</button><button type="button" data-camera="in" aria-label="Zoom in">+</button><button type="button" data-camera="out" aria-label="Zoom out">−</button><button type="button" id="bench-explode" aria-pressed="false">Separate parts ↗</button></div>
   </div><aside class="part-inspector" aria-live="polite" aria-atomic="true"><div class="part-portrait"><img id="part-image" alt="" loading="lazy"></div><div class="part-copy"><p class="eyebrow" id="part-value"></p><h4 id="part-name"></h4><p id="part-role"></p><p class="part-connection" id="part-connection"></p><details><summary>About this reconstruction</summary><p id="part-detail"></p><p class="fine-print">${esc(c.imageNote)}</p></details></div></aside></div>
   <div class="parts-tray" role="group" aria-label="Inspect a component">${c.parts.map((p,i)=>`<button type="button" data-part="${p.id}" aria-pressed="${i===0}"><span class="part-index">${String(i+1).padStart(2,'0')}</span><span>${esc(p.short)}</span></button>`).join('')}</div>
-  <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/m1/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
+  <div class="bench-footnote"><p>${esc(c.modelNote)}</p><a href="assets/${id}/radio-assembly.glb" download>Download 3D model (.glb) ↓</a></div>
   <div class="tuning-lab"><div class="tuning-story"><p class="eyebrow">A LITTLE BENCH EXPERIMENT</p><h4>${esc(c.tuningTitle)}</h4><p>${esc(c.tuningIntro)}</p><p class="tuning-challenge">${esc(c.challenge)}</p><label class="probe-switch"><input id="probe-load" type="checkbox"> Add 100 pF probe capacitance</label><button type="button" class="text-button" id="listen-tuning" aria-pressed="false">Listen to alignment ♪</button><p class="fine-print">Optional synthesized tone, not received radio audio.</p></div>
   <div class="tuning-console"><div class="console-readout"><div><span>TANK RESONANCE</span><output id="tuned-frequency">—</output></div><div><span>TARGET</span><strong>${c.targetKhz}<small> kHz</small></strong></div></div>
   <svg class="tuning-dial" viewBox="0 0 600 110" role="img" aria-label="Frequency scale with target and tank resonance"><defs><pattern id="dial-ticks" width="15" height="55" patternUnits="userSpaceOnUse"><path d="M0 0V18" stroke="currentColor" stroke-width="1"/></pattern></defs><path d="M30 20H570" stroke="currentColor" opacity=".3"/><rect x="30" y="20" width="540" height="55" fill="url(#dial-ticks)" opacity=".5"/><text x="30" y="92">500 kHz</text><text x="510" y="92">2.2 MHz</text><path id="target-needle" d="M0 18V68" stroke-dasharray="3 3"/><path id="tuning-needle" d="M0 10V70"/><circle id="tuning-dot" r="4" cy="10"/></svg>
@@ -1356,18 +1773,32 @@ window.RADIO_CONTENT = {
   <div class="alignment-row"><span>Signal alignment</span><output id="signal-strength"></output></div><meter id="signal-meter" min="0" max="1" value="0" aria-label="Calculated signal alignment"></meter>
   <svg class="scope-mini" viewBox="0 0 600 100" role="img" aria-label="Illustrative amplitude-modulated waveform; its height follows the calculated tank response"><path d="M0 50H600" class="scope-axis"/><path id="scope-wave"/></svg><p class="tune-feedback" id="tune-feedback" role="status"></p></div></div>
   <details class="bench-assumptions"><summary>What this experiment assumes</summary><p>${esc(c.tuningNote)}</p></details>`;
-  document.querySelector('#panel-m1 .chapter-heading').after(section);
+  if(id!=='m1'){
+    section.querySelector('.tuning-lab').remove();section.querySelector('.bench-assumptions').remove();
+    section.querySelector('.bench-fallback').src='assets/m2/lab3-circuit.png';
+    section.querySelector('.bench-fallback').alt='LAB3 Figure 3 amplifier circuit';
+    section.innerHTML=section.innerHTML.replace(/id="(?!m2-workbench)([^"]+)"/g,(_,key)=>`id="${id}-${key}"`);
+  }
+  document.querySelector(`#panel-${id} .chapter-heading`).after(section);
   document.dispatchEvent(new Event('radio:content'));
-  const $=s=>section.querySelector(s), $$=s=>[...section.querySelectorAll(s)];
+  const scoped=s=>id==='m1'?s:s.replace(/#(?!m2-workbench)([\w-]+)/g,`#${id}-$1`);
+  const $=s=>section.querySelector(scoped(s)), $$=s=>[...section.querySelectorAll(scoped(s))];
   const jump=document.createElement('button');jump.className='workbench-jump';jump.type='button';jump.textContent='Explore the circuit in 3D ↗';
-  document.querySelector('.primary-link').after(jump);
+  if(id==='m1')document.querySelector('.primary-link').after(jump);
   jump.addEventListener('click',()=>{document.querySelector('#tab-m1').click();$('#m1-workbench').tabIndex=-1;$('#m1-workbench').focus({preventScroll:true});section.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
   const canvas=$('#radio-model');let selected='coil',render=()=>{},focusPart=()=>{},modelReady=false;
   function select(id,zoom=true) {
     selected=id;const p=c.parts.find(p=>p.id===id);
     $('#part-image').src=p.image;$('#part-image').alt=`Reference view of ${p.name.toLowerCase()}`;
     for(const key of ['value','name','role','detail','connection'])$(`#part-${key}`).textContent=p[key];
-    $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
+    if(c.steps){
+    const plan=document.createElement('div');plan.className='build-plan';
+    plan.innerHTML=`<p class="eyebrow">BUILD PLAN · NOT COMPLETED WORK</p><nav aria-label="Build steps">${c.steps.map((s,i)=>`<button type="button" data-step="${i}" aria-pressed="${i===0}">${i+1}</button>`).join('')}</nav><div aria-live="polite"><h4></h4><p class="plan-copy"></p></div>`;
+    section.querySelector('.parts-tray').before(plan);
+    const show=(i,zoom)=>{const step=c.steps[i];plan.querySelector('h4').textContent=step.title;plan.querySelector('.plan-copy').textContent=step.text;plan.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.step===i)));if(zoom)select(step.part);};
+    plan.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.step,true)));show(0,false);
+  }
+  $$('[data-part]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.part===id)));if(zoom){initModel();focusPart(id);$('.bench-layout').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}render();
   }
   $$('[data-part]').forEach(b=>b.addEventListener('click',()=>select(b.dataset.part)));select('coil',false);
   $('#part-image').addEventListener('error',()=>{if(!$('#part-image').src.endsWith('/assets/placeholder.svg'))$('#part-image').src='assets/placeholder.svg';});
@@ -1384,15 +1815,15 @@ window.RADIO_CONTENT = {
     if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);gl.enable(gl.DEPTH_TEST);
     const attrs=['pos','normal','colour'].map(n=>gl.getAttribLocation(program,n));attrs.forEach(a=>gl.enableVertexAttribArray(a));
     const u=Object.fromEntries(['center','offset','angle','distance','aspect','emphasis'].map(n=>[n,gl.getUniformLocation(program,n)]));
-    const models=G.build().map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
-    let yaw=-.3,pitch=.6,distance=570,desiredDistance=570,center=[-25,28,-48],desiredCenter=[-25,28,-48],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
+    const models=G.build(id).map(p=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(p.vertices),gl.STATIC_DRAW);return {...p,buffer,count:p.vertices.length/9};});
+    let yaw=-.3,pitch=.6,distance=c.cameraDistance||570,desiredDistance=c.cameraDistance||570,center=c.cameraCenter||[-25,28,-48],desiredCenter=c.cameraCenter||[-25,28,-48],focused=null,explode=0,target=0,frame=0,last=0,visible=true;
     focusPart=id=>{const part=models.find(p=>p.id===id);if(!part)return;focused=id;
       const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
       for(let j=0;j<part.vertices.length;j+=9)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],part.vertices[j+k]);hi[k]=Math.max(hi[k],part.vertices[j+k]);}
       desiredCenter=lo.map((v,k)=>(v+hi[k])/2+part.position[k]);desiredDistance=Math.max(25,Math.hypot(...lo.map((v,k)=>(hi[k]-v)/2))*3.1);
       target=0;$('#bench-explode').setAttribute('aria-pressed','false');$('#bench-explode').textContent='Separate parts ↗';canvas.dataset.view=id;$('.bench-hint').textContent='Component close-up · drag to rotate · Whole circuit to return';render();};
     function draw(now=0) {
-      frame=0;if(!visible||document.hidden||document.querySelector('#panel-m1').hidden)return;
+      frame=0;if(!visible||document.hidden||document.querySelector(`#panel-${id}`).hidden)return;
       const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
       const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(rect.width*dpr),h=Math.round(rect.height*dpr);
       if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
@@ -1402,11 +1833,11 @@ window.RADIO_CONTENT = {
       center=center.map((v,i)=>Math.abs(v-desiredCenter[i])<.02?desiredCenter[i]:v+(desiredCenter[i]-v)*ease);
       distance=Math.abs(distance-desiredDistance)<.02?desiredDistance:distance+(desiredDistance-distance)*ease;
       gl.uniform3fv(u.center,center);last=now;gl.viewport(0,0,w,h);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniform2f(u.angle,yaw,pitch);gl.uniform1f(u.distance,distance*Math.max(1,1.3/(w/h)));gl.uniform1f(u.aspect,w/h);
-      for(const p of models){if(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id)))continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
+      for(const p of models){if(focused&&p.id!==focused&&!(['coil',id==='m2'?'link':'test-loop'].includes(focused)&&['coil',id==='m2'?'link':'test-loop'].includes(p.id)))continue;if(target>.05&&p.id==='connections')continue;gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer);attrs.forEach((a,i)=>gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12));gl.uniform3fv(u.offset,p.position.map((v,i)=>v+p.explode[i]*explode));gl.uniform1f(u.emphasis,p.id===selected?1.12:.87);gl.drawArrays(gl.TRIANGLES,0,p.count);}
       if(explode!==target||distance!==desiredDistance||center.some((v,i)=>v!==desiredCenter[i]))frame=requestAnimationFrame(draw);
     }
     render=()=>{if(frame)cancelAnimationFrame(frame);frame=0;draw(performance.now());};
-    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=570;desiredCenter=[-25,28,-48];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · scroll to zoom · click a component";render();};
+    const reset=()=>{yaw=-.3;pitch=.6;desiredDistance=c.cameraDistance||570;desiredCenter=c.cameraCenter||[-25,28,-48];focused=null;canvas.dataset.view="assembly";$(".bench-hint").textContent="Drag to rotate · scroll to zoom · click a component";render();};
     $$('[data-camera]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.camera==='home')reset();else if(b.dataset.camera==='top'){yaw=0;pitch=1.52;render();}else{desiredDistance=Math.max(15,Math.min(1000,desiredDistance+(b.dataset.camera==='in'?-30:30)));render();}}));
     $('#bench-explode').addEventListener('click',()=>{if(focused)reset();target=target?0:1;$('#bench-explode').setAttribute('aria-pressed',String(!!target));$('#bench-explode').textContent=target?'Bring it together ↙':'Separate parts ↗';render();});
     canvas.addEventListener('wheel',e=>{e.preventDefault();const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?canvas.clientHeight:1);desiredDistance=Math.max(15,Math.min(1000,desiredDistance*Math.exp(Math.max(-120,Math.min(120,delta))*.002)));render();},{passive:false});
@@ -1415,7 +1846,7 @@ window.RADIO_CONTENT = {
       const rect=canvas.getBoundingClientRect(),aspect=rect.width/rect.height,D=distance*Math.max(1,1.3/aspect);
       const x=(clientX-rect.left)/rect.width*2-1,y=1-(clientY-rect.top)/rect.height*2;
       let hit=null,best=Infinity;
-      for(const p of models){if(!c.parts.some(q=>q.id===p.id)||(focused&&p.id!==focused&&!(['coil','test-loop'].includes(focused)&&['coil','test-loop'].includes(p.id))))continue;
+      for(const p of models){if(!c.parts.some(q=>q.id===p.id)||(focused&&p.id!==focused&&!(['coil',id==='m2'?'link':'test-loop'].includes(focused)&&['coil',id==='m2'?'link':'test-loop'].includes(p.id))))continue;
         const project=j=>{const v=[0,1,2].map(k=>p.vertices[j+k]+p.position[k]+p.explode[k]*explode-center[k]);const qx=v[0]*Math.cos(yaw)+v[2]*Math.sin(yaw),qz=-v[0]*Math.sin(yaw)+v[2]*Math.cos(yaw),vy=v[1]*Math.cos(pitch)-qz*Math.sin(pitch),z=D-v[1]*Math.sin(pitch)-qz*Math.cos(pitch);return [qx*2.45/aspect/z,vy*2.45/z,z];};
         for(let j=0;j<p.vertices.length;j+=27){const a=project(j),b=project(j+9),c=project(j+18);if(Math.min(a[2],b[2],c[2])<=1)continue;const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(den)<1e-12)continue;const u=((b[1]-c[1])*(x-c[0])+(c[0]-b[0])*(y-c[1]))/den,v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(y-c[1]))/den;if(u<0||v<0||u+v>1)continue;const depth=1/(u/a[2]+v/b[2]+(1-u-v)/c[2]);if(depth<best){best=depth;hit=p.id;}}
       }if(hit)select(hit);
@@ -1432,6 +1863,7 @@ window.RADIO_CONTENT = {
   }
   if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();initModel();}},{rootMargin:'300px'});observer.observe(section);}else initModel();
 
+  if(id!=='m1')return;
   // The optional sound is a quiet 440 Hz cue, never radio audio. It stops offscreen or on tab changes.
   let audio=null,oscillator=null,gain=null,amplitude=0,audioRequest=0,audioPending=false;
   function stopAudio(){audioRequest++;audioPending=false;if(oscillator){oscillator.stop();oscillator.disconnect();oscillator=null;}if(gain){gain.disconnect();gain=null;}if(audio)audio.suspend();$('#listen-tuning').setAttribute('aria-pressed','false');$('#listen-tuning').textContent='Listen to alignment ♪';}
@@ -1451,6 +1883,9 @@ window.RADIO_CONTENT = {
   $('#tune-capacitance').addEventListener('input',tune);$('#probe-load').addEventListener('change',tune);tune();
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});document.addEventListener('radio:tab',stopAudio);
   if('IntersectionObserver' in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stopAudio();}).observe($('.tuning-lab'));
+  }
+  mount(window.RADIO_CONTENT.workbench,'m1');
+  for(const m of window.RADIO_CONTENT.milestones)if(m.workbench)mount({...window.RADIO_CONTENT.workbench,...m.workbench},m.id);
 })();
 ````
 
@@ -1460,7 +1895,9 @@ window.RADIO_CONTENT = {
 // Optional authoring utility: node tools/export-model.cjs. The website needs no build step.
 const fs=require('node:fs');
 require('../js/circuit-model.js');
-const parts=globalThis.RadioGeometry.build();
+const milestone=process.argv[2]||'m1';
+if(!['m1','m2'].includes(milestone))throw Error('Unknown milestone');
+const parts=globalThis.RadioGeometry.build(milestone);
 const json={asset:{version:'2.0',generator:'Team 14 original procedural reconstruction'},scene:0,scenes:[{nodes:[]}],nodes:[],meshes:[],materials:[{name:'Vertex-coloured lab materials',doubleSided:true,pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:.15,roughnessFactor:.65}}],buffers:[{byteLength:0}],bufferViews:[],accessors:[],extras:{description:'Photo-informed educational assembly; nominal geometry, representative housings and placement. Not a scan or a breadboard wiring plan. Units: metres.'}};
 const blocks=[];let offset=0;
 for(const p of parts){
@@ -1477,7 +1914,7 @@ json.buffers[0].byteLength=offset;
 const raw=Buffer.from(JSON.stringify(json));const j=Buffer.alloc(Math.ceil(raw.length/4)*4,32);raw.copy(j);const bin=Buffer.concat(blocks);
 const header=Buffer.alloc(12);header.writeUInt32LE(0x46546c67,0);header.writeUInt32LE(2,4);header.writeUInt32LE(12+8+j.length+8+bin.length,8);
 const chunk=(length,type)=>{const b=Buffer.alloc(8);b.writeUInt32LE(length);b.writeUInt32LE(type,4);return b;};
-fs.writeFileSync('assets/m1/radio-assembly.glb',Buffer.concat([header,chunk(j.length,0x4e4f534a),j,chunk(bin.length,0x004e4942),bin]));
+fs.writeFileSync(`assets/${milestone}/radio-assembly.glb`,Buffer.concat([header,chunk(j.length,0x4e4f534a),j,chunk(bin.length,0x004e4942),bin]));
 console.log(`Exported ${parts.length} meshes; ${offset.toLocaleString()} bytes of vertex data.`);
 ````
 
@@ -1860,6 +2297,10 @@ For accurate replacement geometry, follow [the model capture guide](MODEL-CAPTUR
 Click a visible 3D component or its button to focus it automatically. Drag to orbit, scroll over the canvas to zoom, and use Whole circuit to return. Keyboard arrows, +/- and Home remain available. The focus checkbox has been removed.
 
 The assembly uses a shared 60 mm PVC former with a 75-turn, 29 mm-wide receiver winding and a separate five-turn generator winding. There are four winding leads. The illustrated 24 mm gap and overall pipe height remain approximate. The generator replaces the ESP32 in the model; the ESP32 remains in the historical journey. The supplied GFG-8020H and SDS1102 links guide the instrument shapes, and supplied component photos guide their packages. This is a visual reconstruction, not a dimensionally certified CAD model or breadboard wiring plan.
+
+
+## M2 build plan
+M2 follows LAB3.pdf Part B. Its interactive workbench reuses M1 shapes and adds provisional amplifier components. Select a numbered build step to focus its component. Measurements and sign-off are pending. New component photos will refine the package shapes. Export either model with `node tools/export-model.cjs m1` or `node tools/export-model.cjs m2`; this optional authoring command is not needed to run the site.
 ````
 
 ## Replace these placeholders first
@@ -1868,4 +2309,4 @@ The assembly uses a shared 60 mm PVC former with a 75-turn, 29 mm-wide receiver 
 2. Actual generator/probe settings, confirmed problems and fixes, (M1 sign-off is already confirmed).
 3. Missing close-ups, verified resonance capture, tuning video, and media descriptions.
 4. Keep the last-updated date current; the GitHub repository URL is already configured.
-5. M2 and M3 content when their work begins; until then, keep them as Soon.
+5. M2 measurements and component photographs after the build; M3 remains Soon.
