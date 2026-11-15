@@ -100,7 +100,7 @@
   .tuning-console { break-inside: avoid; }
 }
 
-.build-plan { margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; }
+.build-plan { margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--line); border-radius: 12px; }
 .build-plan nav { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
 .build-plan button { padding:.6rem .9rem; border:1px solid currentColor; border-radius:2rem; color:inherit; background:transparent; cursor:pointer; }
 .build-plan button[aria-pressed="true"] { background:var(--accent); color:white; }
